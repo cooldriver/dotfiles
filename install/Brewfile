@@ -1,51 +1,84 @@
 tap "homebrew/bundle"
-tap "lotyp/homebrew-formulae"
+tap "lotyp/homebrew-formulae" # for dockutil
+tap "shivammathur/php" # to have access to old versions of php
 
 # core/dotfiles
-brew "bats-core"
-brew "coreutils"
-brew "duti"
-brew "lotyp/formulae/dockutil"
-brew "vim"
-brew "stow"
-brew "thefuck"
-brew "tmux"
-brew "topgrade"
+brew "bats-core" # check if kept
+brew "coreutils" # gnu coreutils
+brew "duti" # set default apps
+brew "lotyp/formulae/dockutil" # manage dock
+brew "vim" # default text editor
+brew "stow" # manage dotfiles
+brew "thefuck" # correct previous command
+brew "tmux" # terminal multiplexer
+brew "topgrade" # update everything
+brew "tlrc" # tldr client in rust
+
+# system
+brew "fastfetch" # system info
+brew "htop" # system monitor
+brew "btop" # better system monitor
+brew "spaceship" # improve shell prompt
 
 # fs/network
-brew "bat"
-brew "croc"
-brew "httpie"
-brew "ssh-copy-id"
-brew "tree"
-brew "unar"
-brew "wget"
-brew "zoxide"
+brew "bat" # cat with wings
+brew "croc" # secure file transfer
+brew "httpie" # http client
+brew "tree" # list directory
+brew "unar" # extract archives
+brew "wget" # download files
+brew "zoxide" # cd with z
+brew "doggo" # dig with style
 
 # search/grep/diff
-brew "fd"
-brew "fzf"
-brew "git-delta"
-brew "gnu-sed"
-brew "grep"
-brew "jq"
-brew "psgrep"
-brew "ripgrep"
-brew "the_silver_searcher"
+brew "fd" # find
+brew "fzf" # fuzzy finder
+brew "git-delta" # diff viewer
+brew "gnu-sed" # gnu sed
+brew "grep" # grep
+brew "jq" # json processor
+brew "fx" # terminal JSON viewer
+brew "gron" # json to greppable
+brew "miller" # csv/tsv/json processor
+brew "ripgrep" # Search tool like grep and The Silver Searcher
+brew "the_silver_searcher" # code search tool
 
 # languages/tools
-brew "gh"
-brew "n"
+brew "gh" # github cli
+brew "n" # node version manager
 brew "python"
 brew "ruby"
 brew "rust"
 brew "shellcheck"
+brew  "mas" # Mac App Store CLI
+brew "shivammathur/php/php@7.4"
+brew "php@8.1"
+brew "php@8.2"
+brew "php@8.3"
+brew "caddy" # web server
+brew "redis"
+brew "meilisearch"
+
+# devops
+brew "awscli" # aws cli
+brew "ansible" # software automation
+brew "tfenv" # terraform version manager
+brew "python-packaging" # python packaging tools (useful for ansible)
 
 # media
 brew "ffmpeg"
 brew "imagemagick"
-brew "uni"
-brew "webp"
+brew "uni" # Unicode database query tool
+brew "webp" # WebP image tools
+brew "yt-dlp" # dl youtube videos
+brew "pngquant" # png compression
+brew "jpegoptim" # jpeg compression
 
 # misc
 brew "grip"
+
+# fun
+brew "cowsay"
+brew "fortune"
+brew "lolcat"
+
