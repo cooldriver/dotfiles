@@ -22,7 +22,7 @@ It mainly targets macOS systems (should install on e.g. Ubuntu as well for many 
 - [homebrew-cask](https://github.com/Homebrew/homebrew-cask) (packages: [Caskfile](./install/Caskfile))
 - [Node.js + npm LTS](https://nodejs.org/en/download/) (packages: [npmfile](./install/npmfile))
 - Latest Git, Bash, Python, GNU coreutils, curl, Ruby
-- `$EDITOR` is [GNU nano](https://www.nano-editor.org) (`$VISUAL` is `code` and Git `core.editor` is `code --wait`)
+- `$EDITOR` is [Vim](https://www.vim.org) (`$VISUAL` is `code` and Git `core.editor` is `vim`)
 
 ## Installation
 
