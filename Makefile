@@ -58,7 +58,9 @@ brew:
 	is-executable brew || curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash
 
 git: brew
-	brew install git git-extras
+	brew install git git-lfs
+	git lfs install
+	git lfs install --system
 
 npm: brew-packages
 	n install lts
