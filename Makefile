@@ -18,7 +18,7 @@ macos: sudo core-macos packages link duti
 
 linux: core-linux link
 
-core-macos: brew bash git npm
+core-macos: brew git npm
 
 core-linux:
 	apt-get update
@@ -56,21 +56,6 @@ unlink: stow-$(OS)
 
 brew:
 	is-executable brew || curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash
-
-bash: brew
-ifdef GITHUB_ACTION
-	if ! grep -q bash $(SHELLS); then \
-		brew install bash bash-completion@2 pcre && \
-		sudo append $(shell which bash) $(SHELLS) && \
-		sudo chsh -s $(shell which bash); \
-	fi
-else
-	if ! grep -q bash $(SHELLS); then \
-		brew install bash bash-completion@2 pcre && \
-		sudo append $(shell which bash) $(SHELLS) && \
-		chsh -s $(shell which bash); \
-	fi
-endif
 
 git: brew
 	brew install git git-extras
