@@ -70,10 +70,9 @@ git config --global user.email "your@email.com"
 git config --global github.user "your-github-username"
 ```
 
-2. Set macOS [Dock items](./macos/dock.sh) and [system defaults](./macos/defaults.sh):
+2. Set macOS [system defaults](./macos/defaults.sh):
 
 ```sh
-dot dock
 dot macos
 ```
 
@@ -91,7 +90,6 @@ Usage: dot <command>
 
 Commands:
    clean            Clean up caches (brew, cargo, gem, pip)
-   dock             Apply macOS Dock settings
    edit             Open dotfiles in IDE ($VISUAL) and Git GUI ($VISUAL_GIT)
    help             This help message
    macos            Apply macOS system defaults

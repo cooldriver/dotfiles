@@ -1,12 +1,10 @@
 tap "homebrew/bundle"
-tap "lotyp/homebrew-formulae" # for dockutil
 tap "shivammathur/php" # to have access to old versions of php
 
 # core/dotfiles
 brew "bats-core" # check if kept
 brew "coreutils" # gnu coreutils
 brew "duti" # set default apps
-brew "lotyp/formulae/dockutil" # manage dock
 brew "vim" # default text editor
 brew "stow" # manage dotfiles
 brew "thefuck" # correct previous command
