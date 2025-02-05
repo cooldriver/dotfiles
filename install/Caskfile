@@ -13,7 +13,6 @@ cask "1password"
 cask "1password-cli"
 cask "raycast"
 cask "font-hack-nerd-font"
-cask "hyperkey"
 mas "The Unarchiver", id: 425424353
 
 # Menu bar

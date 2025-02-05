@@ -17,6 +17,7 @@ brew "fastfetch" # system info
 brew "htop" # system monitor
 brew "btop" # better system monitor
 brew "spaceship" # improve shell prompt
+brew "cyme" # list USB devices
 
 # fs/network
 brew "bat" # cat with wings
