@@ -39,6 +39,7 @@ brew "jq" # json processor
 brew "fx" # terminal JSON viewer
 brew "gron" # json to greppable
 brew "miller" # csv/tsv/json processor
+brew "xan" # The CSV magician
 brew "ripgrep" # Search tool like grep and The Silver Searcher
 brew "the_silver_searcher" # code search tool
 
