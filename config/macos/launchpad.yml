@@ -1,0 +1,202 @@
+######################################################################
+# MacOS Launchpad Layout (Lissy93/Dotfiles)                          #
+######################################################################
+# Folder structure and layout for organising the MacOS launchpad     #
+# Managed with lporg (brew install lporg)                            # 
+# To regenerate this file from current layout, run `lporg save`      #
+# To apply changes, run `lporg load ~/.config/launchpad.yml`         #
+#                                                                    #
+# Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com> #
+######################################################################
+
+apps:
+  pages:
+  - number: 1
+    items:
+    - folder: Dev
+      pages:
+      - number: 1
+        items:
+        - Xcode
+        - Android Studio
+        - Docker
+        - Postman
+        - Boop
+        - Sourcetree
+        - UTM
+        - Visual Studio
+        - React Native Debugger
+        - MacDown
+    - folder: Work Coms
+      pages:
+      - number: 1
+        items:
+        - zoom.us
+        - Slack
+        - Google Chrome
+        - Calendar
+        - Mail
+        - Microsoft Teams
+    - folder: Security
+      pages:
+      - number: 1
+        items:
+        - Wireshark
+        - OWASP ZAP
+        - Burp Suite Community Edition
+    - folder: Media
+      pages:
+      - number: 1
+        items:
+        - GIMP-2.10
+        - VLC
+        - Transmission
+        - Audacity
+        - OBS
+        - Spotify
+        - Inkscape
+        - Shotcut
+        - calibre
+    - folder: Personal
+      pages:
+      - number: 1
+        items:
+        - Standard Notes
+        - 1Password
+        - VeraCrypt
+        - Tresorit
+        - Proton Mail Bridge
+        - ProtonVPN
+        - GPG Keychain
+        - Signal
+        - Ledger Live
+        - etesync-dav
+    - folder: Mac Mods
+      pages:
+      - number: 1
+        items:
+        - Raycast
+        - Stats
+        - Hidden Bar
+        - AltTab
+        - OpenInTerminal
+        - Scroll Reverser
+        - amm
+        - Espanso
+        - Little Snitch
+        - AnyBar
+        - Shottr
+        - Finicky
+        - OnyX
+        - CopyQ
+        - PopClip
+        - Mjolnir
+        - LinearMouse
+        - Übersicht
+        - MacForge
+        - QLMarkdown
+        - Santa
+        - Suspicious Package
+    - folder: Other
+      pages:
+      - number: 1
+        items:
+        - Shortcuts
+        - QuickTime Player
+        - TextEdit
+        - Grapher
+        - Time Machine
+        - Font Book
+        - Chess
+        - Stickies
+        - Image Capture
+        - VoiceOver Utility
+        - AirPort Utility
+        - Migration Assistant
+        - Terminal
+        - Activity Monitor
+        - Console
+        - Keychain Access
+        - System Information
+        - Automator
+        - Script Editor
+        - Disk Utility
+        - Digital Color Meter
+        - ColorSync Utility
+        - Screenshot
+        - Bluetooth File Exchange
+        - Audio MIDI Setup
+        - Calculator
+        - System Preferences
+        - Simulator
+        - TestFlight
+        - Developer
+        - Dictionary
+        - VMware Fusion Tech Preview
+        - Jabra Direct
+        - CotEditor
+      - number: 2
+        items:
+        - Orion
+        - Keka
+        - Mountain Duck
+        - DaisyDisk
+    - folder: Apple Crap
+      pages:
+      - number: 1
+        items:
+        - Contacts
+        - Reminders
+        - Photos
+        - Numbers
+        - Pages
+        - Keynote
+        - Photo Booth
+        - Notes
+        - FaceTime
+        - Messages
+        - Maps
+        - Find My
+        - Music
+        - Podcasts
+        - Books
+        - Preview
+        - TV
+        - Voice Memos
+        - News
+        - Stocks
+        - Siri
+        - Mission Control
+        - Safari
+        - Home
+        - App Store
+    - folder: Corporate Spyware
+      pages:
+      - number: 1
+        items:
+        - Netskope Client
+        - Self Service
+        - Solarwinds Discovery Agent
+        - Kandji Extension Manager
+        - Sophos Endpoint
+        - Sophos Network Extension
+        - Sophos Scan
+        - Remove Sophos Endpoint
+        - Remove Netskope Client
+        - Sophos Endpoint Self Help
+    - folder: Voldermort
+      pages:
+      - number: 1
+        items:
+        - Google Sheets
+        - Google Slides
+        - Google Docs
+        - Google Drive
+    - Firefox
+    - Chromium
+    - Visual Studio Code
+    - iTerm
+widgets:
+  pages: []
+dock_items:
+desktop: {}

@@ -1,0 +1,9 @@
+[submodule "lib/dotbot"]
+	path = lib/dotbot
+	url = https://github.com/anishathalye/dotbot
+[submodule "lib/tpm"]
+	path = lib/tpm
+	url = https://github.com/tmux-plugins/tpm.git
+[submodule "config/nvim"]
+	path = config/nvim
+	url = https://github.com/NvChad/NvChad
