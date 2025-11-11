@@ -30,7 +30,7 @@ START_TIME=`date +%s` # Start timer
 SRC_DIR=$(dirname ${0})
 
 # Dotfiles Source Repo and Destination Directory
-REPO_NAME="${REPO_NAME:-Lissy93/Dotfiles}"
+REPO_NAME="${REPO_NAME:-cooldriver/dotfiles}"
 DOTFILES_DIR="${DOTFILES_DIR:-${SRC_DIR:-$HOME/.dotfiles}}"
 DOTFILES_REPO="${DOTFILES_REPO:-https://github.com/${REPO_NAME}.git}"
 

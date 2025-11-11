@@ -3,7 +3,7 @@
 ########################################################################
 # Initiates the applying of MacOS-specific settings and preferences    #
 # Will use local files if available, otherwise run directly from git   #
-# IMPORTANT: Be sure to read files through thoughouly before executing #
+# IMPORTANT: Be sure to read files through thoroughly before executing #
 ########################################################################
 # Licensed under MIT (C) Alicia Sykes 2022 <https://aliciasykes.com>   #
 ########################################################################
@@ -20,8 +20,8 @@ if [ ! -z $0 ]; then # Use local files
     $DIR/$mac_script
   done
 else # Run from remote origin
-  REMOTE_DIR="https://raw.githubusercontent.com/Lissy93/dotfiles"
-  REMOTE_DIR+="/master/scripts/macos-setup"
+  REMOTE_DIR="https://raw.githubusercontent.com/cooldriver/dotfiles"
+  REMOTE_DIR+="/main/scripts/macos-setup"
   for mac_script in ${macos_scripts[@]}; do
     bash <(curl -s "${REMOTE_DIR}/${mac_script}")
   done

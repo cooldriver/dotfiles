@@ -1,8 +1,8 @@
 <h1 align="center"><code>~/.Dotfiles</code></h1>
 <p align="center"><i>My dotfiles for configuring literally everything (automatically!)</i></p>
 <p align="center">
-  <a href="https://github.com/lissy93/dotfiles" title="Automate all the things!">
-    <img width="140" src="https://github.com/Lissy93/dotfiles/raw/master/.github/logo.png" />
+  <a href="https://github.com/cooldriver/dotfiles" title="Automate all the things!">
+    <img width="140" src="https://github.com/cooldriver/dotfiles/raw/main/.github/logo.png" />
   </a>
 </p>
 <h3 align="center"><code>$HOME, sweet $HOME</code></h3>
@@ -59,9 +59,9 @@ This is important, because as a developer, we usually have multiple machines (wo
 
 ### XDG Directories
 
-The location of config files can usually be defined using the [XDG base directory specification](https://specifications.freedesktop.org/basedir-spec), which is honored by most apps. This lets you specify where config, log, cache and data files are stored, keeping your top-level home directory free from clutter. You can do this by setting environmental variables, usually within the [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh.zshenv) file.
+The location of config files can usually be defined using the [XDG base directory specification](https://specifications.freedesktop.org/basedir-spec), which is honored by most apps. This lets you specify where config, log, cache and data files are stored, keeping your top-level home directory free from clutter. You can do this by setting environmental variables, usually within the [`.zshenv`](https://github.com/cooldriver/dotfiles/blob/main/config/zsh.zshenv) file.
 
-For example, in my setup I've [set these variables](https://github.com/Lissy93/dotfiles/blob/e839ab2d77f0be0d09b4f4ba3503c8b69ad925f3/config/zsh/.zshenv#L6=L10) to:
+For example, in my setup I've [set these variables](https://github.com/cooldriver/dotfiles/blob/main/config/zsh/.zshenv#L6=L10) to:
 
 Variable | Location
 --- | ---
@@ -81,7 +81,7 @@ This is awesome for a number of reasons: 1) Super minimal dependency installatio
 
 There's several methods of doing this, like having a Docker container or spinning up VMs with a predefined config (with something like [Vagrant](https://www.vagrantup.com/) or a [NixOS](https://nixos.org/)-based config).
 
-I went with an Alpine-based Docker container defined in the [`Dockerfile`](https://github.com/Lissy93/dotfiles/blob/master/Dockerfile). To try it out, just run `docker run lissy93/dotfiles`.
+I went with an Alpine-based Docker container defined in the [`Dockerfile`](https://github.com/cooldriver/dotfiles/blob/main/Dockerfile). To try it out, just run `docker run cooldriver/dotfiles`.
 
 ---
 
@@ -178,21 +178,21 @@ And for some more inspiration, check out [webpro/awesome-dotfiles](https://githu
 Let's Go!
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/Lissy93/dotfiles/master/lets-go.sh)
+bash <(curl -s https://raw.githubusercontent.com/cooldriver/dotfiles/main/lets-go.sh)
 ```
 
-This will execute the quick setup script (in [`lets-go.sh`](https://github.com/Lissy93/dotfiles/blob/master/lets-go.sh)), which just clones the repo (if not yet present), then executes the [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) script. You can re-run this at anytime to update the dotfiles. You can also optionally pass in some variables to change the install location (`DOTFILES_DIR`) and source repo (`DOTFILES_REPO`) to use your fork.
+This will execute the quick setup script (in [`lets-go.sh`](https://github.com/cooldriver/dotfiles/blob/main/lets-go.sh)), which just clones the repo (if not yet present), then executes the [`install.sh`](https://github.com/cooldriver/dotfiles/blob/main/install.sh) script. You can re-run this at anytime to update the dotfiles. You can also optionally pass in some variables to change the install location (`DOTFILES_DIR`) and source repo (`DOTFILES_REPO`) to use your fork.
 
 The install script [does several things](#install-script), it takes care of checking dependencies are met, updating dotfiles and symlinks, configuring CLI (Vim, Tmux, ZSH, etc), and will prompt the user to install listed packages, update the OS and apply any system preferences. The script is idempotent, so it can be run multiple times without changing the result, beyond the initial application.
 
-_Alternatively, you can clone the repo yourself, cd into it, allow execution of [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) then run it to install or update._
+_Alternatively, you can clone the repo yourself, cd into it, allow execution of [`install.sh`](https://github.com/cooldriver/dotfiles/blob/main/install.sh) then run it to install or update._
 
 <details>
 <summary>Example</summary>
 
 
 ```bash
-git clone --recursive git@github.com:Lissy93/dotfiles.git ~/.dotfiles
+git clone --recursive git@github.com:cooldriver/dotfiles.git ~/.dotfiles
 chmod +x ~/.dotfiles/install.sh
 ~/.dotfiles/install.sh
 ```
@@ -211,30 +211,30 @@ Once the repo is cloned, you can modify whatever files you like before running t
 <pre>
 ~
 └──.
-   ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/config">config/</a>               # All configuration files
-   │ ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/bash">bash/</a>               # Bash (shell) config
-   │ ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/tmux">tmux/</a>               # Tmux (multiplexer) config
-   │ ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/vim">vim/</a>                # Vim (text editor) config
-   │ ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/zsh">zsh/</a>                # ZSH (shell) config
-   │ ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/macos">macos/</a>              # Config files for Mac-specific apps
-   │ └── <a href="https://github.com/Lissy93/dotfiles/tree/master/desktop-apps">desktop-apps/</a>       # Config files for GUI apps
-   ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/scripts">scripts/</a>              # Bash scripts for automating tasks
-   │ ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/scripts/installs">installs/</a>           # Scripts for software installation
-   │ │ ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/Brewfile">Brewfile</a>          # Package installs for MacOS via Homebrew
-   │ │ ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/arch-pacman.sh">arch-pacman.sh</a>    # Package installs for Arch via Pacman
-   │ │ └── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/flatpak.sh">flatpak.sh</a>        # Package installs for Linux desktops via Flatpak
-   │ ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/scripts/linux">linux/</a>              # Automated configuration for Linux
-   │ │ └── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/linux/dconf-prefs.sh">dconf-prefs.sh</a>    # Setting GNOME settings via dconf util
-   │ └── <a href="https://github.com/Lissy93/dotfiles/tree/master/scripts/macos-setup">macos-setup/</a>        # Scripts for setting up Mac OS machines
-   │   ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/macos-setup/macos-apps.sh">macos-apps.sh</a>     # Sets app preferences
-   │   ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/macos-setup/macos-preferences.sh">macos-prefs.sh</a>    # Sets MacOS system preferences
-   │   └── <a href="https://github.com/Lissy93/dotfiles/blob/master/scripts/macos-setup/macos-security.sh">macos-security.sh</a> # Applies MacOS security and privacy settings
-   ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/utils">utils/</a>                # Handy Shell utilitis for various day-to-day tasks
-   ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/.github">.github/</a>              # Meta files for GitHub repo
-   ├── <a href="https://github.com/Lissy93/dotfiles/tree/master/lib">lib/</a>                  # External dependencies, as git sub-modules
-   ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/lets-go.sh">lets-go.sh</a>            # One-line remote installation entry point
-   ├── <a href="https://github.com/Lissy93/dotfiles/blob/master/install.sh">install.sh</a>            # All-in-one install and setup script
-   └── <a href="https://github.com/Lissy93/dotfiles/blob/master/symlinks.yaml">symlinks.yml</a>          # List of symlink locations
+   ├── <a href="https://github.com/cooldriver/dotfiles/tree/main/config">config/</a>               # All configuration files
+   │ ├── <a href="https://github.com/cooldriver/dotfiles/tree/main/bash">bash/</a>               # Bash (shell) config
+   │ ├── <a href="https://github.com/cooldriver/dotfiles/tree/main/tmux">tmux/</a>               # Tmux (multiplexer) config
+   │ ├── <a href="https://github.com/cooldriver/dotfiles/tree/main/vim">vim/</a>                # Vim (text editor) config
+   │ ├── <a href="https://github.com/cooldriver/dotfiles/tree/main/zsh">zsh/</a>                # ZSH (shell) config
+   │ ├── <a href="https://github.com/cooldriver/dotfiles/tree/main/macos">macos/</a>              # Config files for Mac-specific apps
+   │ └── <a href="https://github.com/cooldriver/dotfiles/tree/main/desktop-apps">desktop-apps/</a>       # Config files for GUI apps
+   ├── <a href="https://github.com/cooldriver/dotfiles/tree/main/scripts">scripts/</a>              # Bash scripts for automating tasks
+   │ ├── <a href="https://github.com/cooldriver/dotfiles/tree/main/scripts/installs">installs/</a>           # Scripts for software installation
+   │ │ ├── <a href="https://github.com/cooldriver/dotfiles/blob/main/scripts/installs/Brewfile">Brewfile</a>          # Package installs for MacOS via Homebrew
+   │ │ ├── <a href="https://github.com/cooldriver/dotfiles/blob/main/scripts/installs/arch-pacman.sh">arch-pacman.sh</a>    # Package installs for Arch via Pacman
+   │ │ └── <a href="https://github.com/cooldriver/dotfiles/blob/main/scripts/installs/flatpak.sh">flatpak.sh</a>        # Package installs for Linux desktops via Flatpak
+   │ ├── <a href="https://github.com/cooldriver/dotfiles/tree/main/scripts/linux">linux/</a>              # Automated configuration for Linux
+   │ │ └── <a href="https://github.com/cooldriver/dotfiles/blob/main/scripts/linux/dconf-prefs.sh">dconf-prefs.sh</a>    # Setting GNOME settings via dconf util
+   │ └── <a href="https://github.com/cooldriver/dotfiles/tree/main/scripts/macos-setup">macos-setup/</a>        # Scripts for setting up Mac OS machines
+   │   ├── <a href="https://github.com/cooldriver/dotfiles/blob/main/scripts/macos-setup/macos-apps.sh">macos-apps.sh</a>     # Sets app preferences
+   │   ├── <a href="https://github.com/cooldriver/dotfiles/blob/main/scripts/macos-setup/macos-preferences.sh">macos-prefs.sh</a>    # Sets MacOS system preferences
+   │   └── <a href="https://github.com/cooldriver/dotfiles/blob/main/scripts/macos-setup/macos-security.sh">macos-security.sh</a> # Applies MacOS security and privacy settings
+   ├── <a href="https://github.com/cooldriver/dotfiles/tree/main/utils">utils/</a>                # Handy Shell utilitis for various day-to-day tasks
+   ├── <a href="https://github.com/cooldriver/dotfiles/tree/main/.github">.github/</a>              # Meta files for GitHub repo
+   ├── <a href="https://github.com/cooldriver/dotfiles/tree/main/lib">lib/</a>                  # External dependencies, as git sub-modules
+   ├── <a href="https://github.com/cooldriver/dotfiles/blob/main/lets-go.sh">lets-go.sh</a>            # One-line remote installation entry point
+   ├── <a href="https://github.com/cooldriver/dotfiles/blob/main/install.sh">install.sh</a>            # All-in-one install and setup script
+   └── <a href="https://github.com/cooldriver/dotfiles/blob/main/symlinks.yaml">symlinks.yml</a>          # List of symlink locations
 </pre>
 
 
@@ -242,12 +242,12 @@ Once the repo is cloned, you can modify whatever files you like before running t
 
 ### Install Script
 
-The setup script ([`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh)) will do the following:
+The setup script ([`install.sh`](https://github.com/cooldriver/dotfiles/blob/main/install.sh)) will do the following:
 
 - **Setup**
   - Print welcome message, and a summary of proposed changes, and prompt user to continue
   - Ensure that core dependencies are met (git, zsh, vim)
-  - Set variables by reading any passed parameters, or fallback to sensible defaults (see [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/.zshenv))  
+  - Set variables by reading any passed parameters, or fallback to sensible defaults (see [`.zshenv`](https://github.com/cooldriver/dotfiles/blob/main/config/zsh/.zshenv))  
 - **Dotfiles**
   - If dotfiles not yet present, will clone from git, otherwise pulls latest changes
   - Setup / update symlinks each file to it's correct location on disk
@@ -278,14 +278,14 @@ The install script can accept several flags and environmental variables to confi
   - `--auto-yes` - Doesn't prompt for any user input, always assumes Yes (use with care!)
   - `--no-clear` - Doesn't clear the screen before starting (useful if being run by another app)
 - **Env Vars**
-  - `REPO_NAME` - The repository name to pull, e.g. `Lissy93/Dotfiles`
+  - `REPO_NAME` - The repository name to pull, e.g. `cooldriver/dotfiles`
   - `DOTFILES_DIR` - The directory to clone source dotfiles into, e.g. `~/.dotfiles`
 
 ---
 
 ### Configuring
 
-The locations for all symlinks are defined in [`symlinks.yaml`](https://github.com/Lissy93/dotfiles/blob/master/symlinks.yaml). These are managed using [Dotbot](https://github.com/anishathalye/dotbot), and will be applied whenever you run the [`install.sh`](https://github.com/Lissy93/dotfiles/blob/master/install.sh) script. The symlinks set locations based on XDG paths, all of which are defined in [`.zshenv`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/.zshenv).
+The locations for all symlinks are defined in [`symlinks.yaml`](https://github.com/cooldriver/dotfiles/blob/main/symlinks.yaml). These are managed using [Dotbot](https://github.com/anishathalye/dotbot), and will be applied whenever you run the [`install.sh`](https://github.com/cooldriver/dotfiles/blob/main/install.sh) script. The symlinks set locations based on XDG paths, all of which are defined in [`.zshenv`](https://github.com/cooldriver/dotfiles/blob/main/config/zsh/.zshenv).
 
 ---
 
@@ -312,7 +312,7 @@ You can view a list of defined aliases by running `alias`, or search for a speci
 
 #### My Aliases
 
-All aliases in my dotfiles are categorised into files located in [`zsh/aliases/`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/aliases/) which are imported in [`zsh/.zshrc`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/.zshrc#L9-L14).
+All aliases in my dotfiles are categorised into files located in [`zsh/aliases/`](https://github.com/cooldriver/dotfiles/blob/main/config/zsh/aliases/) which are imported in [`zsh/.zshrc`](https://github.com/cooldriver/dotfiles/blob/main/config/zsh/.zshrc#L9-L14).
 
 The following section lists all (or most) the aliases by category:
 
@@ -320,7 +320,7 @@ The following section lists all (or most) the aliases by category:
 
 <summary><b>Git Aliases</b></summary>
 
-> [`zsh/aliases/git.zsh`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/aliases/git.zsh)
+> [`zsh/aliases/git.zsh`](https://github.com/cooldriver/dotfiles/blob/main/config/zsh/aliases/git.zsh)
 
 Alias | Description
 ---|---
@@ -381,7 +381,7 @@ Alias | Description
 
 <summary><b>Flutter Aliases</b></summary>
 
-> [`zsh/aliases/flutter.zsh`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/aliases/flutter.zsh)
+> [`zsh/aliases/flutter.zsh`](https://github.com/cooldriver/dotfiles/blob/main/config/zsh/aliases/flutter.zsh)
 
 Alias | Description
 ---|---
@@ -406,7 +406,7 @@ Alias | Description
 
 <summary><b>Rust / Cargo Aliases</b></summary>
 
-> [`zsh/aliases/rust.zsh`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/aliases/rust.zsh) <br>
+> [`zsh/aliases/rust.zsh`](https://github.com/cooldriver/dotfiles/blob/main/config/zsh/aliases/rust.zsh) <br>
 > Aliases and shortcuts for frequently used Rust and Cargo commands and common tasks
 
 #### Cargo Basic Commands
@@ -463,7 +463,7 @@ Function / Alias | Description
 
 <summary><b>Node.js Aliases</b></summary>
 
-> [`zsh/aliases/node-js.zsh`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/aliases/node-js.zsh)
+> [`zsh/aliases/node-js.zsh`](https://github.com/cooldriver/dotfiles/blob/main/config/zsh/aliases/node-js.zsh)
 
 These short-hand aliases and helper functions speed up running common commands and tasks for web development, within Node / JavaScript projects.
 
@@ -556,7 +556,7 @@ Alias | Description
 
 <summary><b>General Aliases</b></summary>
 
-> [`zsh/aliases/general.zsh`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/aliases/general.zsh)
+> [`zsh/aliases/general.zsh`](https://github.com/cooldriver/dotfiles/blob/main/config/zsh/aliases/general.zsh)
 
 
 ##### Single-Letter Frequently-Used Commands (only set if not already in use)
@@ -704,15 +704,15 @@ Alias | Description
 
 The dotfile installation script can also, detect which system and environemnt you're running, and optionally prompt to update and install listed packages and applications.
 
-Package lists are stored in [`scripts/installs/`](https://github.com/Lissy93/dotfiles/tree/master/scripts/installs) directory, with separate files for different OSs. The install script will [pick the appropriate file](https://github.com/Lissy93/dotfiles/blob/22c6a04fdb22c140448b7d15ef8187c3a424ab47/install.sh#L243-L260) based on your distro.
+Package lists are stored in [`scripts/installs/`](https://github.com/cooldriver/dotfiles/tree/main/scripts/installs) directory, with separate files for different OSs. The install script will [pick the appropriate file](https://github.com/Lissy93/dotfiles/blob/22c6a04fdb22c140448b7d15ef8187c3a424ab47/install.sh#L243-L260) based on your distro.
 
 You will be prompted before anything is installed. Be sure to remove / comment out anything you do not need before proceeding.
 
-- Linux (desktop): [`flatpak.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/flatpak.sh) - Desktop apps can be installed on Linux systems via [Flatpack](https://flatpak.org/)
-- Mac OS: [`Brewfile`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/Brewfile) - Mac apps installed via [Homebrew](https://brew.sh/)
-- Arch (and Arch-based systems, like Manjaro): [`arch-pacman.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/arch-pacman.sh) - Arch CLI apps installed via [pacman](https://wiki.archlinux.org/title/Pacman)
-- Debian (and Debian-based systems, like Ubuntu): [`debian-apt.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/debian-apt.sh) - Debian CLI apps installed via [apt](https://wiki.debian.org/Apt)
-- Alpine: [`aplpine-apk.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/installs/aplpine-apk.sh) - Alpine CLI apps installed via [apk](https://docs.alpinelinux.org/user-handbook/0.1a/Working/apk.html)
+- Linux (desktop): [`flatpak.sh`](https://github.com/cooldriver/dotfiles/blob/main/scripts/installs/flatpak.sh) - Desktop apps can be installed on Linux systems via [Flatpack](https://flatpak.org/)
+- Mac OS: [`Brewfile`](https://github.com/cooldriver/dotfiles/blob/main/scripts/installs/Brewfile) - Mac apps installed via [Homebrew](https://brew.sh/)
+- Arch (and Arch-based systems, like Manjaro): [`arch-pacman.sh`](https://github.com/cooldriver/dotfiles/blob/main/scripts/installs/arch-pacman.sh) - Arch CLI apps installed via [pacman](https://wiki.archlinux.org/title/Pacman)
+- Debian (and Debian-based systems, like Ubuntu): [`debian-apt.sh`](https://github.com/cooldriver/dotfiles/blob/main/scripts/installs/debian-apt.sh) - Debian CLI apps installed via [apt](https://wiki.debian.org/Apt)
+- Alpine: [`aplpine-apk.sh`](https://github.com/cooldriver/dotfiles/blob/main/scripts/installs/aplpine-apk.sh) - Alpine CLI apps installed via [apk](https://docs.alpinelinux.org/user-handbook/0.1a/Working/apk.html)
 
 The following section lists apps installed for each category:
 
@@ -980,10 +980,10 @@ All settings are then updated in the `.plist` files stored in `~/Library/Prefere
 
 
 In my dotfiles, the MacOS preferences will configure everything from system security to launchpad layout.
-The Mac settings are located in [`scripts/macos-setup/`](https://github.com/Lissy93/dotfiles/tree/master/scripts/macos-setup), and are split into three files:
-- [`macos-security.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/macos-setup/macos-security.sh) - Sets essential security settings, disables telementry, disconnects unused ports, enforces signing, sets logout timeouts, and much more
-- [`macos-preferences.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/macos-setup/macos-preferences.sh) - Configures all user preferences, including computer name, highlight color, finder options, spotlight settings, hardware preferences and more
-- [`macos-apps.sh`](https://github.com/Lissy93/dotfiles/blob/master/scripts/macos-setup/macos-apps.sh) - Applies preferences to any installed desktop apps, such as Terminal, Time Machine, Photos, Spotify, and many others
+The Mac settings are located in [`scripts/macos-setup/`](https://github.com/cooldriver/dotfiles/tree/main/scripts/macos-setup), and are split into three files:
+- [`macos-security.sh`](https://github.com/cooldriver/dotfiles/blob/main/scripts/macos-setup/macos-security.sh) - Sets essential security settings, disables telementry, disconnects unused ports, enforces signing, sets logout timeouts, and much more
+- [`macos-preferences.sh`](https://github.com/cooldriver/dotfiles/blob/main/scripts/macos-setup/macos-preferences.sh) - Configures all user preferences, including computer name, highlight color, finder options, spotlight settings, hardware preferences and more
+- [`macos-apps.sh`](https://github.com/cooldriver/dotfiles/blob/main/scripts/macos-setup/macos-apps.sh) - Applies preferences to any installed desktop apps, such as Terminal, Time Machine, Photos, Spotify, and many others
 
 Upon running each script, a summary of what will be changed will be shown, and you'll be prompted as to weather you'd like to continue. Each script also handles permissions, compatibility checking, and graceful fallbacks. Backup of original settings will be made, and a summary of all changes made will be logged as output when the script is complete.
 
@@ -993,19 +993,19 @@ If you choose to run any of these scripts, take care to read it through first, t
 
 ### Config Files
 
-All config files are located in [`./config/`](https://github.com/Lissy93/dotfiles/tree/master/config/).
+All config files are located in [`./config/`](https://github.com/cooldriver/dotfiles/tree/main/config/).
 
-Configurations for ZSH, Tmux, Vim, and a few others are in dedicated sub-directories (covered in the section below). While all other, small config files are located in the [`./config/general`](https://github.com/Lissy93/dotfiles/tree/master/config/general) direcroty, and include:
+Configurations for ZSH, Tmux, Vim, and a few others are in dedicated sub-directories (covered in the section below). While all other, small config files are located in the [`./config/general`](https://github.com/cooldriver/dotfiles/tree/main/config/general) direcroty, and include:
 
-- [`.bashrc`](https://github.com/Lissy93/dotfiles/blob/master/config/general/.bashrc)
-- [`.curlrc`](https://github.com/Lissy93/dotfiles/blob/master/config/general/.curlrc)
-- [`.gemrc`](https://github.com/Lissy93/dotfiles/blob/master/config/general/.gemrc)
-- [`.gitconfig`](https://github.com/Lissy93/dotfiles/blob/master/config/general/.gitconfig)
-- [`.gitignore_global`](https://github.com/Lissy93/dotfiles/blob/master/config/general/.gitignore_global)
-- [`.wgetrc`](https://github.com/Lissy93/dotfiles/blob/master/config/general/.wgetrc)
-- [`dnscrypt-proxy.toml`](https://github.com/Lissy93/dotfiles/blob/master/config/general/dnscrypt-proxy.toml)
-- [`gpg.conf`](https://github.com/Lissy93/dotfiles/blob/master/config/general/gpg.conf)
-- [`starship.toml`](https://github.com/Lissy93/dotfiles/blob/master/config/general/starship.toml)
+- [`.bashrc`](https://github.com/cooldriver/dotfiles/blob/main/config/general/.bashrc)
+- [`.curlrc`](https://github.com/cooldriver/dotfiles/blob/main/config/general/.curlrc)
+- [`.gemrc`](https://github.com/cooldriver/dotfiles/blob/main/config/general/.gemrc)
+- [`.gitconfig`](https://github.com/cooldriver/dotfiles/blob/main/config/general/.gitconfig)
+- [`.gitignore_global`](https://github.com/cooldriver/dotfiles/blob/main/config/general/.gitignore_global)
+- [`.wgetrc`](https://github.com/cooldriver/dotfiles/blob/main/config/general/.wgetrc)
+- [`dnscrypt-proxy.toml`](https://github.com/cooldriver/dotfiles/blob/main/config/general/dnscrypt-proxy.toml)
+- [`gpg.conf`](https://github.com/cooldriver/dotfiles/blob/main/config/general/gpg.conf)
+- [`starship.toml`](https://github.com/cooldriver/dotfiles/blob/main/config/general/starship.toml)
 
 ---
 
@@ -1013,17 +1013,17 @@ Configurations for ZSH, Tmux, Vim, and a few others are in dedicated sub-directo
 
 [ZSH](https://www.zsh.org/) (or Z shell) is a UNIX command interpriter (shell), similar to and compatible with Korn shell (KSH). Compared to Bash, it includes many useful features and enchanements, notably in the CLI editor, advanced behaviour customization options, filename globbing, recursive path expansion, completion, and it's easyily extandable through plugins. For more info about ZSH, see the [Introduction to ZSH Docs](https://zsh.sourceforge.io/FAQ/zshfaq01.html).
 
-My ZSH config is located in [`config/zsh/`](https://github.com/Lissy93/dotfiles/tree/master/config/zsh)
+My ZSH config is located in [`config/zsh/`](https://github.com/cooldriver/dotfiles/tree/main/config/zsh)
 
 ---
 
 ### Vim
 
-The entry point for the Vim config is the [`vimrc`](https://github.com/Lissy93/dotfiles/blob/master/config/vim/vimrc), but the main editor settings are defined in [`vim/editor.vim`](https://github.com/Lissy93/dotfiles/blob/master/config/vim/editor.vim)
+The entry point for the Vim config is the [`vimrc`](https://github.com/cooldriver/dotfiles/blob/main/config/vim/vimrc), but the main editor settings are defined in [`vim/editor.vim`](https://github.com/cooldriver/dotfiles/blob/main/config/vim/editor.vim)
 
 #### Vim Plugins
 
-Vim plugins are managed using [Plug](https://github.com/junegunn/vim-plug) defined in [`vim/plugins.vim`](https://github.com/Lissy93/dotfiles/blob/master/config/vim/setup-vim-plug.vim).
+Vim plugins are managed using [Plug](https://github.com/junegunn/vim-plug) defined in [`vim/plugins.vim`](https://github.com/cooldriver/dotfiles/blob/main/config/vim/setup-vim-plug.vim).
 To install them from GitHub, run `:PlugInstall` (see [options](https://github.com/junegunn/vim-plug#commands)) from within Vim. They will also be installed or updated when you run the main dotfiles setup script ([`install.sh`](https://github.com/Lissy93/dotfiles/blob/d4b8426629e7fbbd6d17d0b87f0bb863d6618bfd/install.sh#L132-L134)).
 
 The following plugins are being used:
@@ -1109,9 +1109,9 @@ The following plugins are being used:
 ### Tmux
 
 
-Fairly standard Tmux configuration, strongly based off Tmux-sensible. Configuration is defined in [`.tmux.conf`](https://github.com/Lissy93/dotfiles/blob/master/config/tmux/tmux.conf)
+Fairly standard Tmux configuration, strongly based off Tmux-sensible. Configuration is defined in [`.tmux.conf`](https://github.com/cooldriver/dotfiles/blob/main/config/tmux/tmux.conf)
 
-Tmux plugins are managed using [TMP](https://github.com/tmux-plugins/tpm) and defined in [`.tmux.conf`](https://github.com/Lissy93/dotfiles/blob/master/config/tmux/tmux.conf). To install them from GitHub, run `prefix` + <kbd>I</kbd> from within Tmux, and they will be cloned int `~/.tmux/plugins/`.
+Tmux plugins are managed using [TMP](https://github.com/tmux-plugins/tpm) and defined in [`.tmux.conf`](https://github.com/cooldriver/dotfiles/blob/main/config/tmux/tmux.conf). To install them from GitHub, run `prefix` + <kbd>I</kbd> from within Tmux, and they will be cloned int `~/.tmux/plugins/`.
 
 ##### Plugins
 
@@ -1130,7 +1130,7 @@ Tmux plugins are managed using [TMP](https://github.com/tmux-plugins/tpm) and de
 
 // TODO
 
-Git aliases for ZSH are located in [`/zsh/aliases/git.zsh`](https://github.com/Lissy93/dotfiles/blob/master/config/zsh/aliases/git.zsh), and are documented under the [Aliases](https://github.com/lissy93/dotfiles#my-aliases) section, above.
+Git aliases for ZSH are located in [`/zsh/aliases/git.zsh`](https://github.com/cooldriver/dotfiles/blob/main/config/zsh/aliases/git.zsh), and are documented under the [Aliases](https://github.com/lissy93/dotfiles#my-aliases) section, above.
 
 ---
 
@@ -1182,7 +1182,7 @@ You can change the file transfer service, or use a self-hosted instance by setti
 The file can be either run directly, or sourced in your `.zshrc` and used via the `transfer` alias.
 
 > For info, run `transfer --help`<br>
-> Source: [`utils/transfer.sh`](https://github.com/Lissy93/dotfiles/blob/master/utils/transfer.sh)
+> Source: [`utils/transfer.sh`](https://github.com/cooldriver/dotfiles/blob/main/utils/transfer.sh)
 
 #### Web Search
 
@@ -1220,14 +1220,14 @@ The following search engines are supported by default:
 The alias `ws` will also resolve to `web-search`, if it's not already in use. You can either run the script directly, e.g.`~/.config/utils/web-search.sh` (don't forget to `chmod +x` the file first, to make it executable), or use the `web-search` / `ws` alias anywhere, once it has been source'd from your .zshrc. 
 
 > For info, run `web-search --help`<br>
-> Source: [`utils/web-search.sh`](https://github.com/Lissy93/dotfiles/blob/master/utils/web-search.sh)
+> Source: [`utils/web-search.sh`](https://github.com/cooldriver/dotfiles/blob/main/utils/web-search.sh)
 
 <details>
 
 <summary>Try now!</summary>
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/Lissy93/dotfiles/master/utils/web-search.sh)
+bash <(curl -s https://raw.githubusercontent.com/cooldriver/dotfiles/main/utils/web-search.sh)
 ```
 
 </details>
