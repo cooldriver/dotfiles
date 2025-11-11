@@ -35,9 +35,9 @@ WARN_1='\033[1;31m'
 WARN_2='\033[0;31m'
 RESET_COLOR='\033[0m'
 
-# Current and total taslks, used for progress updates
+# Current and total tasks, used for progress updates
 current_event=0
-total_events=34
+total_events=11
 
 if [ ! "$(uname -s)" = "Darwin" ]; then
   echo -e "${PRIMARY_COLOR}Incompatible System${RESET_COLOR}"
@@ -125,17 +125,17 @@ log_msg "Disable Siri voice feedback"
 defaults write com.apple.assistant.backedup 'Use device speaker for TTS' -int 3
 
 # Disable Siri services (Siri and assistantd)
-log_msg "Disable Siri services (Siri and assistantd)"
-launchctl disable "user/$UID/com.apple.assistantd"
-launchctl disable "gui/$UID/com.apple.assistantd"
-sudo launchctl disable 'system/com.apple.assistantd'
-launchctl disable "user/$UID/com.apple.Siri.agent"
-launchctl disable "gui/$UID/com.apple.Siri.agent"
-sudo launchctl disable 'system/com.apple.Siri.agent'
-if [ $(/usr/bin/csrutil status | awk '/status/ {print $5}' | sed 's/\.$//') = "enabled" ]; then
-    >&2 echo 'This script requires SIP to be disabled. Read more: \
-    https://developer.apple.com/documentation/security/disabling_and_enabling_system_integrity_protection'
-fi
+#log_msg "Disable Siri services (Siri and assistantd)"
+#launchctl disable "user/$UID/com.apple.assistantd"
+#launchctl disable "gui/$UID/com.apple.assistantd"
+#sudo launchctl disable 'system/com.apple.assistantd'
+#launchctl disable "user/$UID/com.apple.Siri.agent"
+#launchctl disable "gui/$UID/com.apple.Siri.agent"
+#sudo launchctl disable 'system/com.apple.Siri.agent'
+#if [ $(/usr/bin/csrutil status | awk '/status/ {print $5}' | sed 's/\.$//') = "enabled" ]; then
+#    >&2 echo 'This script requires SIP to be disabled. Read more: \
+#    https://developer.apple.com/documentation/security/disabling_and_enabling_system_integrity_protection'
+#fi
 
 # Disable "Do you want to enable Siri?" pop-up
 log_msg "Disable 'Do you want to enable Siri?' pop-up"
@@ -159,50 +159,50 @@ log_msg "Disable crash reporter"
 defaults write com.apple.CrashReporter DialogType none
 
 ############################
-# MacOS Firefwall Security #
+# MacOS Firewall Security #
 ############################
-log_section "Firewall Config"
+#log_section "Firewall Config"
 
 # Prevent automatically allowing incoming connections to signed apps
-log_msg "Prevent automatically allowing incoming connections to signed apps"
-sudo defaults write /Library/Preferences/com.apple.alf allowsignedenabled -bool false
+#log_msg "Prevent automatically allowing incoming connections to signed apps"
+#sudo defaults write /Library/Preferences/com.apple.alf allowsignedenabled -bool false
 
 # Prevent automatically allowing incoming connections to downloaded signed apps
-log_msg "Prevent automatically allowing incoming connections to downloaded signed apps"
-sudo defaults write /Library/Preferences/com.apple.alf allowdownloadsignedenabled -bool false
+#log_msg "Prevent automatically allowing incoming connections to downloaded signed apps"
+#sudo defaults write /Library/Preferences/com.apple.alf allowdownloadsignedenabled -bool false
 
 # Enable application firewall
-log_msg "Enable application firewall"
-/usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
-sudo defaults write /Library/Preferences/com.apple.alf globalstate -bool true
-defaults write com.apple.security.firewall EnableFirewall -bool true
+#log_msg "Enable application firewall"
+#/usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
+#sudo defaults write /Library/Preferences/com.apple.alf globalstate -bool true
+#defaults write com.apple.security.firewall EnableFirewall -bool true
 
 # Turn on firewall logging
-log_msg "Turn on firewall logging"
-/usr/libexec/ApplicationFirewall/socketfilterfw --setloggingmode on
-sudo defaults write /Library/Preferences/com.apple.alf loggingenabled -bool true
+#log_msg "Turn on firewall logging"
+#/usr/libexec/ApplicationFirewall/socketfilterfw --setloggingmode on
+#sudo defaults write /Library/Preferences/com.apple.alf loggingenabled -bool true
 
 # Turn on stealth mode
-log_msg "Turn on stealth mode"
-/usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on
-sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -bool true
-defaults write com.apple.security.firewall EnableStealthMode -bool true
+#log_msg "Turn on stealth mode"
+#/usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on
+#sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -bool true
+#defaults write com.apple.security.firewall EnableStealthMode -bool true
 
 # Will prompt user to allow network access even for signed apps
-log_msg "Prevent signed apps from being automatically whitelisted"
-sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsigned off
+#log_msg "Prevent signed apps from being automatically whitelisted"
+#sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsigned off
 
 # Will prompt user to allow network access for downloaded apps
-log_msg "Prevent downloaded apps from being automatically whitelisted"
-sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsignedapp off
+#log_msg "Prevent downloaded apps from being automatically whitelisted"
+#sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsignedapp off
 
 # Sending hangup command to socketfilterfw is required for changes to take effect
-log_msg "Restarting socket filter firewall"
-sudo pkill -HUP socketfilterfw
+#log_msg "Restarting socket filter firewall"
+#sudo pkill -HUP socketfilterfw
 
 # Prevents quarantine from storing info about downloaded files as privacy risk
-log_msg "Disabling GateKeeper"
-sudo spctl --master-disable
+#log_msg "Disabling GateKeeper"
+#sudo spctl --master-disable
 
 ####################################
 # Log In and User Account Security #
@@ -210,19 +210,19 @@ sudo spctl --master-disable
 log_section "Account Security"
 
 # Enforce system hibernation
-log_msg "Enforce hibernation instead of sleep"
-sudo pmset -a destroyfvkeyonstandby 1
+#log_msg "Enforce hibernation instead of sleep"
+#sudo pmset -a destroyfvkeyonstandby 1
 
 # Evict FileVault keys from memory
-log_msg "Evict FileVault keys from memory on hibernate"
-sudo pmset -a hibernatemode 25
+#log_msg "Evict FileVault keys from memory on hibernate"
+#sudo pmset -a hibernatemode 25
 
 # Set power settings (required when evicting FV keys)
-log_msg "Disable power nap and other auto-power settings"
-sudo pmset -a powernap 0
-sudo pmset -a standby 0
-sudo pmset -a standbydelay 0
-sudo pmset -a autopoweroff 0
+#log_msg "Disable power nap and other auto-power settings"
+#sudo pmset -a powernap 0
+#sudo pmset -a standby 0
+#sudo pmset -a standbydelay 0
+#sudo pmset -a autopoweroff 0
 
 # Require a password to wake the computer from sleep or screen saver
 log_msg "Require a password to wake the computer from sleep or screen saver"
@@ -244,58 +244,58 @@ sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.serve
 ####################################
 # Prevent Unauthorized Connections #
 ####################################
-log_section "Prevent Unauthorized Connections"
+#log_section "Prevent Unauthorized Connections"
 
 # Disables Guest access to file shares over SMB
-log_msg "Disables Guest access to file shares over SMB"
-sudo defaults write /Library/Preferences/com.apple.AppleFileServer guestAccess -bool NO
+#log_msg "Disables Guest access to file shares over SMB"
+#sudo defaults write /Library/Preferences/com.apple.AppleFileServer guestAccess -bool NO
 
 # Disable remote login (incoming SSH and SFTP connections)
-log_msg "Disable remote login (incoming SSH and SFTP connections)"
-echo 'yes' | sudo systemsetup -setremotelogin off
+#log_msg "Disable remote login (incoming SSH and SFTP connections)"
+#echo 'yes' | sudo systemsetup -setremotelogin off
 
 # Disable insecure TFTP service
-log_msg "Disable insecure TFTP service"
-sudo launchctl disable 'system/com.apple.tftpd'
+#log_msg "Disable insecure TFTP service"
+#sudo launchctl disable 'system/com.apple.tftpd'
 
 # Disable Bonjour multicast advertising
-log_msg "Disable Bonjour multicast advertising"
-sudo defaults write /Library/Preferences/com.apple.mDNSResponder.plist NoMulticastAdvertisements -bool true
+#log_msg "Disable Bonjour multicast advertising"
+#sudo defaults write /Library/Preferences/com.apple.mDNSResponder.plist NoMulticastAdvertisements -bool true
 
 # Disable insecure telnet protocol
-log_msg "Disable insecure telnet protocol"
-sudo launchctl disable system/com.apple.telnetd
+#log_msg "Disable insecure telnet protocol"
+#sudo launchctl disable system/com.apple.telnetd
 
-log_msg "Prevent auto-launching captive portal webpages"
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control.plist Active -bool false
+#log_msg "Prevent auto-launching captive portal webpages"
+#sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control.plist Active -bool false
 
 #########################################
 # Disable Printers and Sharing Protocols #
 #########################################
-log_section "Printers and Sharing Protocols"
+#log_section "Printers and Sharing Protocols"
 
 # Disable sharing of local printers with other computers
-log_msg "Disable sharing of local printers with other computers"
-cupsctl --no-share-printers
+#log_msg "Disable sharing of local printers with other computers"
+#cupsctl --no-share-printers
 
 # Disable printing from any address including the Internet
-log_msg "Disable printing from any address including the Internet"
-cupsctl --no-remote-any
+#log_msg "Disable printing from any address including the Internet"
+#cupsctl --no-remote-any
 
 # Disable remote printer administration
-log_msg "Disable remote printer administration"
-cupsctl --no-remote-admin
+#log_msg "Disable remote printer administration"
+#cupsctl --no-remote-admin
 
 # Disable Captive portal
-log_msg "Disable Captive portal"
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control.plist Active -bool false
+#log_msg "Disable Captive portal"
+#sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control.plist Active -bool false
 
 #####################################
 # Print finishing message, and exit #
 #####################################
 echo -e "${PRIMARY_COLOR}\nFinishing...${RESET_COLOR}"
 echo -e "${SUCCESS_COLOR}✔ ${current_event}/${total_events} tasks were completed \
-succesfully in $((`date +%s`-start_time)) seconds${RESET_COLOR}"
+successfully in $((`date +%s`-start_time)) seconds${RESET_COLOR}"
 echo -e "\n${PRIMARY_COLOR}         .:'\n     __ :'__\n  .'\`__\`-'__\`\`.\n \
 :__________.-'\n :_________:\n  :_________\`-;\n   \`.__.-.__.'\n${RESET_COLOR}"
 
