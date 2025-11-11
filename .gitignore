@@ -51,6 +51,8 @@ Temporary Items
 
 *.icloud
 
+# JetBrains IDEs
+.idea/
 
 # VS Code
 .vscode/*
