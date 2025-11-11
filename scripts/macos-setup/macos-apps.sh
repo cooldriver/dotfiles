@@ -35,9 +35,9 @@ WARN_1='\033[1;31m'
 WARN_2='\033[0;31m'
 RESET_COLOR='\033[0m'
 
-# Current and total taslks, used for progress updates
+# Current and total tasks, used for progress updates
 current_event=0
-total_events=90
+total_events=42
 
 if [ ! "$(uname -s)" = "Darwin" ]; then
   echo -e "${PRIMARY_COLOR}Incompatible System${RESET_COLOR}"
@@ -55,15 +55,13 @@ if [[ ! $params == *"--skip-intro"* ]]; then
   echo -e "${ACCENT_COLOR}Settings will be applied to the following apps:"
   echo -e " - Finder"
   echo -e " - Safari"
-  echo -e " - Mail App"
+#  echo -e " - Mail App"
   echo -e " - Terminal"
-  echo -e " - Time Machine"
-  echo -e " - Activity Monitor"
-  echo -e " - Mac App Store"
+#  echo -e " - Time Machine"
+#  echo -e " - Activity Monitor"
+#  echo -e " - Mac App Store"
   echo -e " - Photos App"
   echo -e " - Messages App"
-  echo -e " - Chromium"
-  echo -e " - Transmission"
   # Informs user what they're running, and cautions them to read first
   echo -e "\n${INFO_COLOR}You are running ${0} on\
   $(hostname -f | sed -e 's/^[^.]*\.//') as $(id -un)${RESET_COLOR}"
@@ -82,7 +80,7 @@ if [[ ! $params == *"--skip-intro"* ]]; then
   fi  
 fi
 
-# Check have got admin privilages
+# Check have got admin privileges
 if [ "$EUID" -ne 0 ]; then
   echo -e "${ACCENT_COLOR}\nElevated permissions are required to adjust system settings."
   echo -e "${PRIMARY_COLOR}Please enter your password...${RESET_COLOR}"
@@ -125,28 +123,28 @@ log_msg "Open new tabs to Home"
 defaults write com.apple.finder NewWindowTarget -string "PfHm"
 
 log_msg "Open new windows to file root"
-defaults write com.apple.finder NewWindowTargetPath -string "file:///"
+defaults write com.apple.finder NewWindowTargetPath -string "file:///Users/herve/"
 
-log_msg "Show hidden files"
-defaults write com.apple.finder AppleShowAllFiles -bool true
+log_msg "Hide hidden files"
+defaults write com.apple.finder AppleShowAllFiles -bool false
 
 log_msg "Show file extensions"
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
-log_msg "Don't ask before emptying trash"
-defaults write com.apple.finder WarnOnEmptyTrash -bool false
+log_msg "Ask before emptying trash"
+defaults write com.apple.finder WarnOnEmptyTrash -bool true
 
 log_msg "View all network locations"
 defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
 
-log_msg "Show the ~/Library folder"
-chflags nohidden ~/Library && xattr -d com.apple.FinderInfo ~/Library
+#log_msg "Show the ~/Library folder"
+#chflags nohidden ~/Library && xattr -d com.apple.FinderInfo ~/Library
 
-log_msg "Show the /Volumes folder"
-sudo chflags nohidden /Volumes
+#log_msg "Show the /Volumes folder"
+#sudo chflags nohidden /Volumes
 
-log_msg "Allow finder to be fully quitted with ⌘ + Q"
-defaults write com.apple.finder QuitMenuItem -bool true
+#log_msg "Allow finder to be fully quit with ⌘ + Q"
+#defaults write com.apple.finder QuitMenuItem -bool true
 
 log_msg "Show the status bar in Finder"
 defaults write com.apple.finder ShowStatusBar -bool true
@@ -154,14 +152,14 @@ defaults write com.apple.finder ShowStatusBar -bool true
 log_msg "Show the path bar in finder"
 defaults write com.apple.finder ShowPathbar -bool true
 
-log_msg "Display full POSIX path as Finder window title"
-defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+#log_msg "Display full POSIX path as Finder window title"
+#defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
-log_msg "Expand the General, Open and Privileges file info panes"
-defaults write com.apple.finder FXInfoPanesExpanded -dict \
-	General -bool true \
-	OpenWith -bool true \
-	Privileges -bool true
+#log_msg "Expand the General, Open and Privileges file info panes"
+#defaults write com.apple.finder FXInfoPanesExpanded -dict \
+#	General -bool true \
+#	OpenWith -bool true \
+#	Privileges -bool true
 
 log_msg "Keep directories at top of search results"
 defaults write com.apple.finder _FXSortFoldersFirst -bool true
@@ -178,10 +176,10 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 log_msg "Don't add .DS_Store to USB devices"
 defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 
-log_msg "Disable disk image verification"
-defaults write com.apple.frameworks.diskimages skip-verify -bool true
-defaults write com.apple.frameworks.diskimages skip-verify-locked -bool true
-defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
+#log_msg "Disable disk image verification"
+#defaults write com.apple.frameworks.diskimages skip-verify -bool true
+#defaults write com.apple.frameworks.diskimages skip-verify-locked -bool true
+#defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
 
 log_msg "Open a new Finder window when a volume is mounted"
 defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
@@ -229,29 +227,29 @@ defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebK
 log_msg "Show full URL"
 defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
 
-log_msg "Set homepage"
-defaults write com.apple.Safari HomePage -string "about:blank"
+#log_msg "Set homepage"
+#defaults write com.apple.Safari HomePage -string "about:blank"
 
 log_msg "Don't open downloaded files automatically"
 defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
 
-log_msg "Hide favorites bar"
-defaults write com.apple.Safari ShowFavoritesBar -bool false
+#log_msg "Hide favorites bar"
+#defaults write com.apple.Safari ShowFavoritesBar -bool false
 
-log_msg "Hide sidebar"
-defaults write com.apple.Safari ShowSidebarInTopSites -bool false
+#log_msg "Hide sidebar"
+#defaults write com.apple.Safari ShowSidebarInTopSites -bool false
 
-log_msg "Disable thumbnail cache"
-defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
+#log_msg "Disable thumbnail cache"
+#defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
 
-log_msg "Enable debug menu"
-defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+#log_msg "Enable debug menu"
+#defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
 
-log_msg "Search feature matches any part of word"
-defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
+#log_msg "Search feature matches any part of word"
+#defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
 
-log_msg "Remove unneeded icons from bookmarks bar"
-defaults write com.apple.Safari ProxiesInBookmarksBar "()"
+#log_msg "Remove unneeded icons from bookmarks bar"
+#defaults write com.apple.Safari ProxiesInBookmarksBar "()"
 
 log_msg "Enable developer options"
 defaults write com.apple.Safari IncludeDevelopMenu -bool true
@@ -265,7 +263,7 @@ defaults write com.apple.Safari WebContinuousSpellCheckingEnabled -bool true
 log_msg "Disable auto-correct"
 defaults write com.apple.Safari WebAutomaticSpellingCorrectionEnabled -bool false
 
-log_msg "Disable auto-fill addressess"
+log_msg "Disable auto-fill addresses"
 defaults write com.apple.Safari AutoFillFromAddressBook -bool false
 
 log_msg "Disable auto-fill passwords"
@@ -280,20 +278,20 @@ defaults write com.apple.Safari AutoFillMiscellaneousForms -bool false
 log_msg "Enable fraud warnings"
 defaults write com.apple.Safari WarnAboutFraudulentWebsites -bool true
 
-log_msg "Disable web plugins"
-defaults write com.apple.Safari WebKitPluginsEnabled -bool false
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2PluginsEnabled -bool false
+#log_msg "Disable web plugins"
+#defaults write com.apple.Safari WebKitPluginsEnabled -bool false
+#defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2PluginsEnabled -bool false
 
-log_msg "Disable Java"
-defaults write com.apple.Safari WebKitJavaEnabled -bool false
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabled -bool false
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabledForLocalFiles -bool false
+#log_msg "Disable Java"
+#defaults write com.apple.Safari WebKitJavaEnabled -bool false
+#defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabled -bool false
+#defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabledForLocalFiles -bool false
 
-log_msg "Prevent pop-ups"
-defaults write com.apple.Safari WebKitJavaScriptCanOpenWindowsAutomatically -bool false
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically -bool false
+#log_msg "Prevent pop-ups"
+#defaults write com.apple.Safari WebKitJavaScriptCanOpenWindowsAutomatically -bool false
+#defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically -bool false
 
-log_msg "Dissallow auto-play"
+log_msg "Disallow auto-play"
 defaults write com.apple.Safari WebKitMediaPlaybackAllowsInline -bool false
 defaults write com.apple.SafariTechnologyPreview WebKitMediaPlaybackAllowsInline -bool false
 defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2AllowsInlineMediaPlayback -bool false
@@ -308,25 +306,25 @@ defaults write com.apple.Safari InstallExtensionUpdatesAutomatically -bool true
 ##################
 # Apple Mail App #
 ##################
-log_section "Apple Mail App"
+#log_section "Apple Mail App"
 
-log_msg "Copy only email address, not name"
-defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
+#log_msg "Copy only email address, not name"
+#defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
 
-log_msg "Use ⌘ + Enter shortcut to quick send emails"
-defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" "@\U21a9"
+#log_msg "Use ⌘ + Enter shortcut to quick send emails"
+#defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" "@\U21a9"
 
-log_msg "Display messages in thread mode"
-defaults write com.apple.mail DraftsViewerAttributes -dict-add "DisplayInThreadedMode" -string "yes"
+#log_msg "Display messages in thread mode"
+#defaults write com.apple.mail DraftsViewerAttributes -dict-add "DisplayInThreadedMode" -string "yes"
 
-log_msg "Sort messages by date"
-defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortOrder" -string "received-date"
+#log_msg "Sort messages by date"
+#defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortOrder" -string "received-date"
 
-log_msg "Sort by newest to oldest"
-defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortedDescending" -string "yes"
+#log_msg "Sort by newest to oldest"
+#defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortedDescending" -string "yes"
 
-log_msg "Disable inline attachment viewing"
-defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
+#log_msg "Disable inline attachment viewing"
+#defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
 
 ################
 # Terminal App #
@@ -336,61 +334,61 @@ log_section "Terminal App"
 log_msg "Set Terminal to only use UTF-8"
 defaults write com.apple.terminal StringEncodings -array 4
 
-log_msg "Enable secure entry for Terminal"
-defaults write com.apple.terminal SecureKeyboardEntry -bool true
+#log_msg "Enable secure entry for Terminal"
+#defaults write com.apple.terminal SecureKeyboardEntry -bool true
 
-log_msg "Apply custom Terminal theme"
-theme=$(<config/macos/alicia-term.terminal)
-plutil -replace Window\ Settings.Alicia-Term -xml "$theme" ~/Library/Preferences/com.apple.Terminal.plist
-defaults write com.apple.terminal 'Default Window Settings' -string Alicia-Term  
-defaults write com.apple.terminal 'Startup Window Settings' -string Alicia-Term
-echo 'tell application "Terminal" to set current settings of first window to settings set "Alicia-Term"' | osascript
+#log_msg "Apply custom Terminal theme"
+#theme=$(<config/macos/alicia-term.terminal)
+#plutil -replace Window\ Settings.Alicia-Term -xml "$theme" ~/Library/Preferences/com.apple.Terminal.plist
+#defaults write com.apple.terminal 'Default Window Settings' -string Alicia-Term
+#defaults write com.apple.terminal 'Startup Window Settings' -string Alicia-Term
+#echo 'tell application "Terminal" to set current settings of first window to settings set "Alicia-Term"' | osascript
 
 ###############################################################################
 # Time Machine                                                                #
 ###############################################################################
-log_section "Time Machine"
+#log_section "Time Machine"
 
-log_msg "Prevent Time Machine prompting to use new drive as backup"
-defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
+#log_msg "Prevent Time Machine prompting to use new drive as backup"
+#defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
-log_msg "Disable local Time Machine backups"
-hash tmutil &> /dev/null && sudo tmutil disablelocal
+#log_msg "Disable local Time Machine backups"
+#hash tmutil &> /dev/null && sudo tmutil disablelocal
 
 ###############################################################################
 # Activity Monitor                                                            #
 ###############################################################################
-log_section "Activity Monitor"
+#log_section "Activity Monitor"
 
-log_msg "Show the main window when launching Activity Monitor"
-defaults write com.apple.ActivityMonitor OpenMainWindow -bool true
+#log_msg "Show the main window when launching Activity Monitor"
+#defaults write com.apple.ActivityMonitor OpenMainWindow -bool true
 
-log_msg "Visualize CPU usage in the Activity Monitor Dock icon"
-defaults write com.apple.ActivityMonitor IconType -int 5
+#log_msg "Visualize CPU usage in the Activity Monitor Dock icon"
+#defaults write com.apple.ActivityMonitor IconType -int 5
 
-log_msg "Show all processes in Activity Monitor"
-defaults write com.apple.ActivityMonitor ShowCategory -int 0
+#log_msg "Show all processes in Activity Monitor"
+#defaults write com.apple.ActivityMonitor ShowCategory -int 0
 
-log_msg "Sort results by CPU usage"
-defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
-defaults write com.apple.ActivityMonitor SortDirection -int 0
+#log_msg "Sort results by CPU usage"
+#defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
+#defaults write com.apple.ActivityMonitor SortDirection -int 0
 
 ###################
 # Apple Mac Store #
 ###################
-log_section "Apple Mac Store"
+#log_section "Apple Mac Store"
 
-log_msg "Allow automatic update checks"
-defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true
+#log_msg "Allow automatic update checks"
+#defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true
 
-log_msg "Auto install criticial security updates"
-defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
+#log_msg "Auto install criticial security updates"
+#defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
 
-log_msg "Enable the debug menu"
-defaults write com.apple.appstore ShowDebugMenu -bool true
+#log_msg "Enable the debug menu"
+#defaults write com.apple.appstore ShowDebugMenu -bool true
 
-log_msg "Enable extra dev tools"
-defaults write com.apple.appstore WebKitDeveloperExtras -bool true
+#log_msg "Enable extra dev tools"
+#defaults write com.apple.appstore WebKitDeveloperExtras -bool true
 
 ####################
 # Apple Photos App #
@@ -414,13 +412,13 @@ defaults write com.apple.messageshelper.MessageController SOInputLineSettings -d
 #############################################################
 # Address Book, Dashboard, iCal, TextEdit, and Disk Utility #
 #############################################################
-log_section "Address Book, Calendar, TextEdit"
+log_section "TextEdit"
 
-log_msg "Enable the debug menu in Address Book"
-defaults write com.apple.addressbook ABShowDebugMenu -bool true
+#log_msg "Enable the debug menu in Address Book"
+#defaults write com.apple.addressbook ABShowDebugMenu -bool true
 
-log_msg "Enable Dashboard dev mode"
-defaults write com.apple.dashboard devmode -bool true
+#log_msg "Enable Dashboard dev mode"
+#defaults write com.apple.dashboard devmode -bool true
 
 log_msg "Use plaintext for new text documents"
 defaults write com.apple.TextEdit RichText -int 0
@@ -431,73 +429,19 @@ defaults write com.apple.TextEdit PlainTextEncoding -int 4
 log_msg "Use UTF-8 for saving text files"
 defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
 
-log_msg "Enable the debug menu in Disk Utility"
-defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
-defaults write com.apple.DiskUtility advanced-image-options -bool true
+#log_msg "Enable the debug menu in Disk Utility"
+#defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
+#defaults write com.apple.DiskUtility advanced-image-options -bool true
 
-log_msg "Auto-play videos when opened with QuickTime Player"
-defaults write com.apple.QuickTimePlayerX MGPlayMovieOnOpen -bool true
-
-########################################
-# Google Chrome & Google Chrome Canary #
-########################################
-log_section "Chromium"
-
-log_msg "Use the system-native print preview dialog"
-defaults write com.google.Chrome DisablePrintPreview -bool true
-defaults write com.google.Chrome.canary DisablePrintPreview -bool true
-
-log_msg "Expand the print dialog by default"
-defaults write com.google.Chrome PMPrintingExpandedStateForPrint2 -bool true
-defaults write com.google.Chrome.canary PMPrintingExpandedStateForPrint2 -bool true
-
-####################
-# Transmission.app #
-####################
-log_section "Transmission"
-
-log_msg "Store incomplete downloads in the Downloads/torrents dir"
-defaults write org.m0k.transmission UseIncompleteDownloadFolder -bool true
-defaults write org.m0k.transmission IncompleteDownloadFolder -string "${HOME}/Documents/Torrents"
-
-log_msg "Store completed downloads in Downloads directory"
-defaults write org.m0k.transmission DownloadLocationConstant -bool true
-
-log_msg "Dont prompt for confirmation before downloading"
-defaults write org.m0k.transmission DownloadAsk -bool false
-defaults write org.m0k.transmission MagnetOpenAsk -bool false
-
-log_msg "No confirmation before removing non-downloading transfers"
-defaults write org.m0k.transmission CheckRemoveDownloading -bool true
-
-log_msg "Trash original torrents"
-defaults write org.m0k.transmission DeleteOriginalTorrent -bool true
-
-log_msg "Hide the donate message"
-defaults write org.m0k.transmission WarningDonate -bool false
-
-log_msg "Hide the legal disclaimer"
-defaults write org.m0k.transmission WarningLegal -bool false
-
-log_msg "Set IP blocklists"
-defaults write org.m0k.transmission BlocklistNew -bool true
-defaults write org.m0k.transmission BlocklistURL -string "http://john.bitsurge.net/public/biglist.p2p.gz"
-defaults write org.m0k.transmission BlocklistAutoUpdate -bool true
-
-log_msg "Randomize port on launch"
-defaults write org.m0k.transmission RandomPort -bool true
+#log_msg "Auto-play videos when opened with QuickTime Player"
+#defaults write com.apple.QuickTimePlayerX MGPlayMovieOnOpen -bool true
 
 #################################
 # Restart affected applications #
 #################################
 log_section "Finishing Up"
 log_msg "Restarting affecting apps"
-for app in "Activity Monitor" \
-	"Address Book" \
-	"Calendar" \
-	"Contacts" \
-	"Finder" \
-	"Mail" \
+for app in "Finder" \
 	"Messages" \
 	"Photos" \
 	"Safari" \
@@ -511,7 +455,7 @@ done
 #####################################
 echo -e "${PRIMARY_COLOR}\nFinishing...${RESET_COLOR}"
 echo -e "${SUCCESS_COLOR}✔ ${current_event}/${total_events} tasks were completed \
-succesfully in $((`date +%s`-start_time)) seconds${RESET_COLOR}"
+successfully in $((`date +%s`-start_time)) seconds${RESET_COLOR}"
 echo -e "\n${PRIMARY_COLOR}         .:'\n     __ :'__\n  .'\`__\`-'__\`\`.\n \
 :__________.-'\n :_________:\n  :_________\`-;\n   \`.__.-.__.'\n${RESET_COLOR}"
 
