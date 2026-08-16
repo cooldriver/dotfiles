@@ -1,0 +1,10 @@
+# Copy the relevant section to a local file outside this repository:
+# ~/.config/git/personal.gitconfig or ~/.config/git/work.gitconfig
+#
+# These local files are required before using Git in the matching directories.
+# Do not add a private email address or a signing key to this repository.
+
+[user]
+    name = Your Name
+    email = you@example.com
+    signingkey = ~/.ssh/id_ed25519_git_account.pub

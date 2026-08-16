@@ -1,0 +1,16 @@
+# Add these entries to your local ~/.ssh/config. Replace the identity file
+# names with the private keys held outside this repository.
+
+Host github-personal
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_github_personal
+    IdentitiesOnly yes
+    HostKeyAlias github.com
+
+Host github-work
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_github_work
+    IdentitiesOnly yes
+    HostKeyAlias github.com

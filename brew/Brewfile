@@ -11,6 +11,7 @@ tap 'homebrew/services'
 # CLI Essentials
 brew 'git'          # Version control
 brew 'neovim'       # Text editor
+brew 'stow'         # Deploy dotfiles with symlinks
 brew 'tmux'         # Term multiplexer
 brew 'vim'          # Text editor
 

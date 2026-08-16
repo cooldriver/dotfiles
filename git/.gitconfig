@@ -1,0 +1,56 @@
+[includeIf "gitdir/i:~/Developer/personal/"]
+    path = ~/.config/git/personal.gitconfig
+
+[includeIf "gitdir/i:~/Developer/work/"]
+    path = ~/.config/git/work.gitconfig
+
+[gpg]
+    format = ssh
+
+[commit]
+    gpgsign = true
+
+[init]
+    defaultBranch = main
+
+[merge]
+    tool = vimdiff
+    conflictstyle = diff3
+
+[color]
+    ui = auto
+
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    line-numbers = true
+    side-by-side = true
+
+[diff]
+    colorMoved = default
+
+[push]
+    default = simple
+
+[filter "lfs"]
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
+
+[alias]
+    st = status -sb
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    l = log --oneline --decorate
+    co = checkout
+    sw = switch
+    br = branch
+    ci = commit
+    cp = cherry-pick
+    cl = clone
+    rb = !git branch --sort=-committerdate | head -n 10
