@@ -1,0 +1,178 @@
+# Options
+cask_args appdir: '~/Applications', require_sha: true
+
+# Taps
+tap 'homebrew/services'
+
+#############################################################
+# Command Line
+#############################################################
+
+# CLI Essentials
+brew 'git'          # Version control
+brew 'neovim'       # Text editor
+brew 'tmux'         # Term multiplexer
+brew 'vim'          # Text editor
+
+# CLI Basics
+brew 'bat'          # Output highlighting (better cat)
+brew 'cyme'         # List USB devices
+brew 'git-delta'    # Readable file compares, binary is 'delta'
+brew 'duf'          # Get info on mounted disks (better df)
+brew 'eza'          # Listing files with info
+brew 'fd'           # Alternative to find
+brew 'fx'           # Terminal JSON viewer
+brew 'fzf'          # Fuzzy file finder and filtering
+brew 'hyperfine'    # Benchmarking for arbitrary commands
+brew 'just'         # Powerful command runner
+brew 'jq'           # JSON parser, output and query files
+brew 'miller'       # CSV/TSV/JSON processor
+brew 'rename'       # Bulk rename tool
+brew 'ripgrep'      # Searching within files
+brew 'rsync'        # Fast incremental file transfer
+brew 'sd'           # RegEx find and replace
+brew 'thefuck'      # Auto-correct mistyped commands
+brew 'tlrc'         # Community-maintained docs
+brew 'tokei'        # Count lines of code
+brew 'tree'         # Directory listings as tree structure
+brew 'uni'          # Unicode utilities and information
+brew 'watch'        # Run commands periodically
+brew 'witr'         # Find why a process is running
+brew 'xan'          # The CSV magician
+brew 'zoxide'       # Auto-learning navigation
+brew 'zsh-syntax-highlighting'
+
+# CLI Monitoring and Performance Apps
+brew 'doggo'        # DNS lookup client
+brew 'btop'         # Resource monitoring
+brew 'dua-cli'      # Disk usage analyzer and monitor
+brew 'goaccess'     # Web log analyzer and viewer
+brew 'gping'        # Interactive ping tool with graph
+
+# CLI Productivity Apps
+brew 'aspell'       # Spell checker
+brew 'rclone'       # Manage cloud storage
+
+# CLI Development Suites
+brew 'httpie'       # HTTP and API testing client
+brew 'taze'         # Keep project dependencies fresh
+
+# CLI External Services
+cask 'ngrok'        # Reverse proxy for sharing localhost
+
+# CLI Fun
+brew 'cowsay'       # Have an ASCII cow say your message
+brew 'fastfetch'    # Show system and distro information
+brew 'figlet'       # Output text as big ASCII art text
+brew 'fortune'      # Random quotes and sayings
+brew 'lolcat'       # Make console output rainbow colored
+brew 'pv'           # Pipe viewer with progress
+
+#############################################################
+# Software Development
+#############################################################
+
+# Development Apps
+cask 'iterm2'       # Terminal emulator
+cask 'phpstorm'     # PHP IDE
+
+# Development Languages, Compilers, Package Managers and SDKs
+brew 'nvm'          # Switching Node.js versions
+brew 'openjdk'      # Java development kit
+brew 'php'          # Current PHP version
+brew 'php@8.3'      # PHP 8.3
+brew 'python'       # Python interpreter
+brew 'shellcheck'   # Shell script analysis tool
+brew 'uv'           # Python package and project manager
+
+# DevOps
+brew 'ansible'          # Automation
+brew 'awscli'           # AWS command line tools
+brew 'caddy'            # Web server
+brew 'direnv'           # Environment variable manager
+brew 'redis'            # In-memory data structure store
+brew 'meilisearch'      # Search engine
+brew 'python-packaging' # Python packaging tools for Ansible
+brew 'tfenv'            # Terraform version manager
+
+# Development Utilities
+cask 'dbngin'       # Database server management
+cask 'fork'         # Git GUI client
+brew 'gh'           # Interact with GitHub
+brew 'git-lfs'      # Git Large File Storage
+cask 'rapidapi'     # API client
+cask 'tableplus'    # Database client
+
+# Security Utilities and Data Encryption
+brew 'bcrypt'       # Encryption utility using Blowfish
+brew 'borgbackup'   # Encrypted, deduplicated backups
+brew 'openssl'      # Cryptography and SSL/TLS toolkit
+
+# Media
+brew 'exiftool'     # Read and write image metadata
+brew 'ffmpeg'       # Audio and video processing toolkit
+brew 'imagemagick'  # Image manipulation tools
+brew 'jpegoptim'    # JPEG optimization
+brew 'pngquant'     # PNG optimization
+brew 'webp'         # WebP tools
+brew 'yt-dlp'       # Audio and video downloader
+
+#############################################################
+# Desktop Applications
+#############################################################
+
+# Media
+cask 'plexamp'      # Music client for Plex servers
+cask 'iina'         # Modern VLC alternative
+cask 'vlc'          # Media player
+
+# Browsers
+cask 'firefox'
+cask 'vivaldi'
+cask 'zen'
+
+# Communication Apps
+cask 'slack'
+
+#############################################################
+# macOS-Specific Tools
+#############################################################
+
+# Fonts
+tap 'homebrew/cask-fonts'
+cask 'font-fira-code-nerd-font'
+cask 'font-hack-nerd-font'
+cask 'font-maple-mono-nf'
+
+# macOS Improvements
+cask 'istat-menus'  # System monitoring in the menu bar
+cask 'dot'          # Menu bar calendar and meeting reminder
+cask 'raycast'      # Launcher and productivity tool
+cask 'shottr'       # Screenshot utility
+
+# Productivity
+mas 'Bear', id: 1091189122
+mas 'Dropover', id: 1355679052
+cask 'lookaway'     # Reminds you to look away from the screen
+mas 'Numbers', id: 409203825
+cask 'obsidian'     # Markdown note taking app
+mas 'Reeder Classic.', id: 1529448980
+mas 'Soonie', id: 6468766154
+mas 'TestFlight', id: 899247664
+mas 'Things3', id: 904280696
+
+# macOS Utilities
+cask 'proton-pass'  # Proton password manager
+brew 'proton-pass-cli'
+mas 'Amphetamine', id: 937984704
+cask 'coteditor'    # Plain-text editor
+cask 'keka'         # Archive utility
+brew 'mas'          # Mac App Store CLI
+cask 'transmit'     # FTP, SFTP and cloud storage client
+
+brew 'codex'
+cask 'chatgpt'
+cask 'cyberduck'
+brew 'opencode'
+cask 'openchamber'
+cask 'orbstack'
