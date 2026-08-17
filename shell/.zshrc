@@ -22,16 +22,24 @@ if command -v fzf >/dev/null 2>&1; then
   eval "$(fzf --zsh)"
 
   if command -v fd >/dev/null 2>&1; then
-    export FZF_DEFAULT_COMMAND='fd --hidden --strip-cwd-prefix --exclude .git'
+    fd_command=fd
+  elif command -v fdfind >/dev/null 2>&1; then
+    fd_command=fdfind
+  else
+    fd_command=''
+  fi
+
+  if [[ -n "$fd_command" ]]; then
+    export FZF_DEFAULT_COMMAND="$fd_command --hidden --strip-cwd-prefix --exclude .git"
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-    export FZF_ALT_C_COMMAND='fd --type=d --hidden --strip-cwd-prefix --exclude .git'
+    export FZF_ALT_C_COMMAND="$fd_command --type=d --hidden --strip-cwd-prefix --exclude .git"
 
     _fzf_compgen_path() {
-      fd --hidden --exclude .git . "$1"
+      "$fd_command" --hidden --exclude .git . "$1"
     }
 
     _fzf_compgen_dir() {
-      fd --type=d --hidden --exclude .git . "$1"
+      "$fd_command" --type=d --hidden --exclude .git . "$1"
     }
   fi
 

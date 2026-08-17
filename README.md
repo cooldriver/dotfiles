@@ -63,18 +63,21 @@ data.
 
 ## Linux Bootstrap
 
-The homelab runbook installs the baseline dependencies, including Zsh, Git,
-Vim, btop, fzf, tmux, and Stow. Then clone this repository and deploy the
-shared packages:
+The Debian-based bootstrap installs the terminal tools required by the dotfiles
+and their optional integrations. The `server` profile also installs the
+administration tools used by the homelab runbook.
 
 ```bash
 git clone https://github.com/<account>/dotfiles.git ~/src/dotfiles
 cd ~/src/dotfiles
+bootstrap/linux/server.sh
 stow --target "$HOME" shell git vim btop
 ```
 
-Shell integrations whose commands are absent remain inactive. Install optional
-dependencies only when they are useful.
+Use `bootstrap/linux/common.sh` when only the shared shell environment is
+needed. A desktop profile can be added later without changing the server
+profile. Optional packages unavailable in a distribution release are skipped,
+and their shell integrations remain inactive.
 
 ## Updating
 
