@@ -118,6 +118,9 @@ refresh Stow links when the change affects the deployed file structure.
 
 - `~/.config/zsh/local.zsh` is reserved for local settings and secrets that
   cannot be managed by a dedicated tool.
+- `~/.config/zsh/hosts/<hostname>.zsh` contains non-sensitive, versioned shell
+  settings for a specific host. It is deployed with the `shell` package, but
+  Zsh loads only the file matching `hostname -s`.
 - `~/.config/git/personal.gitconfig` and `~/.config/git/work.gitconfig` hold
   Git identities and signing keys.
 - `~/.ssh/config` and private SSH keys remain outside this repository.

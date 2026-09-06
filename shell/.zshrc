@@ -74,3 +74,6 @@ aliases_file="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/aliases.zsh"
 
 local_config="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/local.zsh"
 [[ -r "$local_config" ]] && source "$local_config"
+
+host_config="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/hosts/$(hostname -s).zsh"
+[[ -r "$host_config" ]] && source "$host_config"
