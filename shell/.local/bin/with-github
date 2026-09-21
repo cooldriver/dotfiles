@@ -1,0 +1,22 @@
+#!/bin/bash
+set -euo pipefail
+
+if [[ $# -lt 2 ]]; then
+  printf '%s\n' 'Usage: with-github LOGIN COMMAND [ARG...]' >&2
+  exit 2
+fi
+
+login="$1"
+shift
+unset GH_TOKEN GITHUB_TOKEN GH_ENTERPRISE_TOKEN GITHUB_ENTERPRISE_TOKEN
+export GH_HOST=github.com
+
+token="$(gh auth token --hostname github.com --user "$login")"
+if [[ -z "$token" ]]; then
+  printf '%s\n' 'No token available for the selected GitHub account.' >&2
+  exit 1
+fi
+
+export GH_TOKEN="$token"
+unset token
+exec "$@"

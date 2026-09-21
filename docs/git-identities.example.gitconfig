@@ -7,4 +7,9 @@
 [user]
     name = Your Name
     email = you@example.com
-    signingkey = ~/.ssh/id_ed25519_git_account.pub
+    signingkey = ssh-ed25519 REPLACE_WITH_ACCOUNT_PUBLIC_KEY
+
+# macOS only, with 1Password installed in /Applications by the Brewfile.
+# Omit this section on hosts without the 1Password application.
+[gpg "ssh"]
+    program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign

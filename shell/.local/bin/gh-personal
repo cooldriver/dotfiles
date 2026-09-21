@@ -1,0 +1,13 @@
+#!/bin/bash
+set -euo pipefail
+login_file="${XDG_CONFIG_HOME:-$HOME/.config}/github/personal-user"
+if [[ ! -r "$login_file" ]]; then
+  printf 'Missing GitHub login file: %s\n' "$login_file" >&2
+  exit 1
+fi
+login="$(< "$login_file")"
+if [[ -z "$login" || "$login" == *[!a-zA-Z0-9-]* ]]; then
+  printf '%s\n' 'Expected a single GitHub login, not a token.' >&2
+  exit 1
+fi
+exec with-github "$login" gh "$@"

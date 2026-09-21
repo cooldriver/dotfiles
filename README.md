@@ -8,18 +8,23 @@ data.
 
 | Package | Target | Contents |
 | --- | --- | --- |
-| `shell` | macOS and Linux | Zsh, aliases, and optional integrations |
+| `shell` | macOS and Linux | Zsh, aliases, optional integrations, and per-account GitHub CLI launchers |
 | `git` | macOS and Linux | Shared Git settings |
 | `vim` | macOS and Linux | Minimal Vim configuration |
 | `btop` | macOS and Linux | Portable btop preferences |
-| `macos` | macOS | Conditional OrbStack integration |
+| `macos` | macOS | OrbStack integration, project-local PHP selection, and Composer launcher |
 
-`brew` is not deployed with Stow. It contains the macOS Brewfile.
+`brew`, `bootstrap`, `docs`, `services`, and `tests` are not deployed with Stow.
+See the [manual macOS guide](docs/macos-installation.md) for PHP 7.4/8.5,
+Composer/Xdebug, 1Password, GitHub accounts, and Time Machine exclusions.
+Local databases and mail capture are described in [services](services/README.md).
 
 ## macOS Bootstrap
 
 1. Install Homebrew from its official website.
-2. Clone this repository, then install applications and command-line tools:
+2. Clone this repository, review the Brewfile, then follow the staged Homebrew
+   installation in the [macOS guide](docs/macos-installation.md). To install the
+   complete reviewed list at once (after App Store sign-in):
 
    ```bash
    git clone https://github.com/<account>/dotfiles.git ~/Developer/personal/dotfiles
@@ -54,12 +59,18 @@ data.
 5. Add the GitHub host aliases from `docs/ssh-github-config.example` to your
    local SSH configuration. Use `github-personal` or `github-work` in remotes.
 
-6. Deploy the packages:
+6. Preview deployment and resolve existing-file conflicts before applying:
 
    ```bash
+   stow --simulate --verbose --target "$HOME" shell git vim btop macos
    stow --target "$HOME" shell git vim btop macos
    chsh -s "$(command -v zsh)"
    ```
+
+7. Open a new login shell, install the Composer PHAR with
+   `bash bootstrap/macos/install-composer.sh`, then configure the remaining local
+   settings and run the checks from the macOS guide. No services or backup
+   exclusions are applied automatically by Stow.
 
 ## Linux Bootstrap
 
@@ -124,5 +135,9 @@ refresh Stow links when the change affects the deployed file structure.
 - `~/.config/git/personal.gitconfig` and `~/.config/git/work.gitconfig` hold
   Git identities and signing keys.
 - `~/.ssh/config` and private SSH keys remain outside this repository.
+- `~/.config/github/personal-user` and `work-user` hold GitHub logins only;
+  tokens are retrieved from `gh` at invocation time.
+- `~/.config/dev-services/local.env` holds local Compose parameters and passwords.
+- `~/.config/timemachine/exclusions.txt` holds the reviewed exclusion paths.
 - Prefer AWS profiles, `gh auth login`, secret managers, and `direnv` over
   exporting credentials in the shell.

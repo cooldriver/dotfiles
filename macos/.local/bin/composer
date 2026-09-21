@@ -1,0 +1,10 @@
+#!/bin/bash
+set -euo pipefail
+
+phar="${XDG_DATA_HOME:-$HOME/.local/share}/composer/composer.phar"
+if [[ ! -r "$phar" ]]; then
+  printf '%s\n' 'Composer is missing: run bootstrap/macos/install-composer.sh.' >&2
+  exit 1
+fi
+# Use the executable selected by direnv, not a globally linked Homebrew PHP.
+exec php "$phar" "$@"

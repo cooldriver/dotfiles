@@ -1,16 +1,18 @@
-# Add these entries to your local ~/.ssh/config. Replace the identity file
-# names with the private keys held outside this repository.
+# macOS: enable the 1Password SSH agent, export only the public keys below.
+# Merge these entries into ~/.ssh/config before any general Host * rules.
 
 Host github-personal
     HostName github.com
     User git
-    IdentityFile ~/.ssh/id_ed25519_github_personal
+    IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+    IdentityFile ~/.ssh/github-personal.pub
     IdentitiesOnly yes
     HostKeyAlias github.com
 
 Host github-work
     HostName github.com
     User git
-    IdentityFile ~/.ssh/id_ed25519_github_work
+    IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+    IdentityFile ~/.ssh/github-work.pub
     IdentitiesOnly yes
     HostKeyAlias github.com

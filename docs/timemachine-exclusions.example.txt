@@ -1,0 +1,20 @@
+# Copy to ~/.config/timemachine/exclusions.txt and review before applying.
+# One absolute path or ~/path per line. No globs, variables or inline comments.
+# These are regenerable caches; confirm actual tool locations on the Mac.
+~/Library/Caches/Homebrew
+~/.cache/uv
+~/.npm/_cacache
+~/.aws/sso/cache
+~/.aws/cli/cache
+
+# Uncomment only after replacing PROJECT and validating reconstruction.
+# ~/Developer/work/PROJECT/node_modules
+# ~/Developer/work/PROJECT/vendor
+# ~/Developer/work/PROJECT/.venv
+# ~/Developer/work/PROJECT/.terraform
+# ~/Developer/work/PROJECT/storage/logs
+
+# Keep .git, .env, source files, uploads, SQLite files and SQL exports included.
+# Never exclude all of ~/Developer, ~/.config, ~/Library or /opt/homebrew.
+# OrbStack data may only be excluded after all unique volumes are backed up
+# and a restore has been tested. No OrbStack storage path is assumed here.

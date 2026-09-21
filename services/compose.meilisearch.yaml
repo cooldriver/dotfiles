@@ -1,0 +1,19 @@
+name: dev-search
+services:
+  meilisearch:
+    image: ${MEILISEARCH_IMAGE:?Set an explicit compatible Meilisearch image tag or digest}
+    platform: linux/arm64
+    restart: "no"
+    environment:
+      MEILI_ENV: production
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY:?Set a local Meilisearch master key of at least 16 bytes}
+      MEILI_NO_ANALYTICS: "true"
+    ports:
+      - "127.0.0.1:${MEILISEARCH_PORT:-7700}:7700"
+    volumes:
+      - meilisearch-data:/meili_data
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}
+volumes:
+  meilisearch-data:

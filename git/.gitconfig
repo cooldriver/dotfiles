@@ -7,6 +7,9 @@
 [gpg]
     format = ssh
 
+[user]
+    useConfigOnly = true
+
 [commit]
     gpgsign = true
 

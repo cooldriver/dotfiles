@@ -2,7 +2,8 @@
 cask_args appdir: '~/Applications', require_sha: true
 
 # Taps
-tap 'homebrew/services'
+tap 'shivammathur/php'
+tap 'shivammathur/extensions'
 
 #############################################################
 # Command Line
@@ -27,6 +28,7 @@ brew 'fzf'          # Fuzzy file finder and filtering
 brew 'hyperfine'    # Benchmarking for arbitrary commands
 brew 'just'         # Powerful command runner
 brew 'jq'           # JSON parser, output and query files
+brew 'yq'           # YAML processor
 brew 'miller'       # CSV/TSV/JSON processor
 brew 'rename'       # Bulk rename tool
 brew 'ripgrep'      # Searching within files
@@ -53,6 +55,8 @@ brew 'gping'        # Interactive ping tool with graph
 # CLI Productivity Apps
 brew 'aspell'       # Spell checker
 brew 'rclone'       # Manage cloud storage
+brew 'atuin'        # Local shell history; sync is configured separately
+brew 'yazi'         # Terminal file manager
 
 # CLI Development Suites
 brew 'httpie'       # HTTP and API testing client
@@ -80,27 +84,31 @@ cask 'phpstorm'     # PHP IDE
 # Development Languages, Compilers, Package Managers and SDKs
 brew 'nvm'          # Switching Node.js versions
 brew 'openjdk'      # Java development kit
-brew 'php'          # Current PHP version
-brew 'php@8.3'      # PHP 8.3
+brew 'shivammathur/php/php@8.5', link: false
+brew 'shivammathur/php/php@7.4', link: false
+brew 'shivammathur/extensions/xdebug@8.5'
+# Composer PHAR: bootstrap/macos/install-composer.sh (uses project PHP).
 brew 'python'       # Python interpreter
 brew 'shellcheck'   # Shell script analysis tool
+brew 'shfmt'        # Shell script formatter
 brew 'uv'           # Python package and project manager
 
 # DevOps
-brew 'ansible'          # Automation
+# Ansible is pinned in the infrastructure project's uv environment.
 brew 'awscli'           # AWS command line tools
 brew 'caddy'            # Web server
 brew 'direnv'           # Environment variable manager
-brew 'redis'            # In-memory data structure store
-brew 'meilisearch'      # Search engine
-brew 'python-packaging' # Python packaging tools for Ansible
+# Databases, Redis and Meilisearch are managed under services/ via OrbStack.
 brew 'tfenv'            # Terraform version manager
+brew 'tflint'           # Terraform linter
 
 # Development Utilities
-cask 'dbngin'       # Database server management
+# DBngin remains an optional fallback after the OrbStack performance trial.
 cask 'fork'         # Git GUI client
 brew 'gh'           # Interact with GitHub
 brew 'git-lfs'      # Git Large File Storage
+brew 'lazygit'
+brew 'lazydocker'
 cask 'rapidapi'     # API client
 cask 'tableplus'    # Database client
 
@@ -140,7 +148,6 @@ cask 'slack'
 #############################################################
 
 # Fonts
-tap 'homebrew/cask-fonts'
 cask 'font-fira-code-nerd-font'
 cask 'font-hack-nerd-font'
 cask 'font-maple-mono-nf'
@@ -163,8 +170,8 @@ mas 'TestFlight', id: 899247664
 mas 'Things3', id: 904280696
 
 # macOS Utilities
-cask 'proton-pass'  # Proton password manager
-brew 'proton-pass-cli'
+cask '1password', args: { appdir: '/Applications' }
+cask '1password-cli'
 mas 'Amphetamine', id: 937984704
 cask 'coteditor'    # Plain-text editor
 cask 'keka'         # Archive utility

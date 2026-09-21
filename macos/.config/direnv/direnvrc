@@ -1,0 +1,19 @@
+# shellcheck shell=bash
+# direnv calls use_php for "use php php@8.5" (or "use php 8.5").
+use_php() {
+  local formula="${1:-}" prefix
+  case "$formula" in
+    php@7.4|php@8.5) ;;
+    7.4|8.5) formula="php@$formula" ;;
+    *) log_error "Expected php@7.4 or php@8.5"; return 1 ;;
+  esac
+
+  prefix="$(brew --prefix "$formula")" || return 1
+  if [[ ! -x "$prefix/bin/php" ]]; then
+    log_error "PHP executable missing: $prefix/bin/php"
+    return 1
+  fi
+
+  PATH_add "$prefix/sbin"
+  PATH_add "$prefix/bin"
+}
