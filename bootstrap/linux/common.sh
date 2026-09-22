@@ -45,7 +45,7 @@ install_optional() {
 
 install_common_packages() {
   install_required zsh git vim btop fzf tmux stow
-  install_optional bat direnv fd-find git-delta eza fastfetch jq ripgrep shellcheck zoxide
+  install_optional bat direnv fd-find git-delta eza fastfetch jq ripgrep shellcheck zoxide zsh-syntax-highlighting
 }
 
 clone_if_missing() {

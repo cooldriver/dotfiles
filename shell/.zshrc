@@ -85,3 +85,12 @@ local_config="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/local.zsh"
 host_name="$(hostname -s)"
 host_config="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/hosts/${host_name:l}.zsh"
 [[ -r "$host_config" ]] && source "$host_config"
+
+# Load last so it can inspect the final command line editor configuration.
+syntax_highlighting=""
+if command -v brew >/dev/null 2>&1; then
+  syntax_highlighting="$(brew --prefix zsh-syntax-highlighting 2>/dev/null)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+elif [[ -r /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+  syntax_highlighting=/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+[[ -r "$syntax_highlighting" ]] && source "$syntax_highlighting"
