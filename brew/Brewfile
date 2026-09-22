@@ -84,7 +84,7 @@ cask 'phpstorm'     # PHP IDE
 # Development Languages, Compilers, Package Managers and SDKs
 brew 'nvm'          # Switching Node.js versions
 brew 'openjdk'      # Java development kit
-brew 'shivammathur/php/php@8.5', link: false
+brew 'php', link: false
 brew 'shivammathur/php/php@7.4', link: false
 brew 'shivammathur/extensions/xdebug@8.5'
 # Composer PHAR: bootstrap/macos/install-composer.sh (uses project PHP).
