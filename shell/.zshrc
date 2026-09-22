@@ -57,6 +57,13 @@ fi
 fzf_git="$HOME/.local/share/fzf-git/fzf-git.sh"
 [[ -r "$fzf_git" ]] && source "$fzf_git"
 
+# Atuin owns Ctrl-R when installed; fzf keeps Ctrl-T, Alt-C and completion.
+# Initialize after fzf so its history binding is replaced in each keymap.
+# Without Atuin, fzf's Ctrl-R remains available. Keep native up-arrow history.
+if command -v atuin >/dev/null 2>&1; then
+  eval "$(atuin init zsh --disable-up-arrow)"
+fi
+
 if command -v zoxide >/dev/null 2>&1; then
   eval "$(zoxide init zsh)"
 fi
@@ -75,5 +82,6 @@ aliases_file="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/aliases.zsh"
 local_config="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/local.zsh"
 [[ -r "$local_config" ]] && source "$local_config"
 
-host_config="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/hosts/$(hostname -s).zsh"
+host_name="$(hostname -s)"
+host_config="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/hosts/${host_name:l}.zsh"
 [[ -r "$host_config" ]] && source "$host_config"

@@ -1,0 +1,8 @@
+# Manual sync by default; Tatooine's Zsh host config enables automatic sync.
+# Toola stays manual: run `atuin sync` when LAN/VPN access is available.
+sync_address = "https://atuin.hwapp.ovh"
+auto_sync = false
+update_check = false
+
+[daemon]
+enabled = false

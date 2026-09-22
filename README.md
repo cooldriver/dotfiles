@@ -18,6 +18,8 @@ data.
 See the [manual macOS guide](docs/macos-installation.md) for PHP 7.4/8.5,
 Composer/Xdebug, 1Password, GitHub accounts, and Time Machine exclusions.
 Local databases and mail capture are described in [services](services/README.md).
+Shell history, fzf key bindings, and private per-host sync are described in
+[Atuin and fzf](docs/atuin.md).
 
 ## macOS Bootstrap
 
@@ -143,7 +145,7 @@ refresh Stow links when the change affects the deployed file structure.
   cannot be managed by a dedicated tool.
 - `~/.config/zsh/hosts/<hostname>.zsh` contains non-sensitive, versioned shell
   settings for a specific host. It is deployed with the `shell` package, but
-  Zsh loads only the file matching `hostname -s`.
+  Zsh loads only the file matching `hostname -s`, converted to lowercase.
 - `~/.config/git/personal.gitconfig` and `~/.config/git/work.gitconfig` hold
   Git identities and signing keys.
 - `~/.ssh/config` and private SSH keys remain outside this repository.

@@ -61,8 +61,11 @@ Ouvrir un nouveau terminal de connexion : `~/.local/bin` doit être dans le PATH
 et PHP 8.5 est la version par défaut. Les formules PHP sont installées sans
 liaison globale ; aucun switch de liens n'est nécessaire.
 
-Pour Atuin, ajouter `eval "$(atuin init zsh)"` au fichier local Zsh après essai si
-souhaité. La synchronisation n'est pas activée par ce dépôt. Les réglages visuels
+Atuin est initialisé automatiquement par `.zshrc` lorsqu'il est installé, après
+fzf : `Ctrl+R` utilise Atuin, `Ctrl+T` et `Alt+C` restent à fzf, et la flèche haut
+conserve son comportement habituel. La synchronisation privée est automatique sur
+Tatooine et manuelle sur Toola ; voir
+[Atuin et fzf](atuin.md) pour le déploiement et l'import initial. Les réglages visuels
 iTerm2, les raccourcis tmux et les préférences TUI restent des choix à ajuster
 pendant le pilote plutôt que des paramètres arbitraires imposés.
 
