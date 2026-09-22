@@ -136,7 +136,6 @@ cask 'iina'         # Modern VLC alternative
 cask 'vlc'          # Media player
 
 # Browsers
-cask 'firefox'
 cask 'vivaldi'
 cask 'zen'
 
@@ -157,6 +156,7 @@ cask 'istat-menus'  # System monitoring in the menu bar
 cask 'dot'          # Menu bar calendar and meeting reminder
 cask 'raycast'      # Launcher and productivity tool
 cask 'shottr'       # Screenshot utility
+cask 'openlogi'     # Alternative to Logitech Options+
 
 # Productivity
 mas 'Bear', id: 1091189122
