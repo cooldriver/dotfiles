@@ -105,6 +105,22 @@ fi
         (config / "work-user").write_text("not a login\n")
         self.assertNotEqual(self.run_command([ROOT / "shell/.local/bin/gh-work", "api", "user"]).returncode, 0)
 
+    def test_git_personal_identity_is_default_and_work_overrides_it(self):
+        (self.home / ".gitconfig").symlink_to(ROOT / "git/.gitconfig")
+        config = self.home / ".config/git"
+        config.mkdir(parents=True)
+        (config / "personal.gitconfig").write_text("[user]\n    email = personal@example.com\n")
+        (config / "work.gitconfig").write_text("[user]\n    email = work@example.com\n")
+        for name, expected in [("other", "personal@example.com"),
+                               ("Developer/work/project", "work@example.com")]:
+            repository = self.home / name
+            repository.mkdir(parents=True)
+            result = self.run_command(["git", "init", "--quiet", repository])
+            self.assertEqual(result.returncode, 0, result.stderr)
+            result = self.run_command(["git", "-C", repository, "config", "--get", "user.email"])
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(result.stdout.strip(), expected)
+
     def test_composer_uses_php_from_path_and_preserves_arguments(self):
         data = self.home / ".local/share/composer"
         data.mkdir(parents=True)

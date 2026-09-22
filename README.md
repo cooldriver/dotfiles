@@ -85,6 +85,18 @@ bootstrap/linux/server.sh
 stow --target "$HOME" shell git vim btop
 ```
 
+Before creating commits, configure the personal identity used by every Linux
+repository:
+
+```bash
+mkdir -p ~/.config/git
+cp docs/git-identities.example.gitconfig ~/.config/git/personal.gitconfig
+```
+
+Set the personal name, email, and public signing key in that local file. It is
+also the default identity on macOS; `~/Developer/work/` overrides it with the
+work identity.
+
 Use `bootstrap/linux/common.sh` when only the shared shell environment is
 needed. A desktop profile can be added later without changing the server
 profile. Optional packages unavailable in a distribution release are skipped,
