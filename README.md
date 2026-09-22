@@ -55,8 +55,9 @@ Shell history, fzf key bindings, and private per-host sync are described in
    cp docs/git-identities.example.gitconfig ~/.config/git/work.gitconfig
    ```
 
-   Set the appropriate identity and public signing key in each file. These files
-   remain outside this repository.
+   Set the appropriate identity and public signing key in each file. Create
+   `~/.ssh/allowed_signers` with one line per profile in the form
+   `<email> <public SSH key>`. These files remain outside this repository.
 
 5. Add the GitHub host aliases from `docs/ssh-github-config.example` to your
    local SSH configuration. Use `github-personal` or `github-work` in remotes.
@@ -95,9 +96,10 @@ mkdir -p ~/.config/git
 cp docs/git-identities.example.gitconfig ~/.config/git/personal.gitconfig
 ```
 
-Set the personal name, email, and public signing key in that local file. It is
-also the default identity on macOS; `~/Developer/work/` overrides it with the
-work identity.
+Set the personal name, email, and public signing key in that local file. Create
+`~/.ssh/allowed_signers` with one `<email> <public SSH key>` entry for each
+identity. It is also the default identity on macOS; `~/Developer/work/`
+overrides it with the work identity.
 
 Use `bootstrap/linux/common.sh` when only the shared shell environment is
 needed. A desktop profile can be added later without changing the server

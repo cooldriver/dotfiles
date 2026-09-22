@@ -169,8 +169,9 @@ le mode debug ; la couverture de tests utilise le mode `coverage` séparément.
    du socket avec les réglages de l'application installée.
 3. Préparer `~/.config/git/personal.gitconfig` et `work.gitconfig` à partir de
    `docs/git-identities.example.gitconfig`. Renseigner les vrais noms/emails et les
-   clés publiques de signature localement. Enregistrer les clés d'authentification
-   et de signature sur les comptes GitHub correspondants.
+   clés publiques de signature localement. Créer `~/.ssh/allowed_signers` avec une
+   ligne `<email> <clé publique SSH>` par profil. Enregistrer les clés
+   d'authentification et de signature sur les comptes GitHub correspondants.
 4. Placer les dépôts dans `~/Developer/personal/` ou `~/Developer/work/`, et utiliser
    les alias SSH correspondants dans les remotes. Les anciens chemins
    `~/Repositories/` ne sont pas couverts automatiquement par `includeIf`.

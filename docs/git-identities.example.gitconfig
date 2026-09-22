@@ -13,3 +13,4 @@
 # Omit this section on hosts without the 1Password application.
 [gpg "ssh"]
     program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+    allowedSignersFile = ~/.ssh/allowed_signers
