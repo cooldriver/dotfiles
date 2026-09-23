@@ -1,0 +1,5 @@
+// Keep shell bindings (notably Atuin/fzf Ctrl-R) available by default.
+// Ctrl-G switches to normal mode for Zellij shortcuts, then back to locked.
+default_mode "locked"
+on_force_close "detach"
+web_server false

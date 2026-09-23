@@ -40,10 +40,10 @@ de son programme de signature ; les autres casks utilisent `~/Applications`.
 
 ## 2. Shell et déploiement Stow
 
-Installer Oh My Zsh, Spaceship et fzf-git selon le README, puis prévisualiser :
+Installer Oh My Zsh et Spaceship selon le README, puis prévisualiser :
 
 ```bash
-stow --simulate --verbose --target "$HOME" shell git vim btop macos
+stow --simulate --verbose --target "$HOME" shell git vim btop zellij macos
 ```
 
 Le paquet `macos` comprend maintenant `~/.config/direnv/direnvrc` et le lanceur
@@ -54,7 +54,7 @@ contenu ; en particulier, conserver les autres helpers direnv utiles.
 Après résolution des conflits :
 
 ```bash
-stow --target "$HOME" shell git vim btop macos
+stow --target "$HOME" shell git vim btop zellij macos
 ```
 
 Ouvrir un nouveau terminal de connexion : `~/.local/bin` doit être dans le PATH
@@ -66,8 +66,9 @@ fzf : `Ctrl+R` utilise Atuin, `Ctrl+T` et `Alt+C` restent à fzf, et la flèche 
 conserve son comportement habituel. La synchronisation privée est automatique sur
 Tatooine et manuelle sur Toola ; voir
 [Atuin et fzf](atuin.md) pour le déploiement et l'import initial. Les réglages visuels
-iTerm2, les raccourcis tmux et les préférences TUI restent des choix à ajuster
-pendant le pilote plutôt que des paramètres arbitraires imposés.
+iTerm2 et les préférences TUI restent des choix à ajuster pendant le pilote.
+Zellij remplace tmux ; son mode verrouillé préserve `Ctrl+R` pour Atuin/fzf.
+Voir [Zellij](zellij.md) pour les sessions locales et SSH.
 
 ## 3. PHP et Composer
 

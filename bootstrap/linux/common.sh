@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+
 require_apt() {
   if ! command -v apt-get >/dev/null 2>&1; then
     printf '%s\n' 'This bootstrap supports Debian-based distributions only.' >&2
@@ -44,8 +46,9 @@ install_optional() {
 }
 
 install_common_packages() {
-  install_required zsh git vim btop fzf tmux stow
+  install_required zsh git vim btop fzf stow curl ca-certificates
   install_optional bat direnv fd-find git-delta eza fastfetch jq ripgrep shellcheck zoxide zsh-syntax-highlighting
+  bash "$script_dir/install-zellij.sh"
 }
 
 clone_if_missing() {
@@ -72,7 +75,6 @@ install_shell_dependencies() {
     ln -s "spaceship-prompt/spaceship.zsh-theme" "$spaceship_theme"
   fi
 
-  clone_if_missing https://github.com/junegunn/fzf-git.sh.git "$HOME/.local/share/fzf-git"
 }
 
 main() {

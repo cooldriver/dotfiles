@@ -12,6 +12,7 @@ data.
 | `git` | macOS and Linux | Shared Git settings |
 | `vim` | macOS and Linux | Minimal Vim configuration |
 | `btop` | macOS and Linux | Portable btop preferences |
+| `zellij` | macOS and Linux | Shared terminal multiplexer settings |
 | `macos` | macOS | OrbStack integration, project-local PHP selection, and Composer launcher |
 
 `brew`, `bootstrap`, `docs`, `services`, and `tests` are not deployed with Stow.
@@ -20,6 +21,7 @@ Composer/Xdebug, 1Password, GitHub accounts, and Time Machine exclusions.
 Local databases and mail capture are described in [services](services/README.md).
 Shell history, fzf key bindings, and private per-host sync are described in
 [Atuin and fzf](docs/atuin.md).
+See [Zellij](docs/zellij.md) for installation and session handling on both systems.
 
 ## macOS Bootstrap
 
@@ -42,9 +44,6 @@ Shell history, fzf key bindings, and private per-host sync are described in
      ~/.oh-my-zsh/custom/themes/spaceship-prompt
    ln -sfn ~/.oh-my-zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme \
      ~/.oh-my-zsh/custom/themes/spaceship.zsh-theme
-   mkdir -p ~/.local/share
-   git clone --depth=1 https://github.com/junegunn/fzf-git.sh.git \
-     ~/.local/share/fzf-git
    ```
 
 4. Create local Git identity files before working in the matching directories:
@@ -65,8 +64,8 @@ Shell history, fzf key bindings, and private per-host sync are described in
 6. Preview deployment and resolve existing-file conflicts before applying:
 
    ```bash
-   stow --simulate --verbose --target "$HOME" shell git vim btop macos
-   stow --target "$HOME" shell git vim btop macos
+   stow --simulate --verbose --target "$HOME" shell git vim btop zellij macos
+   stow --target "$HOME" shell git vim btop zellij macos
    chsh -s "$(command -v zsh)"
    ```
 
@@ -85,7 +84,8 @@ administration tools used by the homelab runbook.
 git clone https://github.com/<account>/dotfiles.git ~/src/dotfiles
 cd ~/src/dotfiles
 bootstrap/linux/server.sh
-stow --target "$HOME" shell git vim btop
+stow --simulate --verbose --target "$HOME" shell git vim btop zellij
+stow --target "$HOME" shell git vim btop zellij
 ```
 
 Before creating commits, configure the personal identity used by every Linux
@@ -110,14 +110,14 @@ and their shell integrations remain inactive.
 
 ```bash
 git pull --ff-only
-stow --restow --target "$HOME" shell git vim btop
+stow --restow --target "$HOME" shell git vim btop zellij
 ```
 
 For changes to an existing deployed file, `git pull --ff-only` is enough: the
 symbolic link already points into the repository. Run `stow --restow` when a
 commit adds, removes, moves, or changes the deployment path of files. It is
 also safe to run after every pull. On macOS, add `macos` to the command. Update
-cloned dependencies separately in `~/.oh-my-zsh` and `~/.local/share/fzf-git`.
+cloned dependencies separately in `~/.oh-my-zsh`.
 
 ## Persisting Changes
 

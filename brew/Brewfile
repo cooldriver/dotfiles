@@ -13,7 +13,7 @@ tap 'shivammathur/extensions', trusted: true
 brew 'git'          # Version control
 brew 'neovim'       # Text editor
 brew 'stow'         # Deploy dotfiles with symlinks
-brew 'tmux'         # Term multiplexer
+brew 'zellij'       # Term multiplexer
 brew 'vim'          # Text editor
 
 # CLI Basics

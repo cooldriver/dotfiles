@@ -9,7 +9,7 @@ Le paquet Stow `shell` initialise Atuin après fzf quand le binaire est disponib
 | `Ctrl+T` | Sélection de fichiers fzf, avec aperçu bat si installé |
 | `Alt+C` | Changement de répertoire fzf, avec aperçu eza si installé |
 | `**` puis Tab | Complétion fzf pour les commandes prises en charge |
-| Intégration Git | fzf-git si installé |
+| Navigation Git interactive | Lazygit, lancé à la demande |
 | Pipelines interactifs | Commande `fzf` toujours disponible |
 
 Sur macOS, `Alt+C` nécessite que le terminal transmette Option comme Meta/Alt.

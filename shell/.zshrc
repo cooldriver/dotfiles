@@ -54,9 +54,6 @@ if command -v fzf >/dev/null 2>&1; then
   fi
 fi
 
-fzf_git="$HOME/.local/share/fzf-git/fzf-git.sh"
-[[ -r "$fzf_git" ]] && source "$fzf_git"
-
 # Atuin owns Ctrl-R when installed; fzf keeps Ctrl-T, Alt-C and completion.
 # Initialize after fzf so its history binding is replaced in each keymap.
 # Without Atuin, fzf's Ctrl-R remains available. Keep native up-arrow history.
