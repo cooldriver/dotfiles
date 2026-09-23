@@ -44,25 +44,49 @@ Résultats attendus : widget Atuin pour `Ctrl+R`, `fzf-file-widget` pour `Ctrl+T
 
 La configuration partagée cible `https://atuin.hwapp.ovh`, prévu sur Gamorr.
 Le serveur doit être déployé avant la création du compte. La configuration TOML
-conserve `auto_sync = false` par défaut. Les fichiers Zsh par machine la surchargent
-avec les variables d'environnement natives d'Atuin :
+conserve `auto_sync = false` par défaut. Les profils Zsh sélectionnent le dossier
+de configuration avec `ATUIN_CONFIG_DIR` :
 
 | Machine | Mode | Réglage Zsh |
 | --- | --- | --- |
-| Tatooine, Mac mini fixe sur le LAN | Automatique, intervalle de 5 minutes | `ATUIN_AUTO_SYNC=true`, `ATUIN_SYNC_FREQUENCY=5m` |
-| Toola, MacBook mobile | Manuel, même lorsqu'il est sur le LAN | `ATUIN_AUTO_SYNC=false` |
+| Tatooine, Mac mini fixe sur le LAN | Automatique, intervalle de 5 minutes | `~/.config/atuin/hosts/tatooine/config.toml` |
+| Toola, MacBook mobile | Manuel, même lorsqu'il est sur le LAN | `~/.config/atuin/config.toml` |
 | Autres machines | Manuel par défaut | Configuration TOML |
 
 Les profils sont `shell/.config/zsh/hosts/tatooine.zsh` et `toola.zsh`.
 Zsh normalise `hostname -s` en minuscules : `Tatooine` et `tatooine` sélectionnent
 le même profil. Après déploiement Stow, ouvrir un nouveau terminal et vérifier
-`hostname -s` puis `printenv ATUIN_AUTO_SYNC` (`true` sur Tatooine, `false` sur Toola).
+`hostname -s`, `printenv ATUIN_CONFIG_DIR` puis `atuin config get auto_sync --resolved`
+(`true` sur Tatooine, `false` sur Toola). Les chemins respectent `XDG_CONFIG_HOME`
+s'il est défini.
+
+Dans Atuin 18.23.0, le TOML est chargé après les variables `ATUIN_AUTO_SYNC` et
+`ATUIN_SYNC_FREQUENCY` : les valeurs du fichier les écrasent. L'ancien mécanisme
+par variables n'activait donc pas la synchronisation sur Tatooine. Les profils
+retirent ces anciennes variables et sélectionnent désormais un fichier complet.
+`ATUIN_CONFIG_DIR` ne change ni les bases, ni la clé, ni la session existante :
+aucune reconnexion ou réimportation n'est nécessaire. Maintenir les réglages
+communs dans les deux fichiers TOML lors de leurs prochaines modifications.
 
 Sur Tatooine, la synchronisation se déclenche à la fin d'une commande si le compte
 est connecté et que l'intervalle est écoulé. Ce n'est pas un timer permanent :
 aucune synchronisation périodique n'est garantie pendant l'inactivité du shell.
-Les surcharges s'appliquent aux commandes lancées depuis ces sessions Zsh et à
-leurs processus enfants ; un processus lancé indépendamment utilise le TOML.
+La sélection s'applique aux commandes lancées depuis ces sessions Zsh et à
+leurs processus enfants ; un processus indépendant sans `ATUIN_CONFIG_DIR`
+utilise le fichier manuel par défaut.
+
+Pour contrôler les valeurs réellement appliquées et l'état de synchronisation :
+
+```bash
+atuin config get auto_sync --resolved
+atuin config get sync_frequency --resolved
+atuin status
+```
+
+Sur Tatooine, les valeurs attendues sont `true` et `5m`. Dans la version 18.23.0,
+`atuin status` n'affiche la fréquence, la dernière synchronisation et les détails
+distants que lorsque `auto_sync` est activé. Une sortie limitée à `[Local]` sur
+Toola est donc normale. `atuin sync` permet un contrôle manuel de l'échange.
 
 `update_check = false` et le daemon désactivé restent communs aux deux postes.
 Homebrew reste responsable des mises à jour du client. Sur Toola, aucune tentative
