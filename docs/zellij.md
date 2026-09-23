@@ -31,14 +31,14 @@ zellij list-sessions
 zellij attach travail
 ```
 
-Dans Zellij, `Ctrl+G` quitte le mode verrouillé pour donner accès aux raccourcis
-affichés par l'interface (`Ctrl+P` pour les panneaux, `Ctrl+T` pour les onglets,
-`Ctrl+O` pour les sessions). `Ctrl+G` revient au mode verrouillé : les touches
-du shell, dont `Ctrl+R` pour Atuin/fzf, sont alors transmises normalement.
-`Ctrl+G` reste réservé à Zellij, même en mode verrouillé : fzf-git n'est plus
-chargé dans le shell ; Lazygit assure la navigation Git interactive.
-Pour quitter le terminal sans terminer le travail, utiliser `Ctrl+G`, puis
-`Ctrl+O`, puis `d` pour détacher la session. La fermeture forcée du terminal
+Dans Zellij, le mode normal et les raccourcis affichés par l'interface sont
+actifs dès le démarrage : `Ctrl+P` pour les panneaux, `Ctrl+T` pour les onglets,
+`Ctrl+R` pour le redimensionnement et `Ctrl+O` pour les sessions. La flèche haut
+ouvre l'historique Atuin dans Zsh si Atuin est installé. `Ctrl+G` passe
+temporairement en mode verrouillé
+pour transmettre les raccourcis à une application dans un panneau.
+Pour quitter le terminal sans terminer le travail, utiliser `Ctrl+O`, puis
+`d` pour détacher la session. La fermeture forcée du terminal
 détache aussi la session ; ce comportement ne remplace pas une sauvegarde ni
 une restauration des processus après redémarrage du serveur.
 
@@ -48,6 +48,6 @@ Une session Zellij lancée uniquement sur le Mac ne maintient pas à elle seule
 les processus distants après la coupure SSH. Éviter d'imbriquer deux sessions
 Zellij (Mac et serveur) tant que les raccourcis imbriqués n'ont pas été validés.
 
-Tester sur chaque terminal la copie, les couleurs, `Ctrl+R` et la reprise après
+Tester sur chaque terminal la copie, les couleurs, la flèche haut et la reprise après
 une déconnexion SSH avant d'abandonner les sessions tmux existantes. L'installation
 ne supprime pas tmux déjà présent et ne migre pas ses sessions.

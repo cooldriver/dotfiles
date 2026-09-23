@@ -38,10 +38,10 @@ fichiers effectivement utilisés.
   Zsh.
 - Powerlevel10k est retiré. Spaceship sera installé par clone Git explicite sur
   macOS et Linux, puis chargé par Oh My Zsh.
-- Les intégrations optionnelles (`fzf`, `fd`, `eza`, `bat`, `zoxide`, NVM)
+- Les intégrations optionnelles (`fd`, `eza`, `bat`, `zoxide`, NVM)
   testeront la présence de leur commande ou fichier avant chargement.
-- fzf-git n'est plus chargé : ses raccourcis `Ctrl+G` interfèrent avec le
-  déverrouillage de Zellij. Lazygit couvre la navigation Git interactive.
+- Lazygit couvre la navigation Git interactive. Atuin gère l'historique via
+  la flèche haut ; aucun sélecteur interactif supplémentaire n'est installé.
 - Les alias et petites fonctions seront séparés dans
   `~/.config/zsh/aliases.zsh`.
 - `bat` remplacera `cat`. `cd` ne sera pas remplacé par `zoxide`.
@@ -93,8 +93,9 @@ fichiers effectivement utilisés.
 - Zellij remplace tmux sur macOS et sur les serveurs Linux. Le paquet Stow
   `zellij` partage une configuration minimale ; aucune session ne démarre
   automatiquement au lancement de Zsh ou à la connexion SSH.
-- Le mode verrouillé par défaut laisse `Ctrl+R` à Atuin/fzf. `Ctrl+G` donne accès
-  aux raccourcis Zellij puis ramène au mode verrouillé.
+- Le mode normal et les raccourcis Zellij restent ceux par défaut. Atuin utilise
+  la flèche haut plutôt que `Ctrl+R` ; dans Zellij, `Ctrl+R` et `Ctrl+T`
+  appartiennent au multiplexeur.
 - macOS utilise Homebrew ; Linux utilise une archive officielle versionnée,
   vérifiée par SHA-256, car Zellij n'est pas disponible dans tous les dépôts APT.
 

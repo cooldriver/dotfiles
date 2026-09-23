@@ -19,8 +19,7 @@ data.
 See the [manual macOS guide](docs/macos-installation.md) for PHP 7.4/8.5,
 Composer/Xdebug, 1Password, GitHub accounts, and Time Machine exclusions.
 Local databases and mail capture are described in [services](services/README.md).
-Shell history, fzf key bindings, and private per-host sync are described in
-[Atuin and fzf](docs/atuin.md).
+Shell history and private per-host sync are described in [Atuin](docs/atuin.md).
 See [Zellij](docs/zellij.md) for installation and session handling on both systems.
 
 ## macOS Bootstrap

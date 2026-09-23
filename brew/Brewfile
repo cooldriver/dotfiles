@@ -24,7 +24,6 @@ brew 'duf'          # Get info on mounted disks (better df)
 brew 'eza'          # Listing files with info
 brew 'fd'           # Alternative to find
 brew 'fx'           # Terminal JSON viewer
-brew 'fzf'          # Fuzzy file finder and filtering
 brew 'hyperfine'    # Benchmarking for arbitrary commands
 brew 'just'         # Powerful command runner
 brew 'jq'           # JSON parser, output and query files

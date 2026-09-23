@@ -1,20 +1,17 @@
-# Atuin et fzf
+# Atuin
 
-Le paquet Stow `shell` initialise Atuin après fzf quand le binaire est disponible.
+Le paquet Stow `shell` initialise Atuin quand le binaire est disponible.
 
 | Raccourci ou usage | Outil |
 | --- | --- |
-| `Ctrl+R` | Historique Atuin ; repli sur fzf si Atuin est absent |
-| Flèche haut | Navigation habituelle de Zsh, sans interface Atuin |
-| `Ctrl+T` | Sélection de fichiers fzf, avec aperçu bat si installé |
-| `Alt+C` | Changement de répertoire fzf, avec aperçu eza si installé |
-| `**` puis Tab | Complétion fzf pour les commandes prises en charge |
+| Flèche haut | Historique Atuin si installé ; sinon, historique habituel de Zsh |
+| `Ctrl+R` | Recherche historique standard de Zsh hors de Zellij ; mode redimensionnement dans Zellij |
+| `Ctrl+T` | Mode onglets dans Zellij |
+| Navigation entre répertoires | `zoxide` si installé, avec `z` |
 | Navigation Git interactive | Lazygit, lancé à la demande |
-| Pipelines interactifs | Commande `fzf` toujours disponible |
 
-Sur macOS, `Alt+C` nécessite que le terminal transmette Option comme Meta/Alt.
 Les fichiers Zsh locaux chargés en fin de `.zshrc` peuvent modifier les raccourcis :
-retirer toute ancienne initialisation Atuin/fzf en doublon.
+retirer toute ancienne initialisation Atuin en doublon.
 
 ## Activation
 
@@ -32,13 +29,16 @@ une fois l'historique Zsh existant, depuis ce terminal où `HISTFILE` est défin
 
 ```bash
 atuin import zsh
+bindkey '^[[A'
+bindkey '^[OA'
 bindkey '^R'
-bindkey '^T'
-bindkey '^[c'
 ```
 
-Résultats attendus : widget Atuin pour `Ctrl+R`, `fzf-file-widget` pour `Ctrl+T`,
-`fzf-cd-widget` pour `Alt+C`. Tester aussi la flèche haut.
+Résultats attendus : widget Atuin pour la flèche haut ; hors de Zellij,
+`Ctrl+R` utilise la recherche habituelle de Zsh. Dans Zellij, le mode normal
+reçoit `Ctrl+R` et `Ctrl+T` avant Zsh ; vérifier la flèche haut.
+Atuin modifie donc l'usage de la flèche haut : elle ouvre la recherche d'historique
+au lieu de parcourir directement les commandes précédentes.
 
 ## Synchronisation privée par machine
 
