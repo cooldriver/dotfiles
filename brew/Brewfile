@@ -97,11 +97,11 @@ brew 'uv'           # Python package and project manager
 brew 'awscli'           # AWS command line tools
 brew 'caddy'            # Web server
 brew 'direnv'           # Environment variable manager
-# Databases, Redis and Meilisearch are managed under services/ via OrbStack.
+# MySQL and PostgreSQL via DBngin; Redis and Meilisearch via OrbStack.
 brew 'tfenv'            # Terraform version manager
 
 # Development Utilities
-# DBngin remains an optional fallback after the OrbStack performance trial.
+cask 'dbngin'       # Local MySQL and PostgreSQL instances
 cask 'fork'         # Git GUI client
 brew 'gh'           # Interact with GitHub
 brew 'git-lfs'      # Git Large File Storage

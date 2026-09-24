@@ -225,16 +225,15 @@ printf '%s/php installs/%s\\n' "$TEST_ROOT" "$2"
     def test_compose_configuration_and_required_optional_versions(self):
         # Prefer the standalone CLI: a temporary HOME has no user plugin config.
         compose = [shutil.which("docker-compose")] if shutil.which("docker-compose") else ["docker", "compose"]
-        self.env.update(MYSQL_ROOT_PASSWORD="test-root", MYSQL_PASSWORD="test-mysql",
-                        POSTGRES_PASSWORD="test-postgres")
-        for key in ["REDIS_IMAGE", "MEILISEARCH_IMAGE", "MEILI_MASTER_KEY", "COMPOSE_PROFILES"]:
+        for key in ["MYSQL_ROOT_PASSWORD", "MYSQL_PASSWORD", "POSTGRES_PASSWORD",
+                    "REDIS_IMAGE", "MEILISEARCH_IMAGE", "MEILI_MASTER_KEY", "COMPOSE_PROFILES"]:
             self.env.pop(key, None)
         command = compose + ["--env-file", "/dev/null", "-f", ROOT / "services/compose.yaml",
                    "--profile", "*", "config", "--format", "json"]
         result = self.run_command(command)
         self.assertEqual(result.returncode, 0, result.stderr)
         services = json.loads(result.stdout)["services"]
-        self.assertEqual(set(services), {"mysql", "postgres", "mailpit"})
+        self.assertEqual(set(services), {"mailpit"})
         for service in services.values():
             self.assertIn("@sha256:", service["image"])
             self.assertEqual(service["platform"], "linux/arm64")

@@ -13,8 +13,9 @@ exécutées depuis la racine du dépôt Dotfiles après lecture de chaque étape
    été publiés par le propriétaire. Préserver les permissions exécutables lors
    d'un transfert local.
 3. Lire `brew/Brewfile`. Les anciennes formules PHP non versionnées, Ansible
-   global, Redis/Meilisearch natifs et Proton Pass sont remplacés dans le parcours
-   nominal. DBngin reste un repli à installer manuellement si le test SQL échoue.
+    global, Redis/Meilisearch natifs et Proton Pass sont remplacés dans le parcours
+    nominal. DBngin est installé pour MySQL et PostgreSQL ; OrbStack reste utilisé
+    pour Mailpit, Redis et Meilisearch.
 4. Installer d'abord les outils nécessaires au déploiement et aux validations :
 
    ```bash
@@ -215,8 +216,10 @@ modifié par un nouveau lancement depuis le terminal.
 
 ## 6. Services, infrastructure et sauvegarde
 
-- Suivre [services/README.md](../services/README.md) pour SQL, Mailpit et les
-  services optionnels. Relever Redis/Meilisearch avant de remplir leurs images.
+- Suivre [services/README.md](../services/README.md) pour créer et restaurer les
+  instances MySQL/PostgreSQL dans DBngin, puis lancer Mailpit avec Compose et,
+  selon les projets, Redis et Meilisearch sous OrbStack. Relever leurs versions
+  avant de remplir leurs images. Aucun service SQL Compose n'est prévu.
 - Installer les versions Node/Yarn déclarées par les projets. Ne pas régénérer
   leurs fichiers de verrouillage pendant la réinstallation.
 - Le projet d'infrastructure gère Python/Ansible avec uv ; reproduire les versions

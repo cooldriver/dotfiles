@@ -45,9 +45,10 @@ fichiers effectivement utilisés.
 - Les alias et petites fonctions seront séparés dans
   `~/.config/zsh/aliases.zsh`.
 - `bat` remplacera `cat`. `cd` ne sera pas remplacé par `zoxide`.
-- `broot`, les anciens chemins DBngin/MySQL et `ansible@10` ne sont pas repris
-  dans la configuration shell. Le parcours macOS utilise les services Compose
-  et un environnement Ansible isolé avec uv dans le dépôt d'infrastructure.
+- `broot`, les anciens chemins DBngin/MySQL spécifiques au poste et `ansible@10`
+  ne sont pas repris dans la configuration shell. Le parcours macOS utilise
+  DBngin pour MySQL/PostgreSQL, Compose pour les autres services et un
+  environnement Ansible isolé avec uv dans le dépôt d'infrastructure.
 - Les réglages locaux et les secrets seront hors Git. Lorsqu'un fichier local
   est nécessaire, il sera chargé seulement s'il est lisible.
 - L'intégration OrbStack sera versionnée dans le paquet `macos`, avec un
@@ -131,8 +132,10 @@ fichiers effectivement utilisés.
   direnv conserve la syntaxe `use php php@VERSION` et modifie seulement le PATH.
 - Composer est un PHAR vérifié lancé avec le PHP courant. Xdebug est installé
   pour 8.5 uniquement, désactivé par défaut et activable à la demande.
-- SQL et Mailpit utilisent des images ARM64 avec versions et digests fixés.
-  Redis/Meilisearch nécessitent un choix de version explicite selon les projets.
-- DBngin reste un repli si les essais de performance SQL ne sont pas concluants.
+- MySQL et PostgreSQL sont gérés localement par DBngin sur les deux Mac. Les
+  versions sources déclarées sont MySQL 8.0.33 et PostgreSQL 16.4 ; vérifier
+  leur disponibilité et restaurer les exports logiques avant la recette.
+- Mailpit utilise une image ARM64 avec version et digest fixés sous OrbStack.
+  Redis/Meilisearch y nécessitent un choix de version explicite selon les projets.
 - Les exclusions Time Machine sont une liste explicite de chemins régénérables,
   contrôlée avant application ; aucun dossier de travail complet n'est exclu.

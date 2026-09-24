@@ -19,7 +19,7 @@ data.
 `brew`, `bootstrap`, `docs`, `services`, and `tests` are not deployed with Stow.
 See the [manual macOS guide](docs/macos-installation.md) for PHP 7.4/8.5,
 Composer/Xdebug, 1Password, GitHub accounts, and Time Machine exclusions.
-Local databases and mail capture are described in [services](services/README.md).
+DBngin databases and OrbStack services are described in [services](services/README.md).
 Shell history and private per-host sync are described in [Atuin](docs/atuin.md).
 See [Zellij](docs/zellij.md) for installation and session handling on both systems.
 
@@ -158,7 +158,9 @@ refresh Stow links when the change affects the deployed file structure.
 - `~/.ssh/config` and private SSH keys remain outside this repository.
 - `~/.config/github/personal-user` and `work-user` hold GitHub logins only;
   tokens are retrieved from `gh` at invocation time.
-- `~/.config/dev-services/local.env` holds local Compose parameters and passwords.
+- `~/.config/dev-services/local.env` holds local Compose parameters for Mailpit,
+  Redis and Meilisearch; SQL instance credentials remain in DBngin or local
+  credential storage, outside this repository.
 - `~/.config/timemachine/exclusions.txt` holds the reviewed exclusion paths.
 - Prefer AWS profiles, `gh auth login`, secret managers, and `direnv` over
   exporting credentials in the shell.
