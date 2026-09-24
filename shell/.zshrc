@@ -1,5 +1,7 @@
 [[ -o interactive ]] || return
 
+export LG_CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/lazygit/config.yml"
+
 export ZSH="$HOME/.oh-my-zsh"
 
 if [[ -r "$ZSH/oh-my-zsh.sh" ]]; then

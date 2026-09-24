@@ -13,6 +13,7 @@ data.
 | `vim` | macOS and Linux | Minimal Vim configuration |
 | `btop` | macOS and Linux | Portable btop preferences |
 | `zellij` | macOS and Linux | Shared terminal multiplexer settings |
+| `lazygit` | macOS and Linux | Syntax-highlighted diffs using delta |
 | `macos` | macOS | OrbStack integration, project-local PHP selection, and Composer launcher |
 
 `brew`, `bootstrap`, `docs`, `services`, and `tests` are not deployed with Stow.
@@ -63,8 +64,8 @@ See [Zellij](docs/zellij.md) for installation and session handling on both syste
 6. Preview deployment and resolve existing-file conflicts before applying:
 
    ```bash
-   stow --simulate --verbose --target "$HOME" shell git vim btop zellij macos
-   stow --target "$HOME" shell git vim btop zellij macos
+    stow --simulate --verbose --target "$HOME" shell git vim btop zellij lazygit macos
+    stow --target "$HOME" shell git vim btop zellij lazygit macos
    chsh -s "$(command -v zsh)"
    ```
 
@@ -83,8 +84,8 @@ administration tools used by the homelab runbook.
 git clone https://github.com/<account>/dotfiles.git ~/src/dotfiles
 cd ~/src/dotfiles
 bootstrap/linux/server.sh
-stow --simulate --verbose --target "$HOME" shell git vim btop zellij
-stow --target "$HOME" shell git vim btop zellij
+stow --simulate --verbose --target "$HOME" shell git vim btop zellij lazygit
+stow --target "$HOME" shell git vim btop zellij lazygit
 ```
 
 Before creating commits, configure the personal identity used by every Linux
@@ -109,7 +110,7 @@ and their shell integrations remain inactive.
 
 ```bash
 git pull --ff-only
-stow --restow --target "$HOME" shell git vim btop zellij
+stow --restow --target "$HOME" shell git vim btop zellij lazygit
 ```
 
 For changes to an existing deployed file, `git pull --ff-only` is enough: the
@@ -117,6 +118,11 @@ symbolic link already points into the repository. Run `stow --restow` when a
 commit adds, removes, moves, or changes the deployment path of files. It is
 also safe to run after every pull. On macOS, add `macos` to the command. Update
 cloned dependencies separately in `~/.oh-my-zsh`.
+
+The `lazygit` package stores its shared configuration in
+`~/.config/lazygit/config.yml`. Interactive Zsh sets `LG_CONFIG_FILE` so Lazygit
+uses it on macOS as well as Linux. Diff previews use the installed `delta`
+binary and inherit its appearance settings from `git/.gitconfig`.
 
 ## Persisting Changes
 

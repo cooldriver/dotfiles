@@ -43,7 +43,7 @@ de son programme de signature ; les autres casks utilisent `~/Applications`.
 Installer Oh My Zsh et Spaceship selon le README, puis prévisualiser :
 
 ```bash
-stow --simulate --verbose --target "$HOME" shell git vim btop zellij macos
+stow --simulate --verbose --target "$HOME" shell git vim btop zellij lazygit macos
 ```
 
 Le paquet `macos` comprend maintenant `~/.config/direnv/direnvrc` et le lanceur
@@ -54,7 +54,7 @@ contenu ; en particulier, conserver les autres helpers direnv utiles.
 Après résolution des conflits :
 
 ```bash
-stow --target "$HOME" shell git vim btop zellij macos
+stow --target "$HOME" shell git vim btop zellij lazygit macos
 ```
 
 Ouvrir un nouveau terminal de connexion : `~/.local/bin` doit être dans le PATH
