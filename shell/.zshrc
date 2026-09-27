@@ -20,9 +20,9 @@ if command -v direnv >/dev/null 2>&1; then
   eval "$(direnv hook zsh)"
 fi
 
-# Atuin owns Up when installed; Zellij handles Ctrl-R and Ctrl-T in its normal mode.
+# Atuin owns Ctrl-R; Up keeps the usual Zsh history navigation.
 if command -v atuin >/dev/null 2>&1; then
-  eval "$(atuin init zsh --disable-ctrl-r)"
+  eval "$(atuin init zsh --disable-up-arrow)"
 fi
 
 if command -v zoxide >/dev/null 2>&1; then

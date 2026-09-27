@@ -4,8 +4,8 @@ Le paquet Stow `shell` initialise Atuin quand le binaire est disponible.
 
 | Raccourci ou usage | Outil |
 | --- | --- |
-| Flèche haut | Historique Atuin si installé ; sinon, historique habituel de Zsh |
-| `Ctrl+R` | Recherche historique standard de Zsh hors de Zellij ; mode redimensionnement dans Zellij |
+| Flèche haut | Parcours de l'historique Zsh |
+| `Ctrl+R` | Recherche Atuin si installé ; sinon, recherche habituelle de Zsh, y compris dans Zellij en mode normal |
 | `Ctrl+T` | Mode onglets dans Zellij |
 | Navigation entre répertoires | `zoxide` si installé, avec `z` |
 | Navigation Git interactive | Lazygit, lancé à la demande |
@@ -34,11 +34,10 @@ bindkey '^[OA'
 bindkey '^R'
 ```
 
-Résultats attendus : widget Atuin pour la flèche haut ; hors de Zellij,
-`Ctrl+R` utilise la recherche habituelle de Zsh. Dans Zellij, le mode normal
-reçoit `Ctrl+R` et `Ctrl+T` avant Zsh ; vérifier la flèche haut.
-Atuin modifie donc l'usage de la flèche haut : elle ouvre la recherche d'historique
-au lieu de parcourir directement les commandes précédentes.
+Résultats attendus : `Ctrl+R` ouvre la recherche Atuin, y compris dans Zellij
+en mode normal ; la flèche haut parcourt les commandes précédentes dans Zsh.
+Zellij réserve `Ctrl+N` au mode redimensionnement et `Ctrl+T` au mode onglets.
+Les réglages locaux de Zsh ou du terminal peuvent modifier ces raccourcis.
 
 ## Synchronisation privée par machine
 

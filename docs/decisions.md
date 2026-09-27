@@ -94,9 +94,9 @@ fichiers effectivement utilisés.
 - Zellij remplace tmux sur macOS et sur les serveurs Linux. Le paquet Stow
   `zellij` partage une configuration minimale ; aucune session ne démarre
   automatiquement au lancement de Zsh ou à la connexion SSH.
-- Le mode normal et les raccourcis Zellij restent ceux par défaut. Atuin utilise
-  la flèche haut plutôt que `Ctrl+R` ; dans Zellij, `Ctrl+R` et `Ctrl+T`
-  appartiennent au multiplexeur.
+- Le mode normal et les raccourcis Zellij restent ceux par défaut : `Ctrl+N`
+  ouvre le redimensionnement et `Ctrl+T` les onglets. Atuin utilise `Ctrl+R`,
+  y compris dans Zellij ; la flèche haut conserve le parcours de l'historique Zsh.
 - macOS utilise Homebrew ; Linux utilise une archive officielle versionnée,
   vérifiée par SHA-256, car Zellij n'est pas disponible dans tous les dépôts APT.
 

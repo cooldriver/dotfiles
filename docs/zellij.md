@@ -33,8 +33,9 @@ zellij attach travail
 
 Dans Zellij, le mode normal et les raccourcis affichés par l'interface sont
 actifs dès le démarrage : `Ctrl+P` pour les panneaux, `Ctrl+T` pour les onglets,
-`Ctrl+R` pour le redimensionnement et `Ctrl+O` pour les sessions. La flèche haut
-ouvre l'historique Atuin dans Zsh si Atuin est installé. `Ctrl+G` passe
+`Ctrl+N` pour le redimensionnement et `Ctrl+O` pour les sessions. `Ctrl+R`
+est transmis à Zsh pour ouvrir la recherche Atuin si elle est installée ;
+la flèche haut parcourt l'historique Zsh. `Ctrl+G` passe
 temporairement en mode verrouillé
 pour transmettre les raccourcis à une application dans un panneau.
 Pour quitter le terminal sans terminer le travail, utiliser `Ctrl+O`, puis

@@ -63,12 +63,14 @@ et PHP 8.5 est la version par défaut. Les formules PHP sont installées sans
 liaison globale ; aucun switch de liens n'est nécessaire.
 
 Atuin est initialisé automatiquement par `.zshrc` lorsqu'il est installé :
-la flèche haut ouvre sa recherche d'historique. La synchronisation privée est
-automatique sur Tatooine et manuelle sur Toola ; voir
+`Ctrl+R` ouvre sa recherche, tandis que la flèche haut parcourt l'historique
+Zsh. La synchronisation privée est automatique sur Tatooine et manuelle sur
+Toola ; voir
 [Atuin](atuin.md) pour le déploiement et l'import initial. Les réglages visuels
 iTerm2 et les préférences TUI restent des choix à ajuster pendant le pilote.
-Zellij remplace tmux et utilise son mode normal par défaut : `Ctrl+R` et
-`Ctrl+T` y contrôlent Zellij, tandis que la flèche haut reste à Atuin.
+Zellij remplace tmux et utilise son mode normal par défaut : `Ctrl+N` ouvre
+le redimensionnement, `Ctrl+T` contrôle les onglets et `Ctrl+R` atteint Atuin
+dans Zsh.
 Voir [Zellij](zellij.md) pour les sessions locales et SSH.
 
 ## 3. PHP et Composer
