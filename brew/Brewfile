@@ -11,7 +11,6 @@ tap 'shivammathur/extensions', trusted: true
 
 # CLI Essentials
 brew 'git'          # Version control
-brew 'neovim'       # Text editor
 brew 'stow'         # Deploy dotfiles with symlinks
 brew 'zellij'       # Term multiplexer
 brew 'vim'          # Text editor
@@ -158,7 +157,6 @@ cask 'openlogi'     # Alternative to Logitech Options+
 
 # Productivity
 mas 'Bear', id: 1091189122
-mas 'Dropover', id: 1355679052
 cask 'lookaway'     # Reminds you to look away from the screen
 cask 'obsidian'     # Markdown note taking app
 mas 'Reeder Classic.', id: 1529448980
