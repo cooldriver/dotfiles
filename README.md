@@ -21,6 +21,8 @@ See the [manual macOS guide](docs/macos-installation.md) for PHP 7.4/8.5,
 Composer/Xdebug, 1Password, GitHub accounts, and Time Machine exclusions.
 DBngin databases and OrbStack services are described in [services](services/README.md).
 Shell history and private per-host sync are described in [Atuin](docs/atuin.md).
+Toola's optional LAN-only Atuin LaunchAgent requires a separate, explicit
+installation on Toola; the shared Stow packages do not activate it.
 See [Zellij](docs/zellij.md) for installation and session handling on both systems.
 
 ## macOS Bootstrap

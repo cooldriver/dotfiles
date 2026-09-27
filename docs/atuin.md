@@ -49,7 +49,7 @@ de configuration avec `ATUIN_CONFIG_DIR` :
 | Machine | Mode | Réglage Zsh |
 | --- | --- | --- |
 | Tatooine, Mac mini fixe sur le LAN | Automatique, intervalle de 5 minutes | `~/.config/atuin/hosts/tatooine/config.toml` |
-| Toola, MacBook mobile | Manuel, même lorsqu'il est sur le LAN | `~/.config/atuin/config.toml` |
+| Toola, MacBook mobile | Manuel dans Zsh ; LaunchAgent optionnel uniquement sur le LAN | `~/.config/atuin/config.toml` |
 | Autres machines | Manuel par défaut | Configuration TOML |
 
 Les profils sont `shell/.config/zsh/hosts/tatooine.zsh` et `toola.zsh`.
@@ -89,7 +89,8 @@ Toola est donc normale. `atuin sync` permet un contrôle manuel de l'échange.
 
 `update_check = false` et le daemon désactivé restent communs aux deux postes.
 Homebrew reste responsable des mises à jour du client. Sur Toola, aucune tentative
-automatique de synchronisation n'est déclenchée, y compris hors VPN.
+automatique n'est déclenchée par Zsh ; le LaunchAgent décrit ci-dessous ne tente
+une synchronisation que sur le LAN.
 
 Après ouverture temporaire des inscriptions sur le serveur, depuis le LAN/VPN :
 
@@ -104,11 +105,50 @@ par `atuin key` dans le gestionnaire de mots de passe, puis fermer les inscripti
 Sur les autres machines, configurer la même URL avant `atuin login -u <username>` ;
 saisir le mot de passe et la même clé aux invites, puis lancer `atuin sync`.
 
-Sur Toola hors VPN, l'enregistrement et la recherche restent locaux. Après
-reconnexion, lancer `atuin sync` ; Toola ne rattrape pas automatiquement la
-synchronisation. Tatooine se synchronise lors de l'utilisation du shell ;
-`atuin sync` permet aussi de forcer un échange immédiat. Un appel manuel hors réseau
-peut échouer explicitement, sans nouvelle tentative déclenchée par le shell.
+Sur Toola hors LAN, l'enregistrement et la recherche restent locaux. Au retour
+sur le LAN, le LaunchAgent optionnel rattrape la synchronisation à son prochain
+passage si le Mac est éveillé. Tatooine se synchronise lors de l'utilisation
+du shell ; `atuin sync` permet aussi de forcer un échange immédiat sur une
+connexion fonctionnelle. Un appel manuel hors réseau peut échouer explicitement.
+
+### Synchronisation locale optionnelle sur Toola
+
+Le dépôt fournit `services/macos/toola-atuin-sync.sh` et son LaunchAgent dans
+`services/macos/`. **Ils ne sont pas installés par Stow ni activés par le
+bootstrap commun.** L'installateur refuse toute autre machine que Toola et
+refuse de remplacer un fichier cible différent. Sur Toola uniquement :
+
+```bash
+bash bootstrap/macos/install-toola-atuin-sync.sh
+launchctl print "gui/$(id -u)/com.fieldbook.toola-atuin-sync"
+```
+
+Le job est exécuté sous le compte utilisateur environ toutes les cinq minutes
+quand sa session est ouverte et que macOS le réveille ; ce n'est pas une
+garantie de cadence pendant la veille. Le script exige le nom d'hôte `toola`,
+l'adresse Ethernet `10.0.1.34` ou Wi-Fi `10.0.1.35` sur une interface `en*`,
+et une résolution système **uniquement** vers `10.0.30.100` pour
+`atuin.hwapp.ovh`. Il teste alors HTTPS avec validation TLS, en épinglant cette
+adresse privée pour ne jamais interroger l'IP publique, puis lance `atuin sync`
+avec la configuration manuelle du compte. Sans ces conditions, il sort sans
+faire de requête vers Gamorr. Sur VPN depuis l'extérieur, Toola résout ce nom
+vers l'IP publique : aucune synchronisation automatique n'est prévue.
+
+Pour tester : depuis le LAN, vérifier `dscacheutil -q host -a name atuin.hwapp.ovh`
+(résultat attendu : `10.0.30.100`), puis exécuter
+`~/.local/bin/toola-atuin-sync` et contrôler la synchronisation sur l'autre
+poste. Hors LAN, exécuter le même script et vérifier qu'aucune tentative de
+synchro n'a lieu. Les échecs d'Atuin sont signalés avec le tag
+`toola-atuin-sync` dans les journaux système ; les indisponibilités de réseau
+sont silencieuses. Le LaunchAgent ne lance pas deux instances du même job
+simultanément. Une mise à jour du script ou du plist déjà installé nécessite
+de comparer les copies locales, de décharger le job avec `launchctl bootout`,
+de remplacer les fichiers après sauvegarde si nécessaire, puis de relancer
+l'installateur. Pour arrêter le job sans supprimer les données Atuin :
+
+```bash
+launchctl bootout "gui/$(id -u)/com.fieldbook.toola-atuin-sync"
+```
 
 Les bases, la clé et la session sous `~/.local/share/atuin` restent hors du dépôt.
 La sauvegarde serveur contient l'historique chiffré et ne remplace pas la sauvegarde
