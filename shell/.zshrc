@@ -1,5 +1,8 @@
 [[ -o interactive ]] || return
 
+macos_rc="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/macos.zshrc"
+[[ -r "$macos_rc" ]] && source "$macos_rc"
+
 export LG_CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/lazygit/config.yml"
 
 export ZSH="$HOME/.oh-my-zsh"
