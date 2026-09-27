@@ -167,7 +167,6 @@ mas 'Things3', id: 904280696
 cask '1password', args: { appdir: '/Applications' }
 cask '1password-cli'
 mas 'Amphetamine', id: 937984704
-cask 'coteditor'    # Plain-text editor
 cask 'keka'         # Archive utility
 brew 'mas'          # Mac App Store CLI
 cask 'transmit'     # FTP, SFTP and cloud storage client
