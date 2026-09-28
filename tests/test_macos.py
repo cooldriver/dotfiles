@@ -257,6 +257,8 @@ printf '%s/php installs/%s\\n' "$TEST_ROOT" "$2"
                    "shell", "git", "vim", "btop", "macos"]
         result = self.run_command(command)
         self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual((self.home / ".spaceshiprc.zsh").resolve(),
+                         ROOT / "shell/.spaceshiprc.zsh")
         self.assertEqual((self.home / ".config/direnv/direnvrc").resolve(),
                          ROOT / "macos/.config/direnv/direnvrc")
         for name in ["composer", "with-github", "gh-personal", "gh-work"]:

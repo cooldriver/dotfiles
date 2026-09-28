@@ -8,7 +8,7 @@ data.
 
 | Package | Target | Contents |
 | --- | --- | --- |
-| `shell` | macOS and Linux | Zsh, aliases, optional integrations, and per-account GitHub CLI launchers |
+| `shell` | macOS and Linux | Zsh, Spaceship prompt, aliases, optional integrations, and per-account GitHub CLI launchers |
 | `git` | macOS and Linux | Shared Git settings |
 | `vim` | macOS and Linux | Minimal Vim configuration |
 | `btop` | macOS and Linux | Portable btop preferences |
@@ -21,6 +21,10 @@ See the [manual macOS guide](docs/macos-installation.md) for PHP 7.4/8.5,
 Composer/Xdebug, 1Password, GitHub accounts, and Time Machine exclusions.
 DBngin databases and OrbStack services are described in [services](services/README.md).
 Shell history and private per-host sync are described in [Atuin](docs/atuin.md).
+The `shell` package deploys `~/.spaceshiprc.zsh`: it moves the time to the
+right and the directory after the host, always shows user and host, and reports
+failed commands. Other Spaceship sections keep their default order. Spaceship
+loads this file automatically when installed.
 Toola's optional LAN-only Atuin LaunchAgent requires a separate, explicit
 installation on Toola; the shared Stow packages do not activate it.
 See [Zellij](docs/zellij.md) for installation and session handling on both systems.
