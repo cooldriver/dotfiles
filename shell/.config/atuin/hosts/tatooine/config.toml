@@ -6,3 +6,6 @@ update_check = false
 
 [daemon]
 enabled = false
+
+[ui]
+columns = ["duration", "time", "host", "command"]
