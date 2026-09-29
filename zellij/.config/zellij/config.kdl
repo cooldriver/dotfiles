@@ -1,2 +1,14 @@
 on_force_close "detach"
 web_server false
+
+keybinds {
+    tab {
+        bind "n" {
+	    // Open new tabs in the home directory
+	    // (new panes continue to open in current directory)
+            NewTab { cwd "~"; }
+            SwitchToMode "Normal";
+        }
+    }
+}
+
