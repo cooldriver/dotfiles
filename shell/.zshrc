@@ -1,5 +1,9 @@
 [[ -o interactive ]] || return
 
+# Terminal editors default to Vim on every host; local and host files can override.
+export EDITOR=vim
+export VISUAL=vim
+
 macos_rc="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/macos.zshrc"
 [[ -r "$macos_rc" ]] && source "$macos_rc"
 

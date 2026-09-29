@@ -253,16 +253,27 @@ printf '%s/php installs/%s\\n' "$TEST_ROOT" "$2"
 
     @unittest.skipUnless(shutil.which("stow"), "Stow is needed for the deployment test")
     def test_stow_deploys_into_temporary_home_and_detects_conflict(self):
-        command = ["stow", "--dir", ROOT, "--target", self.home,
-                   "shell", "git", "vim", "btop", "macos"]
-        result = self.run_command(command)
-        self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual((self.home / ".spaceshiprc.zsh").resolve(),
-                         ROOT / "shell/.spaceshiprc.zsh")
-        self.assertEqual((self.home / ".config/direnv/direnvrc").resolve(),
-                         ROOT / "macos/.config/direnv/direnvrc")
+        common = ["shell", "git", "vim", "btop", "zellij", "lazygit"]
+        for profile, packages in [("linux", common), ("macos", common + ["macos"])]:
+            home = self.base / f"{profile}-home"
+            home.mkdir()
+            result = self.run_command(["stow", "--dir", ROOT, "--target", home,
+                                       *packages])
+            self.assertEqual(result.returncode, 0, result.stderr)
+            for deployed, source in [
+                (".spaceshiprc.zsh", "shell/.spaceshiprc.zsh"),
+                (".config/zellij/config.kdl", "zellij/.config/zellij/config.kdl"),
+                (".config/lazygit/config.yml", "lazygit/.config/lazygit/config.yml"),
+            ]:
+                self.assertEqual((home / deployed).resolve(), ROOT / source)
+            if profile == "macos":
+                self.assertEqual((home / ".config/direnv/direnvrc").resolve(),
+                                 ROOT / "macos/.config/direnv/direnvrc")
+            else:
+                self.assertFalse((home / ".config/direnv/direnvrc").exists())
         for name in ["composer", "with-github", "gh-personal", "gh-work"]:
-            self.assertTrue(os.access(self.home / ".local/bin" / name, os.X_OK), name)
+            home = self.base / ("macos-home" if name == "composer" else "linux-home")
+            self.assertTrue(os.access(home / ".local/bin" / name, os.X_OK), name)
         other = self.base / "existing-home"
         (other / ".config/direnv").mkdir(parents=True)
         existing = other / ".config/direnv/direnvrc"

@@ -7,6 +7,9 @@
 [gpg]
     format = ssh
 
+[gpg "ssh"]
+    allowedSignersFile = ~/.ssh/allowed_signers
+
 [user]
     useConfigOnly = true
 

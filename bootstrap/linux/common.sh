@@ -46,8 +46,8 @@ install_optional() {
 }
 
 install_common_packages() {
-  install_required zsh git vim btop stow curl ca-certificates
-  install_optional bat direnv fd-find git-delta eza fastfetch jq ripgrep shellcheck zoxide zsh-syntax-highlighting
+  install_required zsh git git-delta vim btop stow curl ca-certificates
+  install_optional bat direnv fd-find eza fastfetch jq lazygit ripgrep shellcheck zoxide zsh-syntax-highlighting
   bash "$script_dir/install-zellij.sh"
 }
 
