@@ -7,6 +7,9 @@ SPACESHIP_RPROMPT_ORDER=(time)
 spaceship remove dir
 spaceship add --after host dir
 
+# Hide the Docker version and context (including OrbStack).
+spaceship remove docker
+
 # Show user and host on every machine; report failed commands.
 SPACESHIP_USER_SHOW=always
 SPACESHIP_HOST_SHOW=always

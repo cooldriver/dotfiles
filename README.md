@@ -55,9 +55,10 @@ See [AGENTS.md](AGENTS.md) for repository guidance when working with coding agen
 - [Zellij](docs/zellij.md): installation and session handling on both systems.
 
 The `shell` package also deploys `~/.spaceshiprc.zsh`: it moves the time to the
-right and the directory after the host, always shows user and host, and reports
-failed commands. Other Spaceship sections keep their default order. Spaceship
-loads this file automatically when installed. Shell aliases live in
+right and the directory after the host, hides the Docker/OrbStack section,
+always shows user and host, and reports failed commands. Other Spaceship
+sections keep their default order. Spaceship loads this file automatically
+when installed. Shell aliases live in
 [`shell/.config/zsh/aliases.zsh`](shell/.config/zsh/aliases.zsh).
 
 ## macOS bootstrap
