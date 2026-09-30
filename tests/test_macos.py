@@ -250,6 +250,14 @@ printf '%s/php installs/%s\\n' "$TEST_ROOT" "$2"
             result = self.run_command(compose + ["--env-file", "/dev/null", "-f",
                                        ROOT / "services" / filename, "config", "--quiet"])
             self.assertEqual(result.returncode, 0, result.stderr)
+        self.env["DEV_SERVICES_RESTART"] = "unless-stopped"
+        for filename in ["compose.yaml", "compose.redis.yaml", "compose.meilisearch.yaml"]:
+            result = self.run_command(compose + ["--env-file", "/dev/null", "-f",
+                                       ROOT / "services" / filename, "--profile", "*",
+                                       "config", "--format", "json"])
+            self.assertEqual(result.returncode, 0, result.stderr)
+            for service in json.loads(result.stdout)["services"].values():
+                self.assertEqual(service["restart"], "unless-stopped")
 
     @unittest.skipUnless(shutil.which("stow"), "Stow is needed for the deployment test")
     def test_stow_deploys_into_temporary_home_and_detects_conflict(self):

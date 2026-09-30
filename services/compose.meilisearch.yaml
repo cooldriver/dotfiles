@@ -3,7 +3,7 @@ services:
   meilisearch:
     image: ${MEILISEARCH_IMAGE:?Set an explicit compatible Meilisearch image tag or digest}
     platform: linux/arm64
-    restart: "no"
+    restart: ${DEV_SERVICES_RESTART:-no}
     environment:
       MEILI_ENV: production
       MEILI_MASTER_KEY: ${MEILI_MASTER_KEY:?Set a local Meilisearch master key of at least 16 bytes}

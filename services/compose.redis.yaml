@@ -3,7 +3,7 @@ services:
   redis:
     image: ${REDIS_IMAGE:?Set an explicit compatible Redis image tag or digest}
     platform: linux/arm64
-    restart: "no"
+    restart: ${DEV_SERVICES_RESTART:-no}
     command: [redis-server, --appendonly, "yes"]
     ports:
       - "127.0.0.1:${REDIS_PORT:-6379}:6379"

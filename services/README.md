@@ -52,8 +52,21 @@ Vérifier la couverture réelle des données DBngin par Time Machine ; une copie
 1. Installer/lancer OrbStack et vérifier `docker context show`, `docker version`
    et `docker compose version`.
 2. Copier `services/.env.example` dans `~/.config/dev-services/local.env`, après
-   création de son dossier, puis limiter ses permissions à `600`. Les valeurs
-   Redis et Meilisearch ne sont requises que pour leurs fichiers Compose.
+   création de son dossier, puis limiter ses permissions à `600`. Si le fichier
+   existe déjà, conserver ses réglages et reporter seulement les nouvelles
+   valeurs utiles. Ce fichier privé n'est pas mis à jour automatiquement par
+   les changements de l'exemple. Sur Toola, régler `DEV_SERVICES_RESTART=unless-stopped` ;
+   sur Tatooine, laisser `no` pour ne pas charger les services inutiles.
+   Renseigner `REDIS_IMAGE=redis:8.10.2` et
+   `MEILISEARCH_IMAGE=getmeili/meilisearch:v1.54.2` dans le fichier local
+   (versions stables publiées et images ARM64 vérifiées le 2026-09-30).
+   Vérifier d'abord la compatibilité des projets et des données existantes,
+   notamment avant toute montée de version majeure.
+   Pour `MEILI_MASTER_KEY`, générer une clé aléatoire locale avec
+   `openssl rand -hex 32` (32 octets aléatoires, 64 caractères hexadécimaux),
+   puis la placer uniquement dans le fichier privé et la conserver dans
+   1Password. Ne pas mettre la vraie clé dans ce dépôt, ni l'utiliser côté
+   navigateur : réserver la clé maître à la gestion des clés API.
 3. Depuis la racine du dépôt :
 
    ```bash
@@ -70,17 +83,20 @@ volume persistant. Pour Laravel, renseigner `MAIL_MAILER=smtp`,
 `MAIL_HOST=127.0.0.1`, `MAIL_PORT=1025`, sans authentification ni TLS si le
 projet le permet ; envoyer et retrouver un message de test dans l'interface.
 
-Mailpit `1.31.2` est fixé par digest ARM64 dans `services/compose.yaml`. Les
-profils empêchent son démarrage implicite et aucun redémarrage automatique
-n'est configuré. Les ports Compose sont liés uniquement à `127.0.0.1`.
+Mailpit `1.31.2` est déjà fixé par version et digest ARM64 dans
+`services/compose.yaml` : aucune variable `MAILPIT_IMAGE` n'est nécessaire.
+Son profil empêche son démarrage implicite par un simple `up` ; la commande
+`up -d --wait mailpit` ci-dessus le crée explicitement. Les ports Compose sont
+liés uniquement à `127.0.0.1`.
 
-## Redis et Meilisearch à la demande
+## Redis et Meilisearch
 
-Choisir une image avec version explicite ou digest selon les projets, puis
-vérifier sa disponibilité ARM64. Meilisearch exige une clé locale d'au moins
-16 octets ; ne pas publier la sortie de `docker compose config` sans `--quiet`
-si elle contient des secrets interpolés. Les variables déjà exportées dans le
-shell ont priorité sur le fichier local.
+Les images recommandées dans l'exemple sont des versions explicites, non des
+digests immuables : une mise à jour des images doit rester une opération
+contrôlée. Meilisearch exige une clé locale d'au moins 16 octets ; ne pas
+publier la sortie de `docker compose config` sans `--quiet` si elle contient
+des secrets interpolés. Les variables déjà exportées dans le shell ont
+priorité sur le fichier local.
 
 ```bash
 docker compose --env-file "$DEV_SERVICES_ENV" -f services/compose.redis.yaml config --quiet
@@ -90,6 +106,14 @@ docker compose --env-file "$DEV_SERVICES_ENV" -f services/compose.meilisearch.ya
 docker compose --env-file "$DEV_SERVICES_ENV" -f services/compose.meilisearch.yaml up -d
 curl --fail http://127.0.0.1:7700/health
 ```
+
+Sur Toola, activer également le lancement d'OrbStack à la connexion macOS.
+Après le premier `up -d` de chacun des trois projets Compose, la politique
+`unless-stopped` redémarre les conteneurs quand le moteur redémarre (sans
+relancer Compose) ; `stop` manuel les laisse arrêtés au redémarrage. Une
+modification de `DEV_SERVICES_RESTART` dans `local.env` ne s'applique aux
+conteneurs déjà créés qu'après un nouveau `up -d` avec le fichier Compose
+concerné. Ne pas lancer les trois services sur Tatooine par défaut.
 
 Meilisearch n'a pas de healthcheck interne tant que les outils disponibles
 dans l'image retenue ne sont pas vérifiés ; contrôler son endpoint et un index
