@@ -162,6 +162,19 @@ separately from a source you trust if you want to use it. The `git-delta` APT
 package is required by the shared Git configuration and provides Lazygit's
 `delta` diff previews when Lazygit is installed.
 
+## Development checks
+
+Use [AGENTS.md](AGENTS.md) for safety rules and the independent review process. Install the pinned Python linter in an isolated environment with `python -m pip install -r requirements-dev.txt`. Static shell checks require Bash, Zsh, and ShellCheck; optional integration tests use Stow, direnv, and Docker Compose when available.
+
+```sh
+bash scripts/check-shell.sh
+python -m ruff check --no-cache .
+python -B scripts/check-tests.py
+git diff --check
+```
+
+The GitHub workflow runs on Ubuntu and macOS with minimal permissions and commit-pinned actions. Tests use temporary homes and fake commands, not real bootstrap, services, or credentials. The identity test initializes a temporary Git repository; agents exclude it locally under the repository's Git rule and report the exclusion, while CI runs it. Optional skipped tests must be reported; CI is not proof of deployment on the personal machines or Debian servers.
+
 ## Updating
 
 ```bash
