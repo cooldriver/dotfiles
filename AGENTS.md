@@ -28,8 +28,7 @@ do not turn it into a generic dotfiles framework.
 - Keep `README.md` and relevant guides in sync with behavior changes.
 - Update `AGENTS.md` when repository conventions, safety rules, or validation
   practices change; it does not need an edit for every configuration change.
-- For shell changes, use `zsh -n` or `bash -n` as appropriate. Run the offline
-  tests with `python3 -m unittest discover -s tests` when relevant.
+- For shell changes, use `zsh -n` or `bash -n` as appropriate. Run offline tests with `python3 -B scripts/check-tests.py` when relevant, respecting the Git exclusion described below.
 - For Stow layout changes, preview with `stow --simulate --verbose --dir .
   --target <temporary-home> <packages>`; resolve conflicts rather than forcing
   links over existing files.
@@ -43,6 +42,14 @@ do not turn it into a generic dotfiles framework.
 - Add regression tests for bugs and useful tests for changed behavior, errors, and preservation of existing files. Keep tests offline, with synthetic credentials and temporary homes; do not weaken assertions to hide defects.
 - One existing identity test runs `git init` in a temporary repository. `scripts/check-tests.py` excludes exactly `test_git_personal_identity_is_default_and_work_overrides_it` under the Git rule above and reports it; CI retains the full suite. Agents use this runner locally. Never claim a full local pass when it was excluded.
 - CI checks Ubuntu and macOS but does not validate real Debian deployment, Homebrew bootstrap, service activation, or a user's actual environment. Report skipped optional tests separately.
+
+## Problem-solving approach
+
+- For significant changes, identify expected behavior, acceptance criteria, invariants, and affected shell/platform/deployment contracts before coding. Scale analysis to risk; do not require a formal plan for trivial work.
+- If the requested implementation does not fit the need, explain why and propose an alternative with concrete tradeoffs. Do not change scope or deployment policy without agreement.
+- For bugs, reproduce when possible and identify the cause before fixing. Verify that the regression test fails before the fix when feasible and safe; otherwise disclose the limitation. Do not hide defects with ignored errors, unjustified defaults, or retries.
+- Where relevant, consider partial installation, interruptions, repeated execution, missing optional tools, and existing user configuration. Validate with temporary homes and fake commands, never real bootstrap or service activation; do not invent future requirements.
+- Before independent review, inspect the entire diff and new files for requirement coverage, preserved contracts/files, observable-behavior tests rather than implementation mirroring, unrelated edits, and avoidable complexity. The developer owns quality; the reviewer is a second line of defense.
 
 ## Independent review and completion
 
