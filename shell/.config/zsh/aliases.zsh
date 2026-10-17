@@ -13,5 +13,23 @@ if command -v eza >/dev/null 2>&1; then
 fi
 
 hpath() {
-  print -l ${(s.:.)PATH} | sort
+  if (( $# > 1 )) || { (( $# == 1 )) && [[ "$1" != --ordered ]]; }; then
+    print -u2 -r -- 'Usage: hpath [--ordered]'
+    return 2
+  fi
+
+  local -a entries=()
+  local entry
+  local -i i
+  for (( i = 1; i <= ${#path}; i++ )); do
+    printf -v entry '%3d\t%s' "$i" "${path[i]}"
+    entries+=("$entry")
+  done
+  (( ${#entries} )) || return 0
+
+  if (( $# == 0 )); then
+    print -rl -- "${entries[@]}" | sort -s -t $'\t' -k2
+  else
+    print -rl -- "${entries[@]}"
+  fi
 }

@@ -77,6 +77,12 @@ Extra options and paths are passed to eza normally: `lz -a` includes hidden file
 
 `lzr` replaces the old `lat` shortcut and lists all entries rather than truncating to ten. `lz` is now a lightweight grid; use `lzg` for Git details. Recursive directory sizes are deliberately left to dedicated disk-usage tools. Colors and icons remain enabled even when piping these shortcuts; use plain `eza` or `ls` when that is undesirable. Open a new shell after updating to discard old alias definitions.
 
+### Shell navigation and diagnostics
+
+`hpath` lists PATH entries alphabetically for scanning; `hpath --ordered` preserves their actual command-search order. Both views prefix each entry with its original position in PATH (starting at 1), so the same number always indicates the same search priority regardless of display order. Each entry is printed on its own line, without removing duplicates.
+
+With the configured Oh My Zsh Git plugin, `grt` (Git RooT) returns to the current repository's root. Use `cd -` to return to the previous directory.
+
 ## macOS bootstrap
 
 1. Install Homebrew from its official website.
