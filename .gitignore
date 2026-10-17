@@ -5,3 +5,7 @@
 .env
 .env.local
 __pycache__/
+# Defense in depth: private SSH rules and age identities never belong here.
+config.private
+*.agekey
+.ssh-private-*

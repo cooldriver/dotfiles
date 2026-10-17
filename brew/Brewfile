@@ -12,6 +12,7 @@ tap 'shivammathur/extensions', trusted: true
 # CLI Essentials
 brew 'git'          # Version control
 brew 'stow'         # Deploy dotfiles with symlinks
+brew 'age'          # Encrypt personal SSH configuration; identity stays in 1Password
 brew 'zellij'       # Term multiplexer
 brew 'vim'          # Text editor
 

@@ -169,8 +169,7 @@ le mode debug ; la couverture de tests utilise le mode `coverage` séparément.
 
 1. Connecter 1Password, activer son agent SSH, puis exporter les clés **publiques**
    pro/perso. Les clés privées restent dans les coffres.
-2. Adapter `docs/ssh-github-config.example` dans `~/.ssh/config`. Vérifier le chemin
-   du socket avec les réglages de l'application installée.
+2. Suivre le [workflow SSH chiffré](ssh.md) pour restaurer les règles personnelles et déployer explicitement le socle public avec Stow ; il n'est jamais activé par le bootstrap standard. Les alias `personalgit` et `workgit` sont déjà définis dans ce socle : aucune recopie manuelle n'est nécessaire. Le fichier privé restauré sélectionne leurs chemins de clés publiques ; exporter les clés correspondantes depuis 1Password vers ces chemins. Vérifier le chemin du socket avec les réglages de l'application installée.
 3. Préparer `~/.config/git/personal.gitconfig` et `work.gitconfig` à partir de
    `docs/git-identities.example.gitconfig`. Renseigner les vrais noms/emails et les
    clés publiques de signature localement. Créer `~/.ssh/allowed_signers` avec une
@@ -194,8 +193,8 @@ le mode debug ; la couverture de tests utilise le mode `coverage` séparément.
    ```bash
    gh-personal api user --jq .login
    gh-work api user --jq .login
-   ssh -T git@github-personal
-   ssh -T git@github-work
+   ssh -T git@personalgit
+   ssh -T git@workgit
    git config --show-origin --get user.email
    git config --show-origin --get user.signingkey
    ```
@@ -215,6 +214,19 @@ utiliser explicitement `gh-work`/`gh-personal` ou `with-github LOGIN gh ...` et
 vérifier l'identité depuis le contexte réel. La connexion au modèle IA est
 indépendante du compte GitHub. L'environnement d'une fenêtre existante n'est pas
 modifié par un nouveau lancement depuis le terminal.
+
+### Intégration du CLI 1Password
+
+L'intégration du CLI `op` est distincte de l'agent SSH. Pour récupérer notamment l'identité de chiffrement du [workflow SSH](ssh.md), ouvrir et déverrouiller 1Password, puis activer **Réglages → Développeur → Intégrer avec 1Password CLI**. Utiliser l'intégration de l'application plutôt qu'ajouter manuellement le compte ou créer un token de service pour ce poste personnel.
+
+Sur macOS 27, vérifier **Réglages Système → Confidentialité et sécurité → Fichiers et dossiers**, sous l'application qui héberge le terminal (terminal autonome ou éditeur). Lors de la validation sur Toola le 2026-10-17, il a fallu autoriser les deux entrées :
+
+- **Données partagées par 1Password et les apps affiliées** ;
+- **Données partagées par 1Password Updater et les apps affiliées**.
+
+Les libellés et les entrées disponibles dépendent des composants installés. Si une entrée manque, lancer une commande `op` et accepter la demande d'accès macOS, puis revérifier. Quitter complètement et rouvrir l'application hébergeant le terminal après modification ; répéter pour chaque application utilisée.
+
+Valider avec `op vault list` et autoriser la demande 1Password : la liste des coffres doit apparaître. Si `op` affiche « No accounts configured », répondre `n` à la proposition d'ajout manuel et revérifier ces réglages ; ne pas contourner le diagnostic avec `op signin -f` ou `eval`. Voir la [documentation officielle et le dépannage macOS 27](https://developer.1password.com/docs/cli/app-integration/#troubleshooting).
 
 ## 6. Services, infrastructure et sauvegarde
 

@@ -7,7 +7,8 @@ do not turn it into a generic dotfiles framework.
 
 - GNU Stow deploys `shell`, `git`, `vim`, `btop`, `zellij`, and `lazygit` on
   macOS and Linux. Deploy `macos` only on macOS.
-- `brew`, `bootstrap`, `docs`, `services`, `scripts`, and `tests` are not Stow packages.
+- `ssh` is an optional macOS-workstation-only Stow package; deploy explicitly with `--no-folding` after restoring the private configuration. Never add it to Linux/server defaults.
+- `brew`, `bootstrap`, `docs`, `services`, `scripts`, `tests`, and `private` are not Stow packages.
 - Keep Zsh as the shared shell. Follow the existing package layout and make
   integrations optional when the underlying command is not installed.
 - Keep installation and service activation explicit and reviewable.
@@ -17,7 +18,7 @@ do not turn it into a generic dotfiles framework.
 ## Safety
 
 - Never commit secrets, private keys, tokens, passwords, or confidential data.
-  Git identity files and SSH configuration belong outside this repository.
+  Git identity files and plaintext personal SSH configuration belong outside this repository. The public SSH scaffold in `ssh/.ssh/config`, age ciphertext in `private/ssh/config.private.age`, and public age recipients in `private/ssh/recipients.txt` are permitted. SSH public keys and personal host inventories remain local. Never create real private age identities or decrypt real configuration as a validation step.
 - Do not deploy with Stow into the real home directory or run bootstrap scripts
   as a validation step. Use temporary directories and simulations instead.
 - Do not run Git commands that modify the working tree, index, references, or

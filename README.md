@@ -36,14 +36,17 @@ are not part of the tested setup.
 | `zellij` | macOS and Linux | Shared terminal multiplexer settings |
 | `lazygit` | macOS and Linux | Syntax-highlighted diffs using delta |
 | `macos` | macOS | OrbStack integration, project-local PHP selection, and Composer launcher |
+| `ssh` | macOS workstations, explicit opt-in | Public SSH scaffold; restore personal rules first, deploy with `--no-folding` |
 
-`brew`, `bootstrap`, `docs`, `services`, and `tests` are not deployed with Stow.
+`brew`, `bootstrap`, `docs`, `services`, `scripts`, `tests`, and `private` are not deployed with Stow.
 Stow links the selected package files into `$HOME`; it does not install software
 or apply the optional services. Preview links and resolve existing-file conflicts
 before deploying.
 See [AGENTS.md](AGENTS.md) for repository guidance when working with coding agents.
 
 ### Related guides
+
+- [Encrypted personal SSH configuration](docs/ssh.md): optional macOS workflow, local public keys and 1Password agent, age-encrypted backup and explicit restore. Not initialized or deployed automatically.
 
 - [Manual macOS setup](docs/macos-installation.md): PHP 7.4/8.5,
   Composer/Xdebug, 1Password, GitHub accounts, and Time Machine exclusions.
@@ -120,8 +123,7 @@ With the configured Oh My Zsh Git plugin, `grt` (Git RooT) returns to the curren
    verify SSH signatures; the 1Password signing program is macOS-only. These
    files remain outside this repository.
 
-5. Add the GitHub host aliases from `docs/ssh-github-config.example` to your
-   local SSH configuration. Use `github-personal` or `github-work` in remotes.
+5. Follow the [encrypted SSH workflow](docs/ssh.md) to restore personal rules and explicitly deploy the public SSH scaffold. It defines the existing `personalgit` and `workgit` aliases; the restored private rules select their local public-key paths. Export the matching public keys from 1Password to those paths. Use these aliases in remotes. The standard Stow command below does not deploy the optional `ssh` package.
 
 6. Preview deployment and resolve existing-file conflicts before applying:
 
@@ -186,7 +188,7 @@ package is required by the shared Git configuration and provides Lazygit's
 
 ## Development checks
 
-Use [AGENTS.md](AGENTS.md) for safety rules and the independent review process. Install the pinned Python linter in an isolated environment with `python -m pip install -r requirements-dev.txt`. Static shell checks require Bash, Zsh, and ShellCheck; optional integration tests use Stow, direnv, and Docker Compose when available.
+Use [AGENTS.md](AGENTS.md) for safety rules and the independent review process. Install the pinned Python linter in an isolated environment with `python -m pip install -r requirements-dev.txt`. Static shell checks require Bash, Zsh, and ShellCheck; optional integration tests use Stow, direnv, Docker Compose, and age when available. CI installs age to exercise real encryption/restoration with synthetic identities; no personal credentials are used.
 
 ```sh
 bash scripts/check-shell.sh
