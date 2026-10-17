@@ -5,8 +5,11 @@ elif command -v batcat >/dev/null 2>&1; then
 fi
 
 if command -v eza >/dev/null 2>&1; then
-  alias lat='eza --all --long --sort=modified --reverse | head -n 10'
-  alias lz='eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions'
+  alias lz='eza --color=always --icons=always'
+  alias lzl='lz --long --header --group-directories-first --color-scale=size --octal-permissions'
+  alias lzr='lz --long --header --sort=modified --reverse --time-style=relative --color-scale=age'
+  alias lzg='lz --long --header --all --git --group-directories-first'
+  alias lzt='lz --tree --level=2'
 fi
 
 hpath() {

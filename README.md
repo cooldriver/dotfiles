@@ -61,6 +61,22 @@ sections keep their default order. Spaceship loads this file automatically
 when installed. Shell aliases live in
 [`shell/.config/zsh/aliases.zsh`](shell/.config/zsh/aliases.zsh).
 
+### eza shortcuts
+
+When `eza` is installed, these shortcuts always enable colors and icons, without enabling hyperlinks. They do not replace `ls`.
+
+| Alias | View | Example |
+| --- | --- | --- |
+| `lz` | Quick grid, sorted by name | `lz` |
+| `lzl` | Long listing with a header, octal permissions, directories first and a size color scale | `lzl -a` |
+| `lzr` | Long listing with a header, newest modifications first, relative dates and an age color scale | `lzr ~/Downloads` |
+| `lzg` | Long listing with a header, hidden files and Git status, directories first | `lzg` |
+| `lzt` | Tree limited to two levels, without metadata | `lzt --level=3` |
+
+Extra options and paths are passed to eza normally: `lz -a` includes hidden files, `lzt --git-ignore` hides Git-ignored entries, and `lzt --long --header` adds metadata. Only `lzl` and `lzg` group directories first; `lzr` sorts files and directories together by modification time. Git-ignored entries remain visible by default, including in `lzg`.
+
+`lzr` replaces the old `lat` shortcut and lists all entries rather than truncating to ten. `lz` is now a lightweight grid; use `lzg` for Git details. Recursive directory sizes are deliberately left to dedicated disk-usage tools. Colors and icons remain enabled even when piping these shortcuts; use plain `eza` or `ls` when that is undesirable. Open a new shell after updating to discard old alias definitions.
+
 ## macOS bootstrap
 
 1. Install Homebrew from its official website.
