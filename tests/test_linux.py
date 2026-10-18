@@ -71,7 +71,7 @@ install_shell_dependencies
         self.assertTrue(theme.is_symlink())
         self.assertEqual(os.readlink(theme), "spaceship-prompt/spaceship.zsh-theme")
 
-    def test_server_requests_optional_atuin_without_running_real_installers(self):
+    def test_server_uses_standalone_atuin_without_running_real_installers(self):
         bootstrap = self.base / "bootstrap"
         bootstrap.mkdir()
         shutil.copyfile(ROOT / "bootstrap/linux/server.sh", bootstrap / "server.sh")
@@ -81,11 +81,14 @@ install_common_packages() { :; }
 install_shell_dependencies() { :; }
 install_required() { printf 'required:%s\\n' "$*" >> "$TEST_LOG"; }
 install_optional() { printf 'optional:%s\\n' "$*" >> "$TEST_LOG"; }
+bash() { printf 'installer:%s\\n' "$*" >> "$TEST_LOG"; }
 ''')
         result = subprocess.run(["bash", str(bootstrap / "server.sh")],
                                 env=self.env, capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn("optional:atuin", self.log.read_text().splitlines())
+        calls = self.log.read_text()
+        self.assertIn("install-atuin.sh", calls)
+        self.assertNotIn("optional:atuin", calls)
 
 
 if __name__ == "__main__":

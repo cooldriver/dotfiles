@@ -28,6 +28,11 @@ if command -v direnv >/dev/null 2>&1; then
 fi
 
 # Atuin owns Ctrl-R; Up keeps the usual Zsh history navigation.
+# Linux uses the official standalone client, not the older distribution package.
+if [[ "$OSTYPE" == linux* && -x "$HOME/.atuin/bin/atuin" ]]; then
+  path=("$HOME/.atuin/bin" $path)
+  typeset -U path PATH
+fi
 # Explicit server-only Stow package; workstation defaults remain unchanged.
 server_config="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/linux-server.zsh"
 [[ -r "$server_config" ]] && source "$server_config"

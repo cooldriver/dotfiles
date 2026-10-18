@@ -49,7 +49,8 @@ printf '%s\\n' "${ATUIN_CONFIG_DIR:-manual}" > "$TEST_LOG"
     def shell(self):
         result = subprocess.run(
             [shutil.which("zsh"), "-f", "-i", "-c",
-             'source "$HOME/.zshrc"; print -r -- "${ATUIN_CONFIG_DIR:-manual}"'],
+             'OSTYPE="${TEST_OS:-$OSTYPE}"; source "$HOME/.zshrc"; '
+             'print -r -- "${ATUIN_CONFIG_DIR:-manual}"'],
             env=self.env, capture_output=True, text=True,
         )
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -90,3 +91,30 @@ printf '%s\\n' "${ATUIN_CONFIG_DIR:-manual}" > "$TEST_LOG"
         local.write_text('export ATUIN_CONFIG_DIR="$HOME/.config/atuin"\n')
         self.assertEqual(self.shell(), str(self.home / ".config/atuin"))
         self.assertTrue(local.is_file())
+
+    def standalone_client(self):
+        binary = self.home / ".atuin/bin/atuin"
+        binary.parent.mkdir(parents=True)
+        binary.write_text('''#!/bin/sh
+printf 'standalone:%s\\n' "${ATUIN_CONFIG_DIR:-manual}" > "$TEST_LOG"
+''')
+        binary.chmod(0o755)
+        return binary
+
+    def test_linux_prefers_standalone_before_init_even_in_manual_mode(self):
+        self.standalone_client()
+        self.env["TEST_OS"] = "linux-gnu"
+        self.assertEqual(self.shell(), "manual")
+        self.assertEqual(self.log.read_text().strip(), "standalone:manual")
+
+    def test_macos_keeps_package_manager_client(self):
+        self.standalone_client()
+        self.env["TEST_OS"] = "darwin"
+        self.assertEqual(self.shell(), "manual")
+        self.assertEqual(self.log.read_text().strip(), "manual")
+
+    def test_missing_atuin_keeps_shell_optional(self):
+        (self.bin / "atuin").unlink()
+        self.env["TEST_OS"] = "linux-gnu"
+        self.assertEqual(self.shell(), "manual")
+        self.assertFalse(self.log.exists())

@@ -145,7 +145,7 @@ The Debian-based bootstrap installs the terminal tools required by the dotfiles
 and their optional integrations. The `server` profile also installs the
 administration tools used by the homelab runbook.
 
-The server profile also installs Atuin when available from APT. The explicit `linux-server` Stow package enables private sync every five minutes of shell activity, as on Tatooine; deploy it only on servers with permanent access to Gamorr, together with `shell`. Log in to the existing account interactively following the [Atuin guide](docs/atuin.md). The common profile already includes optional `zsh-syntax-highlighting`, loaded last by Zsh when installed.
+The server profile installs Atuin through its official standalone release installer into `~/.atuin/bin`, with a receipt supporting `atuin update`; it does not install the older APT client. The initial verified release is 18.24.1, not a version hold: an existing supported standalone installation is preserved, never downgraded, and future updates use `atuin update --check` then `atuin update`. These updates are not managed by APT or scheduled automatically. Interactive Linux Zsh prefers this client before initialization; macOS keeps its package-manager selection. The explicit `linux-server` Stow package enables private sync every five minutes of shell activity, as on Tatooine; deploy it only on servers with permanent access to Gamorr, together with `shell`. Follow the [Atuin guide](docs/atuin.md) for installation, migration precautions and interactive login. The common profile already includes optional `zsh-syntax-highlighting`, loaded last by Zsh when installed.
 
 ```bash
 git clone https://github.com/cooldriver/dotfiles.git ~/src/dotfiles

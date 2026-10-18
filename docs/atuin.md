@@ -114,7 +114,21 @@ connexion fonctionnelle. Un appel manuel hors réseau peut échouer explicitemen
 
 ### Serveurs Linux
 
-Le bootstrap `bootstrap/linux/server.sh` propose le paquet APT optionnel `atuin` ; s'il n'est pas disponible dans la distribution, il le signale sans installer de binaire tiers. Le paquet `zsh-syntax-highlighting` est déjà proposé par le bootstrap commun et chargé en dernier par `.zshrc`. Sur un serveur existant, ne pas relancer le bootstrap complet : vérifier les candidats APT, simuler puis installer uniquement les paquets manquants après validation.
+Le bootstrap `bootstrap/linux/server.sh` installe le client autonome officiel, pas le paquet APT : le client Debian 13 `18.6.1` a échoué sur les enregistrements récents du compte partagé lors du pilote kiros le 2026-10-18. Le client officiel `18.24.1` a ensuite synchronisé et permis de reconstruire l'historique local. Linux x86_64 et arm64 sont officiellement Tier 1 ; l'installateur sélectionne la cible adaptée, les binaires GNU de cette release demandant glibc >= 2.39 (Debian 13 : 2.41 relevée sur le pilote). Le paquet `zsh-syntax-highlighting` reste optionnel dans le bootstrap commun et chargé en dernier par `.zshrc`.
+
+Sur un serveur existant, ne pas relancer le bootstrap complet. Sous le compte utilisateur, installer uniquement le client :
+
+```bash
+bash bootstrap/linux/install-atuin.sh
+```
+
+Le script nécessite curl, sha256sum et Python 3 (fourni par le profil serveur pour valider le reçu JSON). Il vérifie par SHA-256 l'installateur de la release officielle initiale 18.24.1 avant exécution ; celui-ci installe sous `~/.atuin/bin` et écrit son reçu dans `${XDG_CONFIG_HOME:-$HOME/.config}/atuin/atuin-receipt.json`. Aucun sudo, import, login ou sync n'est lancé ; le PATH et les fichiers shell ne sont pas modifiés par l'installateur. Le wrapper global `setup.atuin.sh` n'est pas utilisé car il peut aussi modifier les shells et installer des hooks d'agents. Un client autonome existant avec reçu JSON valide et correspondant à ce chemin est conservé s'il est au moins en 18.24.1 ; s'il est trop ancien, le script demande une mise à jour explicite, sans l'écraser. Les installations partielles ou non gérées et les reçus invalides sont refusés pour examen.
+
+Avant de migrer des données existantes, fermer les autres sessions utilisateur qui invoquent Atuin, passer dans `exec zsh -f` pour suspendre les hooks et conserver le profil manuel. Relever les chemins avec l'ancien client `atuin info`, puis copier l'ensemble du répertoire de données et la configuration dans un répertoire privé hors dépôt, y compris clé, session et fichiers SQLite/WAL. Ne pas reprendre un ancien client sur une base migrée. Une copie du clone versionné n'est pas nécessaire ; préserver séparément les modifications locales utiles et les données non versionnées. Le retour en arrière exige une reprise cohérente de la copie des données et du client correspondant, pas seulement un changement de binaire ; il n'annule pas les échanges déjà effectués avec le serveur.
+
+Tant que le PATH n'est pas validé, utiliser explicitement `~/.atuin/bin/atuin`. `.zshrc` donne priorité à ce chemin sur Linux avant l'initialisation ; les Mac conservent leur sélection Homebrew. Pour un pilote après migration, rester en mode manuel, contrôler la synchronisation et l'historique, puis seulement déployer le profil automatique. Un paquet APT préexistant n'est pas supprimé par le bootstrap : après validation du client récent et de sa priorité, examiner son retrait séparément avec une simulation APT, sans purge de données ni autoremove implicite.
+
+Si un fichier ordinaire `~/.config/atuin/config.toml` bloque Stow, examiner ses réglages et le préserver hors dépôt ; ne pas utiliser `--adopt`. Les hooks du shell courant peuvent le recréer : déplacer ce fichier puis exécuter Stow dans un même Bash non interactif, après simulation et sans reprise des hooks entre les deux. Le dépliage de `.config/zsh` est normal quand `shell` et `linux-server` partagent ce répertoire.
 
 Depuis le clone du serveur, après sauvegarde et examen des éventuels conflits, déployer le profil explicite avec le module partagé :
 
@@ -123,11 +137,27 @@ stow --simulate --verbose --target "$HOME" shell linux-server
 stow --restow --target "$HOME" shell linux-server
 ```
 
-Ouvrir une nouvelle session Zsh. Le fichier `~/.config/zsh/linux-server.zsh` sélectionne le profil automatique avant l'initialisation Atuin ; les fichiers Zsh locaux et par hôte chargés ensuite peuvent le remplacer. Les Mac ne reçoivent pas ce module. Vérifier `printenv ATUIN_CONFIG_DIR`, puis les valeurs résolues `sync_address`, `auto_sync` et `sync_frequency` (`https://atuin.hwapp.ovh`, `true`, `5m`). Selon la version APT, `atuin config get` peut ne pas exister : relever la version et consulter `atuin --help` avant d'adapter les contrôles, sans supposer la compatibilité.
+Ouvrir une nouvelle session Zsh. Contrôler `command -v atuin` (attendu `~/.atuin/bin/atuin`) et `atuin --version`, jamais l'ancien client APT. Le fichier `~/.config/zsh/linux-server.zsh` sélectionne le profil automatique avant l'initialisation Atuin ; les fichiers Zsh locaux et par hôte chargés ensuite peuvent le remplacer. Les Mac ne reçoivent pas ce module. Vérifier `printenv ATUIN_CONFIG_DIR`, puis les valeurs résolues `sync_address`, `auto_sync` et `sync_frequency` (`https://atuin.hwapp.ovh`, `true`, `5m`) avec `atuin config get <cle> --resolved` si disponible.
 
 Utiliser le compte existant : `atuin login -u <username>`, avec mot de passe et clé de chiffrement saisis aux invites, jamais en arguments ni dans le dépôt. Ne pas rouvrir les inscriptions et ne pas transmettre les sorties contenant la clé ou la session. L'import de l'ancien historique avec `atuin import zsh` est facultatif : le vérifier localement avant tout envoi, car il peut contenir des secrets. `atuin sync` échange l'historique chiffré avec le compte commun ; la synchronisation peut télécharger l'historique des autres machines sur ce serveur. Ne connecter que les comptes administrateur de confiance.
 
-Contrôler une synchronisation manuelle puis le passage automatique après plus de cinq minutes d'activité, et `Ctrl+R`, la flèche haut et la coloration d'une commande sans l'exécuter. Aucun daemon, timer, changement SSH ou service serveur n'est nécessaire. En cas de régression, arrêter la diffusion, retirer seulement le module `linux-server` avec `stow --delete --target "$HOME" linux-server`, puis ouvrir une nouvelle session : la configuration partagée revient au mode manuel en l'absence de surcharge locale. Ne pas supprimer les bases, la session ou la clé ; les historiques déjà synchronisés ne sont pas annulés par ce retour au mode manuel.
+Contrôler une synchronisation manuelle puis le passage automatique après plus de cinq minutes d'activité, et `Ctrl+R`, la flèche haut et la coloration d'une commande sans l'exécuter. Aucun daemon, timer, changement SSH ou service serveur n'est nécessaire. En cas de régression, arrêter la diffusion ; dans la session courante, exporter d'abord `ATUIN_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/atuin"`, puis retirer seulement `linux-server` avec `stow --delete --target "$HOME" linux-server`. Fermer les autres sessions ayant conservé le profil automatique. Une nouvelle session utilise alors le mode manuel, sauf surcharge locale ; le repliage éventuel du répertoire Zsh ne supprime pas les alias du module `shell`. Ne pas supprimer les bases, la session ou la clé ; les historiques déjà synchronisés ne sont pas annulés par ce retour au mode manuel.
+
+Après un échec de décodage sur un ancien client, un sync récent réussi peut ne traiter que les nouveaux records et laisser l'historique consultable incomplet. Dans le shell sans hooks, avec le profil manuel et le client récent par chemin absolu, examiner `atuin store status`, puis `atuin store verify`. Les index des séries ne sont pas des nombres exacts d'entrées consultables. Si le store contient les séries attendues et que le déchiffrement est vérifié, une réparation distincte approuvée peut exécuter `atuin store rebuild history` : reconstruction locale de la base dérivée, sans modification du serveur. Compter sans afficher l'historique avec `atuin history list --format 'entry' | wc -l`, en Bash avec `set -o pipefail`. Ne pas employer purge/rekey/force pour contourner une incompatibilité de version.
+
+### Mises à jour du client Linux
+
+Le canal autonome ne dépend pas des mises à jour APT et aucun timer n'est installé. Lors de la maintenance, vérifier le client utilisé puis les mises à jour proposées :
+
+```bash
+command -v atuin
+atuin --version
+atuin update --check
+```
+
+Après examen de la release et sauvegarde des données avant migration, mettre à jour sous le compte utilisateur avec `atuin update`, puis ouvrir une nouvelle session et refaire les contrôles de version, recherche et synchronisation. Le reçu de l'installateur est nécessaire : une simple copie du binaire n'offre pas ce mécanisme. La version initiale du bootstrap n'est pas un pinning/hold ; le script ne rétrograde pas une installation plus récente. `update_check = false` désactive les notifications automatiques du shell, pas les commandes explicites de contrôle/mise à jour. Ne pas activer le canal nightly ou une mise à jour automatique implicite.
+
+Sources : [support Linux](https://docs.atuin.sh/latest/support/), [release officielle 18.24.1](https://github.com/atuinsh/atuin/releases/tag/v18.24.1), [implémentation de l'update autonome](https://github.com/atuinsh/atuin/blob/v18.24.1/crates/atuin/src/command/client/update.rs).
 
 ### Synchronisation locale optionnelle sur Toola
 
