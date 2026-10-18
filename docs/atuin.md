@@ -50,6 +50,7 @@ de configuration avec `ATUIN_CONFIG_DIR` :
 | --- | --- | --- |
 | Tatooine, Mac mini fixe sur le LAN | Automatique, intervalle de 5 minutes | `~/.config/atuin/hosts/tatooine/config.toml` |
 | Toola, MacBook mobile | Manuel dans Zsh ; LaunchAgent optionnel uniquement sur le LAN | `~/.config/atuin/config.toml` |
+| Serveurs Linux avec le module Stow `linux-server` | Automatique, intervalle de 5 minutes d'activité du shell | `~/.config/atuin/profiles/linux-server/config.toml` |
 | Autres machines | Manuel par défaut | Configuration TOML |
 
 Les profils sont `shell/.config/zsh/hosts/tatooine.zsh` et `toola.zsh`.
@@ -65,7 +66,7 @@ par variables n'activait donc pas la synchronisation sur Tatooine. Les profils
 retirent ces anciennes variables et sélectionnent désormais un fichier complet.
 `ATUIN_CONFIG_DIR` ne change ni les bases, ni la clé, ni la session existante :
 aucune reconnexion ou réimportation n'est nécessaire. Maintenir les réglages
-communs dans les deux fichiers TOML lors de leurs prochaines modifications.
+communs dans les trois fichiers TOML lors de leurs prochaines modifications.
 
 Sur Tatooine, la synchronisation se déclenche à la fin d'une commande si le compte
 est connecté et que l'intervalle est écoulé. Ce n'est pas un timer permanent :
@@ -110,6 +111,23 @@ sur le LAN, le LaunchAgent optionnel rattrape la synchronisation à son prochain
 passage si le Mac est éveillé. Tatooine se synchronise lors de l'utilisation
 du shell ; `atuin sync` permet aussi de forcer un échange immédiat sur une
 connexion fonctionnelle. Un appel manuel hors réseau peut échouer explicitement.
+
+### Serveurs Linux
+
+Le bootstrap `bootstrap/linux/server.sh` propose le paquet APT optionnel `atuin` ; s'il n'est pas disponible dans la distribution, il le signale sans installer de binaire tiers. Le paquet `zsh-syntax-highlighting` est déjà proposé par le bootstrap commun et chargé en dernier par `.zshrc`. Sur un serveur existant, ne pas relancer le bootstrap complet : vérifier les candidats APT, simuler puis installer uniquement les paquets manquants après validation.
+
+Depuis le clone du serveur, après sauvegarde et examen des éventuels conflits, déployer le profil explicite avec le module partagé :
+
+```bash
+stow --simulate --verbose --target "$HOME" shell linux-server
+stow --restow --target "$HOME" shell linux-server
+```
+
+Ouvrir une nouvelle session Zsh. Le fichier `~/.config/zsh/linux-server.zsh` sélectionne le profil automatique avant l'initialisation Atuin ; les fichiers Zsh locaux et par hôte chargés ensuite peuvent le remplacer. Les Mac ne reçoivent pas ce module. Vérifier `printenv ATUIN_CONFIG_DIR`, puis les valeurs résolues `sync_address`, `auto_sync` et `sync_frequency` (`https://atuin.hwapp.ovh`, `true`, `5m`). Selon la version APT, `atuin config get` peut ne pas exister : relever la version et consulter `atuin --help` avant d'adapter les contrôles, sans supposer la compatibilité.
+
+Utiliser le compte existant : `atuin login -u <username>`, avec mot de passe et clé de chiffrement saisis aux invites, jamais en arguments ni dans le dépôt. Ne pas rouvrir les inscriptions et ne pas transmettre les sorties contenant la clé ou la session. L'import de l'ancien historique avec `atuin import zsh` est facultatif : le vérifier localement avant tout envoi, car il peut contenir des secrets. `atuin sync` échange l'historique chiffré avec le compte commun ; la synchronisation peut télécharger l'historique des autres machines sur ce serveur. Ne connecter que les comptes administrateur de confiance.
+
+Contrôler une synchronisation manuelle puis le passage automatique après plus de cinq minutes d'activité, et `Ctrl+R`, la flèche haut et la coloration d'une commande sans l'exécuter. Aucun daemon, timer, changement SSH ou service serveur n'est nécessaire. En cas de régression, arrêter la diffusion, retirer seulement le module `linux-server` avec `stow --delete --target "$HOME" linux-server`, puis ouvrir une nouvelle session : la configuration partagée revient au mode manuel en l'absence de surcharge locale. Ne pas supprimer les bases, la session ou la clé ; les historiques déjà synchronisés ne sont pas annulés par ce retour au mode manuel.
 
 ### Synchronisation locale optionnelle sur Toola
 

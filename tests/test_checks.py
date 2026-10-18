@@ -27,14 +27,14 @@ class ShellValidationTests(unittest.TestCase):
         for name in ("BASH_ENV", "ENV", "ZDOTDIR", "SHELLCHECK_OPTS"):
             self.env.pop(name, None)
         for name in ("bootstrap", "services", "scripts", "shell/.local/bin",
-                     "macos/.local/bin", "macos/.config/direnv"):
+                     "macos/.local/bin", "macos/.config/direnv", "linux-server"):
             (self.base / name).mkdir(parents=True)
         self.script = self.base / "scripts/check-shell.sh"
         shutil.copyfile(ROOT / "scripts/check-shell.sh", self.script)
         self.marker = self.base / "executed"
         for name in ("bootstrap/probe.sh", "shell/.local/bin/helper",
                      "macos/.local/bin/helper", "macos/.config/direnv/direnvrc",
-                     "shell/.zshrc", "macos/local.zshrc"):
+                     "shell/.zshrc", "macos/local.zshrc", "linux-server/profile.zsh"):
             (self.base / name).write_text(
                 f'#!/usr/bin/env bash\ntouch "{self.marker}"\n'
             )
@@ -49,7 +49,7 @@ class ShellValidationTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         for name in ("bootstrap/probe.sh", "shell/.local/bin/helper",
                      "macos/.config/direnv/direnvrc", "shell/.zshrc",
-                     "macos/local.zshrc"):
+                     "macos/local.zshrc", "linux-server/profile.zsh"):
             self.assertIn(name, result.stdout)
         self.assertFalse(self.marker.exists())
 

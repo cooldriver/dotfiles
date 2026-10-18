@@ -1,0 +1,11 @@
+# Selected only by the optional linux-server Stow package.
+sync_address = "https://atuin.hwapp.ovh"
+auto_sync = true
+sync_frequency = "5m"
+update_check = false
+
+[daemon]
+enabled = false
+
+[ui]
+columns = ["duration", "time", "host", "command"]

@@ -28,6 +28,9 @@ if command -v direnv >/dev/null 2>&1; then
 fi
 
 # Atuin owns Ctrl-R; Up keeps the usual Zsh history navigation.
+# Explicit server-only Stow package; workstation defaults remain unchanged.
+server_config="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/linux-server.zsh"
+[[ -r "$server_config" ]] && source "$server_config"
 if command -v atuin >/dev/null 2>&1; then
   eval "$(atuin init zsh --disable-up-arrow)"
 fi

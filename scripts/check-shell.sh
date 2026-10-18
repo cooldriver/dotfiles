@@ -19,7 +19,7 @@ trap cleanup EXIT
 
 # Keep find outside process substitutions so discovery failures stop validation.
 find bootstrap services scripts -type f -name '*.sh' -print0 > "$check_dir/bash"
-find shell macos -type f \( -name '*.zsh' -o -name '*.zshrc' -o -name '.zshrc' -o -name '.zprofile' -o -name '.zshenv' -o -name '.zlogin' -o -name '.zlogout' \) -print0 > "$check_dir/zsh"
+find shell macos linux-server -type f \( -name '*.zsh' -o -name '*.zshrc' -o -name '.zshrc' -o -name '.zprofile' -o -name '.zshenv' -o -name '.zlogin' -o -name '.zlogout' \) -print0 > "$check_dir/zsh"
 
 while IFS= read -r -d '' script; do
   printf 'Bash + ShellCheck: %s\n' "$script"

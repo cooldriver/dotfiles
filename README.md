@@ -30,6 +30,7 @@ are not part of the tested setup.
 | Package | Target | Contents |
 | --- | --- | --- |
 | `shell` | macOS and Linux | Zsh, Spaceship prompt, aliases, optional integrations, and per-account GitHub CLI launchers |
+| `linux-server` | Linux servers, explicit opt-in with `shell` | Automatic private Atuin sync for permanent Gamorr access |
 | `git` | macOS and Linux | Shared Git settings |
 | `vim` | macOS and Linux | Minimal Vim configuration |
 | `btop` | macOS and Linux | Portable btop preferences |
@@ -144,12 +145,14 @@ The Debian-based bootstrap installs the terminal tools required by the dotfiles
 and their optional integrations. The `server` profile also installs the
 administration tools used by the homelab runbook.
 
+The server profile also installs Atuin when available from APT. The explicit `linux-server` Stow package enables private sync every five minutes of shell activity, as on Tatooine; deploy it only on servers with permanent access to Gamorr, together with `shell`. Log in to the existing account interactively following the [Atuin guide](docs/atuin.md). The common profile already includes optional `zsh-syntax-highlighting`, loaded last by Zsh when installed.
+
 ```bash
 git clone https://github.com/cooldriver/dotfiles.git ~/src/dotfiles
 cd ~/src/dotfiles
 bootstrap/linux/server.sh
-stow --simulate --verbose --target "$HOME" shell git vim btop zellij lazygit
-stow --target "$HOME" shell git vim btop zellij lazygit
+stow --simulate --verbose --target "$HOME" shell linux-server git vim btop zellij lazygit
+stow --target "$HOME" shell linux-server git vim btop zellij lazygit
 ```
 
 Start `zsh` to try the deployed shell configuration. If you want it as your

@@ -41,6 +41,7 @@ install_common_packages
         required, optional, installer = self.log.read_text().splitlines()
         self.assertIn("git-delta", required.split())
         self.assertIn("lazygit", optional.split())
+        self.assertIn("zsh-syntax-highlighting", optional.split())
         self.assertNotIn("lazygit", required.split())
         self.assertNotIn("git-delta", optional.split())
         self.assertIn("install-zellij.sh", installer)
@@ -69,6 +70,22 @@ install_shell_dependencies
         theme = self.home / ".oh-my-zsh/custom/themes/spaceship.zsh-theme"
         self.assertTrue(theme.is_symlink())
         self.assertEqual(os.readlink(theme), "spaceship-prompt/spaceship.zsh-theme")
+
+    def test_server_requests_optional_atuin_without_running_real_installers(self):
+        bootstrap = self.base / "bootstrap"
+        bootstrap.mkdir()
+        shutil.copyfile(ROOT / "bootstrap/linux/server.sh", bootstrap / "server.sh")
+        (bootstrap / "common.sh").write_text('''
+prepare_apt() { :; }
+install_common_packages() { :; }
+install_shell_dependencies() { :; }
+install_required() { printf 'required:%s\\n' "$*" >> "$TEST_LOG"; }
+install_optional() { printf 'optional:%s\\n' "$*" >> "$TEST_LOG"; }
+''')
+        result = subprocess.run(["bash", str(bootstrap / "server.sh")],
+                                env=self.env, capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("optional:atuin", self.log.read_text().splitlines())
 
 
 if __name__ == "__main__":
