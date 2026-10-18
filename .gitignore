@@ -5,6 +5,8 @@
 .env
 .env.local
 __pycache__/
+# Runtime log written through the btop Stow directory link.
+/btop/.config/btop/btop.log
 # Defense in depth: private SSH rules and age identities never belong here.
 config.private
 *.agekey
