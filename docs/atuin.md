@@ -116,7 +116,9 @@ connexion fonctionnelle. Un appel manuel hors réseau peut échouer explicitemen
 
 Le bootstrap `bootstrap/linux/server.sh` installe le client autonome officiel, pas le paquet APT : le client Debian 13 `18.6.1` a échoué sur les enregistrements récents du compte partagé lors du pilote kiros le 2026-10-18. Le client officiel `18.24.1` a ensuite synchronisé et permis de reconstruire l'historique local. Linux x86_64 et arm64 sont officiellement Tier 1 ; l'installateur sélectionne la cible adaptée, les binaires GNU de cette release demandant glibc >= 2.39 (Debian 13 : 2.41 relevée sur le pilote). Le paquet `zsh-syntax-highlighting` reste optionnel dans le bootstrap commun et chargé en dernier par `.zshrc`.
 
-Sur un serveur existant, ne pas relancer le bootstrap complet. Sous le compte utilisateur, installer uniquement le client :
+Sur un serveur existant, ne pas relancer le bootstrap complet. Avant l'installation, vérifier que `~/.config` (ou `XDG_CONFIG_HOME`) et son sous-répertoire `atuin` ne sont pas des liens de répertoire vers le dépôt. Le pliage Stow peut avoir lié tout ce répertoire : l'installateur écrirait alors son reçu dans l'arborescence du dépôt. Après examen des conflits, simuler `stow --simulate --verbose --restow --no-folding --target "$HOME" shell`, puis appliquer le même restow sans `--simulate` et vérifier les répertoires réels avant l'installateur. Cette préparation n'active pas le module `linux-server` ni la synchronisation ; les conteneurs d'un serveur Atuin éventuel restent hors périmètre. Après installation, `git status --short` ne doit pas signaler de reçu ajouté au dépôt.
+
+Sous le compte utilisateur, installer ensuite uniquement le client :
 
 ```bash
 bash bootstrap/linux/install-atuin.sh
