@@ -22,7 +22,6 @@ shell/.zprofile
 shell/.config/zsh/aliases.zsh
 git/.gitconfig
 vim/.vimrc
-btop/.config/btop/btop.conf
 macos/.config/zsh/macos.zprofile
 brew/Brewfile
 ```
@@ -102,11 +101,9 @@ fichiers effectivement utilisés.
 
 ## btop
 
-- Le fichier généré complet ne sera pas repris.
-- La future configuration sera minimale et portable, sans chemin Homebrew ni
-  thème dépendant d'une version installée.
-- `save_config_on_exit = false` évitera que btop modifie le fichier versionné à
-  travers son lien Stow.
+- Décision révisée le 2026-10-18 : btop reste installé sur macOS et Linux, mais sa configuration n'est plus versionnée ni déployée par Stow. Chaque installation utilise ses réglages locaux, générés par sa propre version.
+- Le pilote Linux 1.3.2 était stable avec sa configuration générée ; Toola 1.4.7 l'a réécrite. La simplicité prime sur un mécanisme de copie ou une synchronisation entre versions pour une application non personnalisée.
+- Les liens des déploiements existants doivent être retirés avant récupération du commit de suppression, sans désinstaller btop ni toucher aux autres paquets ; voir la migration ciblée du README.
 
 ## Homebrew
 

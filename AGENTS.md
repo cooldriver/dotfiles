@@ -5,8 +5,9 @@ do not turn it into a generic dotfiles framework.
 
 ## Layout and deployment
 
-- GNU Stow deploys `shell`, `git`, `vim`, `btop`, `zellij`, and `lazygit` on
+- GNU Stow deploys `shell`, `git`, `vim`, `zellij`, and `lazygit` on
   macOS and Linux. Deploy `macos` only on macOS.
+- btop is still installed by Homebrew and the Linux bootstrap, but its configuration and logs are local, not Stow-managed. Existing deployments must unlink the old `btop` package before pulling its removal; see README.md.
 - `linux-server` is an explicit server-only Stow package used with `shell`; it enables automatic private Atuin sync on servers with permanent access to Gamorr. Never add it to workstation defaults.
 - Linux Atuin uses the official standalone release installer in `~/.atuin/bin`, with its update receipt and no automatic shell edits. Do not install the APT client or replace this with the global setup wrapper. Preserve supported existing installs, use `atuin update` for upgrades, and keep macOS package-manager selection unchanged.
 - `ssh` is an optional macOS-workstation-only Stow package; deploy explicitly with `--no-folding` after restoring the private configuration. Never add it to Linux/server defaults.

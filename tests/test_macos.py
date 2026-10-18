@@ -261,13 +261,26 @@ printf '%s/php installs/%s\\n' "$TEST_ROOT" "$2"
 
     @unittest.skipUnless(shutil.which("stow"), "Stow is needed for the deployment test")
     def test_stow_deploys_into_temporary_home_and_detects_conflict(self):
-        common = ["shell", "git", "vim", "btop", "zellij", "lazygit"]
+        common = ["shell", "git", "vim", "zellij", "lazygit"]
         for profile, packages in [("linux", common), ("macos", common + ["macos"])]:
             home = self.base / f"{profile}-home"
             home.mkdir()
+            local_btop = home / ".config/btop"
+            local_btop.mkdir(parents=True)
+            (local_btop / "btop.conf").write_text("local settings\n")
+            (local_btop / "btop.log").write_text("local log\n")
+            preview = self.run_command([
+                "stow", "--simulate", "--verbose", "--dir", ROOT,
+                "--target", home, *packages,
+            ])
+            self.assertEqual(preview.returncode, 0, preview.stderr)
             result = self.run_command(["stow", "--dir", ROOT, "--target", home,
                                        *packages])
             self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertFalse(local_btop.is_symlink())
+            self.assertFalse((local_btop / "btop.conf").is_symlink())
+            self.assertEqual((local_btop / "btop.conf").read_text(), "local settings\n")
+            self.assertEqual((local_btop / "btop.log").read_text(), "local log\n")
             for deployed, source in [
                 (".spaceshiprc.zsh", "shell/.spaceshiprc.zsh"),
                 (".config/zellij/config.kdl", "zellij/.config/zellij/config.kdl"),

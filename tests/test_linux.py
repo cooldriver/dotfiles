@@ -40,6 +40,7 @@ install_common_packages
         self.assertEqual(result.returncode, 0, result.stderr)
         required, optional, installer = self.log.read_text().splitlines()
         self.assertIn("git-delta", required.split())
+        self.assertIn("btop", required.split())
         self.assertIn("lazygit", optional.split())
         self.assertIn("zsh-syntax-highlighting", optional.split())
         self.assertNotIn("lazygit", required.split())
