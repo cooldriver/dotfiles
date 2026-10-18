@@ -7,7 +7,7 @@ version=0.45.1
 case "$(uname -m)" in
   x86_64)
     arch=x86_64
-    checksum=d7bda1e18c30a688833ae7627f1d6a253bbba5349a4bc48e4f0ec008aaf75ed1
+    checksum=40bcc2e03f5d5ae8e054e39f676081fe12ab70871506996ba595834c3718eefc
     ;;
   aarch64|arm64)
     arch=aarch64
@@ -41,7 +41,10 @@ if [[ ! -x "$binary" ]]; then
   tmp=$(mktemp -d)
   trap 'rm -rf -- "$tmp"' EXIT
   curl --fail --location --retry 3 --output "$tmp/$archive" "$url"
-  printf '%s  %s\n' "$checksum" "$tmp/$archive" | sha256sum --check --status
+  if ! printf '%s  %s\n' "$checksum" "$tmp/$archive" | sha256sum --check --status; then
+    printf 'Zellij checksum mismatch for %s; nothing installed. Verify the official archive and pinned checksum before retrying.\n' "$archive" >&2
+    exit 1
+  fi
   tar -xzf "$tmp/$archive" -C "$tmp" zellij
   mkdir -p "$install_dir"
   install -m 755 "$tmp/zellij" "$binary"

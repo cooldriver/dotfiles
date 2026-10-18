@@ -22,6 +22,21 @@ prévisualiser `stow --simulate --verbose --target "$HOME" zellij`. Comparer et
 sauvegarder toute configuration préexistante avant `stow --target "$HOME" zellij`.
 La configuration commune vit dans `zellij/.config/zellij/config.kdl`.
 
+## Mise à jour et retour
+
+Sur macOS, la version gérée par Homebrew se met à jour avec `brew upgrade zellij`. Sur Linux, le binaire installé par ce dépôt n'est pas géré par APT et ne fournit pas de commande d'auto-mise à jour équivalente à `atuin update`. Aucun timer de mise à jour n'est ajouté.
+
+Pour changer de version sous Linux, réviser `version` et les deux empreintes **des archives `.tar.gz`** dans `bootstrap/linux/install-zellij.sh` à partir des assets officiels, vérifier les téléchargements puis tester et publier la modification. Les fichiers upstream `.sha256sum` de cette release décrivent les **binaires extraits**, pas les archives : ne pas les utiliser directement pour vérifier un `.tar.gz`. Une empreinte incorrecte arrête l'installation avec un message explicite, sans extraire ni exécuter le téléchargement ou remplacer le lien existant.
+
+Après récupération de la mise à jour du dépôt sur chaque machine concernée, relancer uniquement l'installateur, sans réexécuter tout le bootstrap système :
+
+```sh
+bash ~/src/dotfiles/bootstrap/linux/install-zellij.sh
+~/.local/bin/zellij --version
+```
+
+L'installateur conserve les versions précédentes sous `~/.local/opt/zellij/` et fait pointer `~/.local/bin/zellij` vers la version sélectionnée. Le relancer pour une version déjà installée ne télécharge rien et ne vérifie pas à nouveau son binaire. Tester une nouvelle session avant de retirer une ancienne version ; les sessions déjà ouvertes ne sont pas mises à niveau par le changement du lien. Pour revenir en arrière, vérifier que le binaire de la version précédente existe et réorienter ce seul lien vers lui, sans supprimer les versions ni la configuration.
+
 ## Utilisation
 
 ```bash

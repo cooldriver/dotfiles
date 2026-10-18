@@ -55,7 +55,7 @@ See [AGENTS.md](AGENTS.md) for repository guidance when working with coding agen
 - [Atuin](docs/atuin.md): shell history and private per-host sync. Toola's
   optional LAN-only LaunchAgent requires a separate installation; Stow does not
   activate it.
-- [Zellij](docs/zellij.md): installation and session handling on both systems.
+- [Zellij](docs/zellij.md): installation, manual updates and session handling on both systems.
 
 The `shell` package also deploys `~/.spaceshiprc.zsh`: it moves the time to the
 right and the directory after the host, hides the Docker/OrbStack section,
