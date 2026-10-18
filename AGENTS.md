@@ -25,6 +25,7 @@ do not turn it into a generic dotfiles framework.
   as a validation step. Use temporary directories and simulations instead.
 - Do not run Git commands that modify the working tree, index, references, or
   remotes. Leave staging, commits, and publishing to the owner.
+- User-facing interactive command snippets run in Zsh unless an interpreter is explicit. Never use Zsh special parameters such as `path` (tied to `PATH`), `fpath`, `cdpath`, `manpath`, or `status` as temporary or loop variables; prefer `item`, `file_path`, or `dir_path`, even in Bash examples that may be reused interactively. Intentional PATH changes must be explicit. Use an explicit Bash heredoc for Bash-dependent blocks or to isolate temporary assignments, and review variable names for the actual target shell; Bash syntax checks/ShellCheck do not establish Zsh safety. Do not lock special parameters or alter the user's global shell to work around unsafe snippets.
 
 ## Changes and checks
 
